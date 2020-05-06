@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-class Headquarter extends Model
+class Headquarter extends User
 {
     protected $table = "users";
     /**
