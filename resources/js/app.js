@@ -6,12 +6,14 @@ import { userReducer } from './reducers/user/user.reducer';
 import Axios from 'axios';
 import toastr from 'toastr';
 import { setAuthUser } from './reducers/user/user.action';
+import Loader from './components/custom/loader.component';
 // import axios from "axios";
 export const AuthContext = createContext();
 const App = () => {
     const INITIAL_STATE = {
         user: null
     }
+    const [loading, setLoading] = useState(true);
     const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
     useEffect(() => {
         Axios.get('/sanctum/csrf-cookie').then(response => {
@@ -22,18 +24,23 @@ const App = () => {
                 }else{
                     toastr.error("Please Login.")
                 }
+                setLoading(false);
             })
             .catch(error => {
                 toastr.error("Authentication failed.")
-            })
+                setLoading(false);
+            });
         }).catch(error => {
             console.log(error.response);
+            setLoading(false);
         });
     }, [])
     return (
         <AuthContext.Provider value={{state: state, userDispatch: dispatch}}>
             <Router>
-                {Routes}
+                {
+                    loading ? <Loader /> : Routes
+                }
             </Router>
         </AuthContext.Provider>
     );
