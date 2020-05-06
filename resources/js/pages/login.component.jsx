@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../components/custom/custom.button";
+import { AuthContext } from "../app";
+import { setAuthUser } from "../reducers/user/user.action";
+import { useFormik } from "formik";
+import * as Yup from 'yup'; // for everything
+import Axios from "axios";
+import toastr from 'toastr';
 
 const LoginPage = () => {
-    const [form_fields, setFields] = useState({
-        email: null,
-        password: null
+    const { state, userDispatch} = useContext(AuthContext);
+    const [ button_loading, setButtonLogin] = useState(false);
+    const form_fields ={
+        email: "",
+        password: ""
+    }
+    const validationSchema = Yup.object({
+        password: Yup.string().min(6, 'Too Short!').max(50, 'Too Long!').required('Required'),
+        email: Yup.string().email('Invalid email').required('Required')
     });
-    console.log(form_fields);
-    const handleSignIn = function(event) {
-        event.preventDefault();
-        console.log(event);
+    const formik = useFormik({
+        initialValues: form_fields,
+        onSubmit: (values) => {
+            handleSignIn(values);
+        },
+        validationSchema
+    });
+    const handleSignIn = function(values) {
+        setButtonLogin(true);
+        Axios.post("/api/admin/login", values)
+        .then(response =>{
+            formik.resetForm(form_fields);
+            userDispatch(setAuthUser(response.data));
+        })
+        .catch(error => {
+            console.log(error);
+            toastr.error("Login failed.")
+        })
     }
     return (
         <div className="hold-transition login-page">
-
             <div className="login-box">
                 <div className="login-logo">
                     <Link to="/">
@@ -23,22 +48,36 @@ const LoginPage = () => {
                 </div>
                 <div className="card">
                     <div className="card-body login-card-body">
-                        <form action="../../index3.html" method="post" onSubmit={handleSignIn}>
-                            <div className="input-group mb-3">
-                                <input type="email" className="form-control" placeholder="Email" />
-                                    <div className="input-group-append">
-                                        <div className="input-group-text">
-                                            <span className="fas fa-envelope"></span>
-                                        </div>
+                        <form action="../../index3.html" method="post" onSubmit={formik.handleSubmit}>
+                            <div className={`input-group mb-3`}>
+                                <input id="email" name="email" type="email" className={`form-control ${formik.touched.email && formik.errors.email ? "is-invalid" : ""}`} placeholder="Email"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.email}
+                                    onBlur={formik.handleBlur}
+                                />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-envelope"></span>
                                     </div>
+                                </div>
+                                {
+                                formik.touched.email && formik.errors.email ? (<div className="invalid-feedback">{formik.errors.email}</div>) : null
+                                }
                             </div>
                             <div className="input-group mb-3">
-                                <input type="password" className="form-control" placeholder="Password" />
+                                <input id="password" name="password" type="password" className={`form-control ${formik.touched.password && formik.errors.password ? "is-invalid" : ""}`} placeholder="Password"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.password}
+                                    onBlur={formik.handleBlur}
+                                />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <span className="fas fa-lock"></span>
                                     </div>
                                 </div>
+                                {
+                                    formik.touched.password && formik.errors.password ? (<div className="invalid-feedback">{formik.errors.password}</div>) : null
+                                }
                             </div>
                             <div className="row">
                                 <div className="col-8">

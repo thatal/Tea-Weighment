@@ -6,4 +6,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-@import '../../node_modules/admin-lte/dist/css/adminlte.css'
+@import '../../node_modules/admin-lte/dist/css/adminlte.css';
+@import '../../node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.css';
+@import '../../node_modules/admin-lte//plugins/fontawesome-free/css/all.css';
+@import '../../node_modules/toastr/build/toastr.css'
