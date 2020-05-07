@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from 'yup'; // for everything
 import Axios from "axios";
 import toastr from 'toastr';
+import LoadingButton from "../components/custom/loading-button.component";
 
 const LoginPage = () => {
     const { state, userDispatch} = useContext(AuthContext);
@@ -32,10 +33,12 @@ const LoginPage = () => {
         .then(response =>{
             formik.resetForm(form_fields);
             userDispatch(setAuthUser(response.data));
+            setButtonLogin(false);
         })
         .catch(error => {
             console.log(error);
-            toastr.error("Login failed.")
+            toastr.error("Login failed.");
+            setButtonLogin(false);
         })
     }
     return (
@@ -89,7 +92,7 @@ const LoginPage = () => {
                                         </div>
                                     </div>
                                     <div className="col-4">
-                                        <CustomButton type="submit" className="btn-primary btn-block" text="Sign In"/>
+                                    <LoadingButton loading={button_loading} type="submit" className="btn-primary btn-block" text="Sign In"/>
                                     </div>
                             </div>
                         </form>

@@ -87278,14 +87278,15 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 var CustomButton = function CustomButton(_ref) {
   var className = _ref.className,
+      children = _ref.children,
       type = _ref.type,
       text = _ref.text,
-      otherProps = _objectWithoutProperties(_ref, ["className", "type", "text"]);
+      otherProps = _objectWithoutProperties(_ref, ["className", "children", "type", "text"]);
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", _extends({
     type: "".concat(type ? type : 'button'),
     className: "btn ".concat(className)
-  }, otherProps), text);
+  }, otherProps), children ? children : text);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CustomButton);
@@ -87373,6 +87374,46 @@ var Loader = function Loader() {
 
 /***/ }),
 
+/***/ "./resources/js/components/custom/loading-button.component.jsx":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/custom/loading-button.component.jsx ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _custom_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./custom.button */ "./resources/js/components/custom/custom.button.jsx");
+/* harmony import */ var _spinner_icon_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spinner-icon.component */ "./resources/js/components/custom/spinner-icon.component.jsx");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+var LoadingButton = function LoadingButton(_ref) {
+  var loading = _ref.loading,
+      rest = _objectWithoutProperties(_ref, ["loading"]);
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_custom_button__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
+    disabled: loading
+  }, rest), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_spinner_icon_component__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    style: {
+      marginRight: '3px'
+    }
+  }) : '');
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (LoadingButton);
+
+/***/ }),
+
 /***/ "./resources/js/components/custom/sidebar-link.jsx":
 /*!*********************************************************!*\
   !*** ./resources/js/components/custom/sidebar-link.jsx ***!
@@ -87433,6 +87474,30 @@ var SidebarLink = function SidebarLink(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SidebarLink));
+
+/***/ }),
+
+/***/ "./resources/js/components/custom/spinner-icon.component.jsx":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/custom/spinner-icon.component.jsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var CustomIcon = function CustomIcon(_ref) {
+  var icon = _ref.icon;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas ".concat(icon ? icon : 'fa-circle-notch fa-spin')
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CustomIcon);
 
 /***/ }),
 
@@ -87567,6 +87632,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/custom/loading-button.component */ "./resources/js/components/custom/loading-button.component.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -87586,6 +87652,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // for everything
+
 
 
 
@@ -87621,9 +87688,11 @@ var LoginPage = function LoginPage() {
     axios__WEBPACK_IMPORTED_MODULE_7___default.a.post("/api/admin/login", values).then(function (response) {
       formik.resetForm(form_fields);
       userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_4__["setAuthUser"])(response.data));
+      setButtonLogin(false);
     })["catch"](function (error) {
       console.log(error);
       toastr__WEBPACK_IMPORTED_MODULE_8___default.a.error("Login failed.");
+      setButtonLogin(false);
     });
   };
 
@@ -87694,7 +87763,8 @@ var LoginPage = function LoginPage() {
     htmlFor: "remember"
   }, "Remember Me"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_custom_button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    loading: button_loading,
     type: "submit",
     className: "btn-primary btn-block",
     text: "Sign In"
