@@ -9,7 +9,7 @@ function Guest({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={props =>
-                !state.user ? <Component {...props} /> : <Redirect to="/dashboard" />
+                !state.user ? <Component {...props} /> : <Redirect to="/admin/dashboard" />
             }
         />
     );

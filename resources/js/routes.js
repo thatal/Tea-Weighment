@@ -8,7 +8,7 @@ import Dashboard from './components/admin/dashboard.component';
 
 export const Routes = (
     <Switch>
-        <Auth exact path="/dashboard" component={Dashboard}/>
+        <Auth path="/admin" component={Dashboard}/>
         <Route exact path="/" render={props => <Redirect to="/login" />} />
         <Guest exact path="/login" component={LoginPage} />
     </Switch>
