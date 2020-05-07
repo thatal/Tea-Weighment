@@ -31,9 +31,9 @@ class AuthController extends Controller
     }
     public function logout()
     {
+        \Log::info(Auth::getDefaultDriver());
+        Auth::guard("web")->logout();
         try {
-            \Log::info(Auth::getDefaultDriver());
-            Auth::guard("web")->logout();
             return response()
                 ->json([
                     "status"    => true,

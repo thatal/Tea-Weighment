@@ -86782,22 +86782,17 @@ var App = function App() {
       dispatch = _useReducer2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/sanctum/csrf-cookie').then(function (response) {
-      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/user").then(function (response) {
-        // console.log(response);
-        if (response.data) {
-          dispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_7__["setAuthUser"])(response.data));
-        } else {
-          toastr__WEBPACK_IMPORTED_MODULE_6___default.a.error("Please Login.");
-        }
+    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/user").then(function (response) {
+      // console.log(response);
+      if (response.data) {
+        dispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_7__["setAuthUser"])(response.data));
+      } else {
+        toastr__WEBPACK_IMPORTED_MODULE_6___default.a.error("Please Login.");
+      }
 
-        setLoading(false);
-      })["catch"](function (error) {
-        toastr__WEBPACK_IMPORTED_MODULE_6___default.a.error("Authentication failed.");
-        setLoading(false);
-      });
+      setLoading(false);
     })["catch"](function (error) {
-      console.log(error.response);
+      toastr__WEBPACK_IMPORTED_MODULE_6___default.a.error("Authentication failed.");
       setLoading(false);
     });
   }, []);
@@ -87650,11 +87645,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/user/user.action */ "./resources/js/reducers/user/user.action.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/custom/loading-button.component */ "./resources/js/components/custom/loading-button.component.jsx");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/custom/loading-button.component */ "./resources/js/components/custom/loading-button.component.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -87673,7 +87666,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // for everything
-
 
 
 
@@ -87706,14 +87698,19 @@ var LoginPage = function LoginPage() {
 
   var handleSignIn = function handleSignIn(values) {
     setButtonLogin(true);
-    axios__WEBPACK_IMPORTED_MODULE_6___default.a.post("/api/admin/login", values).then(function (response) {
-      formik.resetForm(form_fields);
-      setButtonLogin(false);
-      userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__["setAuthUser"])(response.data));
+    axios.get('/sanctum/csrf-cookie').then(function (response) {
+      axios.post("/api/admin/login", values).then(function (response) {
+        formik.resetForm(form_fields);
+        setButtonLogin(false);
+        userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__["setAuthUser"])(response.data.data));
+      })["catch"](function (error) {
+        console.log(error);
+        toastr__WEBPACK_IMPORTED_MODULE_6___default.a.error("Login failed.");
+        setButtonLogin(false);
+      });
     })["catch"](function (error) {
-      console.log(error);
-      toastr__WEBPACK_IMPORTED_MODULE_7___default.a.error("Login failed.");
-      setButtonLogin(false);
+      console.log(error.response);
+      setLoading(false);
     });
   };
 
@@ -87784,7 +87781,7 @@ var LoginPage = function LoginPage() {
     htmlFor: "remember"
   }, "Remember Me"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_7__["default"], {
     loading: button_loading,
     type: "submit",
     className: "btn-primary btn-block",

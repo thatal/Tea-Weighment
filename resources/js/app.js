@@ -16,22 +16,17 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
     useEffect(() => {
-        Axios.get('/sanctum/csrf-cookie').then(response => {
-            Axios.get("/api/user").then(response => {
-                // console.log(response);
-                if(response.data){
-                    dispatch(setAuthUser(response.data));
-                }else{
-                    toastr.error("Please Login.")
-                }
-                setLoading(false);
-            })
-            .catch(error => {
-                toastr.error("Authentication failed.")
-                setLoading(false);
-            });
-        }).catch(error => {
-            console.log(error.response);
+        Axios.get("/api/user").then(response => {
+            // console.log(response);
+            if(response.data){
+                dispatch(setAuthUser(response.data));
+            }else{
+                toastr.error("Please Login.")
+            }
+            setLoading(false);
+        })
+        .catch(error => {
+            toastr.error("Authentication failed.")
             setLoading(false);
         });
     }, [])

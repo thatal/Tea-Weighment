@@ -1,10 +1,9 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../app";
 import { setAuthUser } from "../reducers/user/user.action";
 import { useFormik } from "formik";
 import * as Yup from 'yup'; // for everything
-import Axios from "axios";
 import toastr from 'toastr';
 import LoadingButton from "../components/custom/loading-button.component";
 
@@ -28,17 +27,23 @@ const LoginPage = () => {
     });
     const handleSignIn = function(values) {
         setButtonLogin(true);
-        Axios.post("/api/admin/login", values)
-        .then(response =>{
-            formik.resetForm(form_fields);
-            setButtonLogin(false);
-            userDispatch(setAuthUser(response.data));
-        })
-        .catch(error => {
-            console.log(error);
-            toastr.error("Login failed.");
-            setButtonLogin(false);
-        })
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            axios.post("/api/admin/login", values)
+                .then(response => {
+                    formik.resetForm(form_fields);
+                    setButtonLogin(false);
+                    userDispatch(setAuthUser(response.data.data));
+                })
+                .catch(error => {
+                    console.log(error);
+                    toastr.error("Login failed.");
+                    setButtonLogin(false);
+                });
+        }).catch(error => {
+            console.log(error.response);
+            setLoading(false);
+        });
+
     }
     return (
         <div className="hold-transition login-page">
