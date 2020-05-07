@@ -29,4 +29,23 @@ class AuthController extends Controller
             ], 401);
         }
     }
+    public function logout()
+    {
+        try {
+            \Log::info(Auth::getDefaultDriver());
+            Auth::guard("web")->logout();
+            return response()
+                ->json([
+                    "status"    => true,
+                    "message"   => "logged out successfully."
+                ]);
+        } catch (\Throwable $th) {
+            \Log::error($th);
+            return response()
+                ->json([
+                    "status"    => false,
+                    "message"   => "action failed."
+                ], 401);
+        }
+    }
 }

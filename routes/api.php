@@ -23,4 +23,9 @@ Route::group(["prefix" => "admin"], function(){
     Route::post('/login', [
         "uses"  => "Api\Admin\AuthController@login"
     ]);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('/logout', [
+            "uses"  => "Api\Admin\AuthController@logout"
+        ]);
+    });
 });

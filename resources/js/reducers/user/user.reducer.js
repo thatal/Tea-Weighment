@@ -10,7 +10,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user: action.payload
             }
-        case userTypes.LOGGED_OUT:
+        case UserTypes.LOGGED_OUT:
             return {
                 ...state,
                 user: null

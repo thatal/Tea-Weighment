@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import CustomIcon from '../custom/spinner-icon.component';
+import Axios from 'axios';
+import { loggedOutUser } from '../../reducers/user/user.action';
+import { AuthContext } from '../../app';
+import toastr from "toastr";
 
 const AdminNavbar = () => {
+    const { userDispatch } = useContext(AuthContext);
+    const logOutHandler = (event) => {
+        event.preventDefault();
+        Axios.post("/api/admin/logout")
+            .then(response => {
+                userDispatch(loggedOutUser())
+                toastr.success("user logged out");
+            })
+            .catch(error => {
+                toastr.error("Whoops something went wrong.")
+            })
+    }
     return (
         <nav className="main-header navbar navbar-expand navbar-white navbar-light">
             {/* <!-- Left navbar links --> */}
@@ -116,8 +133,9 @@ const AdminNavbar = () => {
                     </div>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
-                        className="fas fa-th-large"></i></a>
+                    <a className="nav-link" onClick={logOutHandler} href="">
+                        <CustomIcon icon="fas fa-sign-out-alt" /> Logout
+                    </a>
                 </li>
             </ul>
             {/* <!-- /.navbar --> */}

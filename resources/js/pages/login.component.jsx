@@ -1,6 +1,5 @@
 import React, { useState, useContext,useEffect } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "../components/custom/custom.button";
 import { AuthContext } from "../app";
 import { setAuthUser } from "../reducers/user/user.action";
 import { useFormik } from "formik";
@@ -32,8 +31,8 @@ const LoginPage = () => {
         Axios.post("/api/admin/login", values)
         .then(response =>{
             formik.resetForm(form_fields);
-            userDispatch(setAuthUser(response.data));
             setButtonLogin(false);
+            userDispatch(setAuthUser(response.data));
         })
         .catch(error => {
             console.log(error);

@@ -86978,9 +86978,34 @@ var AdminFooter = function AdminFooter() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _custom_spinner_icon_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../custom/spinner-icon.component */ "./resources/js/components/custom/spinner-icon.component.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/user/user.action */ "./resources/js/reducers/user/user.action.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app */ "./resources/js/app.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
 
 
 var AdminNavbar = function AdminNavbar() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_app__WEBPACK_IMPORTED_MODULE_4__["AuthContext"]),
+      userDispatch = _useContext.userDispatch;
+
+  var logOutHandler = function logOutHandler(event) {
+    event.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/admin/logout").then(function (response) {
+      userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__["loggedOutUser"])());
+      toastr__WEBPACK_IMPORTED_MODULE_5___default.a.success("user logged out");
+    })["catch"](function (error) {
+      toastr__WEBPACK_IMPORTED_MODULE_5___default.a.error("Whoops something went wrong.");
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "main-header navbar navbar-expand navbar-white navbar-light"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -87162,13 +87187,11 @@ var AdminNavbar = function AdminNavbar() {
     className: "nav-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "nav-link",
-    "data-widget": "control-sidebar",
-    "data-slide": "true",
-    href: "#",
-    role: "button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-th-large"
-  })))));
+    onClick: logOutHandler,
+    href: ""
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_custom_spinner_icon_component__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    icon: "fas fa-sign-out-alt"
+  }), " Logout"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AdminNavbar);
@@ -87623,16 +87646,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _components_custom_custom_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/custom/custom.button */ "./resources/js/components/custom/custom.button.jsx");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
-/* harmony import */ var _reducers_user_user_action__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducers/user/user.action */ "./resources/js/reducers/user/user.action.js");
-/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
-/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/custom/loading-button.component */ "./resources/js/components/custom/loading-button.component.jsx");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
+/* harmony import */ var _reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/user/user.action */ "./resources/js/reducers/user/user.action.js");
+/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/custom/loading-button.component */ "./resources/js/components/custom/loading-button.component.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -87650,7 +87672,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
  // for everything
 
 
@@ -87658,7 +87679,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var LoginPage = function LoginPage() {
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_app__WEBPACK_IMPORTED_MODULE_3__["AuthContext"]),
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_app__WEBPACK_IMPORTED_MODULE_2__["AuthContext"]),
       state = _useContext.state,
       userDispatch = _useContext.userDispatch;
 
@@ -87671,11 +87692,11 @@ var LoginPage = function LoginPage() {
     email: "",
     password: ""
   };
-  var validationSchema = yup__WEBPACK_IMPORTED_MODULE_6__["object"]({
-    password: yup__WEBPACK_IMPORTED_MODULE_6__["string"]().min(6, 'Too Short!').max(50, 'Too Long!').required('Required'),
-    email: yup__WEBPACK_IMPORTED_MODULE_6__["string"]().email('Invalid email').required('Required')
+  var validationSchema = yup__WEBPACK_IMPORTED_MODULE_5__["object"]({
+    password: yup__WEBPACK_IMPORTED_MODULE_5__["string"]().min(6, 'Too Short!').max(50, 'Too Long!').required('Required'),
+    email: yup__WEBPACK_IMPORTED_MODULE_5__["string"]().email('Invalid email').required('Required')
   });
-  var formik = Object(formik__WEBPACK_IMPORTED_MODULE_5__["useFormik"])({
+  var formik = Object(formik__WEBPACK_IMPORTED_MODULE_4__["useFormik"])({
     initialValues: form_fields,
     onSubmit: function onSubmit(values) {
       handleSignIn(values);
@@ -87685,13 +87706,13 @@ var LoginPage = function LoginPage() {
 
   var handleSignIn = function handleSignIn(values) {
     setButtonLogin(true);
-    axios__WEBPACK_IMPORTED_MODULE_7___default.a.post("/api/admin/login", values).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_6___default.a.post("/api/admin/login", values).then(function (response) {
       formik.resetForm(form_fields);
-      userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_4__["setAuthUser"])(response.data));
       setButtonLogin(false);
+      userDispatch(Object(_reducers_user_user_action__WEBPACK_IMPORTED_MODULE_3__["setAuthUser"])(response.data));
     })["catch"](function (error) {
       console.log(error);
-      toastr__WEBPACK_IMPORTED_MODULE_8___default.a.error("Login failed.");
+      toastr__WEBPACK_IMPORTED_MODULE_7___default.a.error("Login failed.");
       setButtonLogin(false);
     });
   };
@@ -87763,7 +87784,7 @@ var LoginPage = function LoginPage() {
     htmlFor: "remember"
   }, "Remember Me"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_custom_loading_button_component__WEBPACK_IMPORTED_MODULE_8__["default"], {
     loading: button_loading,
     type: "submit",
     className: "btn-primary btn-block",
@@ -87854,7 +87875,7 @@ var userReducer = function userReducer() {
         user: action.payload
       });
 
-    case userTypes.LOGGED_OUT:
+    case _user_types__WEBPACK_IMPORTED_MODULE_0__["UserTypes"].LOGGED_OUT:
       return _objectSpread(_objectSpread({}, state), {}, {
         user: null
       });
