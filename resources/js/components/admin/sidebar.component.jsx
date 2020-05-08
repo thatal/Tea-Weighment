@@ -36,8 +36,8 @@ const AdminSidebar = () => {
                             <span className="right badge badge-danger">New</span>
                         </SidebarLink>
 
-                        <DropdownLink icon='fas fa-th'>
-                            <SidebarLink LinkName="Active Page" />
+                        <DropdownLink icon='fas fa-th' text="Master Entries">
+                            <SidebarLink LinkName="Vehicle" link="/admin/vehicle" />
                             <SidebarLink LinkName="InActive Page" />
                         </DropdownLink>
                     </ul>

@@ -13,3 +13,9 @@ export const Routes = (
         <Guest exact path="/login" component={LoginPage} />
     </Switch>
 );
+export const CONST_ROUTES = {
+    admin : {
+        vehicle_create : "/admin/vehicle/create",
+        vehicle_index : "/admin/vehicle",
+    }
+}

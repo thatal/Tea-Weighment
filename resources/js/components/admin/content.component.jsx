@@ -18,7 +18,6 @@ const AdminContent = ({title, children}) => {
                                 <li className="breadcrumb-item active">Starter Page</li>
                             </ol> */}
                         </div>
-                        {children}
                         {/* <!-- /.col --> */}
                     </div>
                     {/* <!-- /.row --> */}
@@ -26,6 +25,7 @@ const AdminContent = ({title, children}) => {
                 {/* <!-- /.container-fluid --> */}
                 {/* <!-- /.content-header --> */}
             </div>
+            {children}
         </div>
     );
 }

@@ -27,5 +27,8 @@ Route::group(["prefix" => "admin"], function(){
         Route::post('/logout', [
             "uses"  => "Api\Admin\AuthController@logout"
         ]);
+
+        // Vehicle routes here
+        Route::resource('vehicle', 'Api\VehicleController');
     });
 });
