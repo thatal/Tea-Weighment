@@ -12,12 +12,12 @@
 */
 
 Route::get('/', function () {
-    // return redirect()->route("login");
-    return view('app.react');
+    return redirect()->route("login");
+    return view('auth.login2');
 });
 // Route::fallback(function(){
 //     return view("layouts.react");
 // });
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');

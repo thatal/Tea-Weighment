@@ -10,4 +10,11 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function redirectAsRole(){
+        $role = auth()->user()->role;
+        if($role =="admin"){
+            return redirect()->route("admin.dashboard");
+        }
+    }
 }
