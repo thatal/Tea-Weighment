@@ -12,11 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.react');
+    // return redirect()->route("login");
+    return view('app.react');
 });
-Route::fallback(function(){
-    return view("layouts.react");
-});
-// Auth::routes();
+// Route::fallback(function(){
+//     return view("layouts.react");
+// });
+Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
