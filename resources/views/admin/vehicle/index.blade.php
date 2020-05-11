@@ -39,7 +39,7 @@ Vehicles
                                 <td>{{$vehicle->name}}</td>
                                 <td>{{$vehicle->weight}}</td>
                                 <td>
-                                <a href="{{route("admin.vehicle.destroy", $vehicle)}}">
+                                <a href="{{route("admin.vehicle.destroy", $vehicle)}}" onClick="return confirm('Are you sure ?')">
                                     <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-container="body" data-title="Delete"> <i class="fas fa-trash"></i></button>
                                 </a>
                                 <a href="{{route("admin.vehicle.edit", $vehicle)}}">

@@ -20602,7 +20602,8 @@ window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.
 //     encrypted: true
 // });
 
-$(function () {// $('[data-toggle="tooltip"]').tooltip();
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
 });
 $(document).on('turbolinks:click', function () {
   $('img').addClass('animated fadeOut').off('webkitAnimationEnd oanimationend msAnimationEnd animationend');

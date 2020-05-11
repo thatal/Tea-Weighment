@@ -42,4 +42,15 @@ Route::group(['prefix' => 'admin', "as" => "admin.", "namespace" => "Admin", "mi
             "uses"    => "VehicleController@update"
         ]);
     });
+    Route::resource('headquarter', 'HeadQuarterController')->except(["destroy"]);
+        Route::group(['prefix' => 'headquarter'], function () {
+        Route::get("/destroy/{headquarter}", [
+            "as"    => "headquarter.destroy",
+            "uses"    => "HeadQuarterController@destroy"
+        ]);
+        Route::get("/reset-pass/{headquarter}", [
+            "as"    => "headquarter.reset",
+            "uses"    => "HeadQuarterController@passwordReset"
+        ]);
+    });
 });

@@ -20,8 +20,9 @@ class Vendor extends User
      *
      * @return void
      */
-    protected static function booted()
+    protected static function boot()
     {
+        parent::boot();
         static::addGlobalScope('role', function (Builder $builder) {
             $builder->where('role', '=', "vendor");
         });

@@ -44,7 +44,7 @@ window.toastr = require('toastr');
 //     encrypted: true
 // });
 $(function () {
-    // $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 })
 $(document).on('turbolinks:click', function () {
     $('img')
