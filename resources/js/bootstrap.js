@@ -13,6 +13,8 @@ try {
     require('bootstrap');
 } catch (e) {}
 require("admin-lte/dist/js/adminlte")
+window.toastr = require('toastr');
+
 // require("admin-lte/build/js/Layout")
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -20,10 +22,10 @@ require("admin-lte/dist/js/adminlte")
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+// window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.withCredentials = true;
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// axios.defaults.withCredentials = true;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -41,3 +43,22 @@ axios.defaults.withCredentials = true;
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+$(function () {
+    // $('[data-toggle="tooltip"]').tooltip();
+})
+$(document).on('turbolinks:click', function () {
+    $('img')
+        .addClass('animated fadeOut')
+        .off('webkitAnimationEnd oanimationend msAnimationEnd animationend')
+});
+$(document).on('ready', function (event) {
+    // if call was fired by turbolinks
+    if (event.originalEvent.data.timing.visitStart) {
+        $('img').addClass('animated fadeIn')
+            .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function () {
+                $('img').removeClass('animated');
+            });
+    } else {
+        $('img').removeClass('hide')
+    }
+});

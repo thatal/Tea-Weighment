@@ -12,5 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.react('resources/js/main.js', 'public/js/app.js')
+    .js('resources/js/turbolinks.js', 'public/js/')
    .sass('resources/sass/app.scss', 'public/css');
 mix.browserSync(process.env.MIX_APP_URL);
