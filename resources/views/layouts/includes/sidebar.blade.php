@@ -21,6 +21,8 @@
         @include('layouts.includes.admin-sidebar')
         @elseif(auth()->user()->role === "headquarter")
         @include('layouts.includes.headquarter-sidebar')
+        @elseif(auth()->user()->role === "factory")
+        @include('layouts.includes.factory-sidebar')
         @endif
         <!-- /.sidebar-menu -->
     </div>

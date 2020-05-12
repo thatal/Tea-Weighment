@@ -79,6 +79,8 @@ class Kernel extends HttpKernel
         'admin.guest' => \App\Http\Middleware\RedirectIfAadmin::class,
         'headquarter.guest' => \App\Http\Middleware\RedirectIfHeadquarter::class,
         'headquarter' => \App\Http\Middleware\RedirectIfNotHeadquarter::class,
+        'factory.guest' => \App\Http\Middleware\RedirectIfFactory::class,
+        'factory' => \App\Http\Middleware\RedirectIfNotFactory::class,
     ];
 
     /**

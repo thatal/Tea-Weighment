@@ -9,9 +9,9 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Login to Headquarter Account</p>
+                <p class="login-box-msg">Login to Factory Account</p>
 
-                <form action="{{route("login")}}" method="post">
+                <form action="{{route("factory.login")}}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
@@ -60,8 +60,8 @@
                 </form>
                 <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
-                    <a href="{{route("factory.login")}}" class="btn btn-block btn-success">
-                        Sign in to Factory Account
+                    <a href="{{route("login")}}" class="btn btn-block btn-success">
+                        Sign in to Headquarter Account
                     </a>
                 </div>
                 <!-- /.social-auth-links -->

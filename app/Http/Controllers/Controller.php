@@ -17,6 +17,8 @@ class Controller extends BaseController
             return redirect()->route("admin.dashboard");
         }elseif($role =="headquarter"){
             return redirect()->route("headquarter.dashboard");
+        }elseif($role =="factory"){
+            return redirect()->route("factory.dashboard");
         }
     }
 }

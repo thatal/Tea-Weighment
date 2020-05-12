@@ -37,4 +37,20 @@ Route::post("/logout", [
     "uses" => "Headquarter\LoginController@logout",
 ]);
 
+Route::group(['prefix' => 'factory', "as" => "factory."], function () {
+    Route::get("/login", [
+        "as"   => "login",
+        "uses" => "Factory\LoginController@getForm",
+    ]);
+
+    Route::post("/login", [
+        "as"   => "login.post",
+        "uses" => "Factory\LoginController@login",
+    ]);
+
+    Route::post("/logout", [
+        "as"   => "logout",
+        "uses" => "Factory\LoginController@logout",
+    ]);
+});
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
