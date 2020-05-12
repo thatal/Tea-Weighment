@@ -33,11 +33,6 @@ class Headquarter extends User
         });
     }
 
-    public function address()
-    {
-        return $this->hasOne(Address::class, "user_id", "id");
-    }
-
     public static function rules()
     {
         return [
@@ -53,5 +48,10 @@ class Headquarter extends User
     public static function updateRules()
     {
         return collect(self::rules())->except(["password", "code"])->toArray();
+    }
+
+    public function factories_info()
+    {
+        return $this->hasMany(FactoryInformation::class, "headquarter_id", "id");
     }
 }

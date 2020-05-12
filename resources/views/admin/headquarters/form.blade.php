@@ -36,7 +36,7 @@
             {!! Form::label("password", "Password", ["class" => "label-control"]) !!}
             {!! Form::password("password", ["class" => "form-control input-sm ", "required" => true, "maxlength" => "50",
             "placeholder" => "password"]) !!}
-            @error('email')
+            @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

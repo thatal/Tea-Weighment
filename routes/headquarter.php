@@ -6,5 +6,15 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
         "as"    => "dashboard",
         "uses"  => "DashboardController@dashboard"
     ]);
-Route::resource('factory', 'FactoryController');
+    Route::resource('factory', 'FactoryController')->except("destroy");
+    Route::group(['prefix' => 'factory'], function () {
+        Route::get("/destroy/{factory}", [
+            "as"    => "factory.destroy",
+            "uses"    => "FactoryController@destroy"
+        ]);
+        Route::get("/reset-pass/{factory}", [
+            "as"    => "factory.reset",
+            "uses"    => "FactoryController@passwordReset"
+        ]);
+    });
 });

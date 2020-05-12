@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin', "as" => "admin.", "namespace" => "Admin", "mi
         ]);
     });
     Route::resource('headquarter', 'HeadQuarterController')->except(["destroy"]);
-        Route::group(['prefix' => 'headquarter'], function () {
+    Route::group(['prefix' => 'headquarter'], function () {
         Route::get("/destroy/{headquarter}", [
             "as"    => "headquarter.destroy",
             "uses"    => "HeadQuarterController@destroy"
