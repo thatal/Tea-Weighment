@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 
-class AdminMiddleware
+class RedirectIfAadmin
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(!Auth::guard($guard)->check() || auth()->user()->role !== "admin"){
-            return redirect()->to(route("admin.login"))->with("error", "Access denied.");
+        if (Auth::guard($guard)->check() && Auth::guard($guard)->user()->role === "admin") {
+            return redirect("admin/dashboard");
         }
         return $next($request);
     }

@@ -1,7 +1,7 @@
 <?php
 
 // admin routes here
-Route::group(['prefix' => 'admin', "as" => "admin.", "namespace" => "Admin", "middleware" => ["auth", "admin"]], function () {
+Route::group(['prefix' => 'admin', "as" => "admin.", "namespace" => "Admin", "middleware" => ["admin"]], function () {
     Route::get("/", [
         "as"    => "root",
         "uses"  => "DashboardController@index"

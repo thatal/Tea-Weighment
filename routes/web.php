@@ -18,6 +18,23 @@ Route::get('/', function () {
 // Route::fallback(function(){
 //     return view("layouts.react");
 // });
-Auth::routes();
+Route::group(['prefix' => 'admin', "as" => "admin."], function () {
+    Auth::routes();
+});
+
+Route::get("/login", [
+    "as"   => "login",
+    "uses" => "Headquarter\LoginController@getForm",
+]);
+
+Route::post("/login", [
+    "as"   => "login.post",
+    "uses" => "Headquarter\LoginController@login",
+]);
+
+Route::post("/logout", [
+    "as"   => "logout",
+    "uses" => "Headquarter\LoginController@logout",
+]);
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');

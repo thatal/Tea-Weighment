@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Headquarter;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Request;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -27,7 +27,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = "/dashboard";
+    protected $redirectTo = "/headquarter/dashboard";
+    protected $role = "headquarter";
 
     /**
      * Create a new controller instance.
@@ -36,9 +37,38 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.guest')->except('logout');
+        $this->middleware('headquarter.guest')->except('logout');
     }
-            /**
+    public function getForm()
+    {
+        return view("headquarter.login");
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return [
+            $this->username() => $request->username,
+            'password'=> $request->password,
+            "role" => $this->role
+        ];
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
+    }
+        /**
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -52,6 +82,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return $this->loggedOut($request) ?: redirect('/admin/login');
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

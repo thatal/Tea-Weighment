@@ -15,6 +15,8 @@ class Controller extends BaseController
         $role = auth()->user()->role;
         if($role =="admin"){
             return redirect()->route("admin.dashboard");
+        }elseif($role =="headquarter"){
+            return redirect()->route("headquarter.dashboard");
         }
     }
 }
