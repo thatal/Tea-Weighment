@@ -16,5 +16,9 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "as"    => "factory.reset",
             "uses"    => "FactoryController@passwordReset"
         ]);
+        Route::get("/login-as/{factory}", [
+            "as"    => "factory.loginas",
+            "uses"    => "FactoryController@loginAsFactory"
+        ]);
     });
 });

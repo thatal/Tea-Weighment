@@ -60,7 +60,7 @@
                 </form>
                 <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
-                    <a href="{{route("login")}}" class="btn btn-block btn-success">
+                    <a href="{{route("login")}}" class="btn btn-block btn-link">
                         Sign in to Headquarter Account
                     </a>
                 </div>

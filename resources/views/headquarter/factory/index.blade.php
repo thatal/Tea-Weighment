@@ -63,6 +63,10 @@ Factories
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip"
                                             data-title="Reset password"><i class="fas fa-key"></i></button>
                                     </a>
+                                    <a href="{{route("headquarter.factory.loginas", $factory)}}"">
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip"
+                                            data-title="Login as factory"><i class="fas fa-sign-in-alt"></i></button>
+                                    </a>
                                 </td>
                             </tr>
                             @empty

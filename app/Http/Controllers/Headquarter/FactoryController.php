@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Headquarter;
 use App\Http\Controllers\Controller;
 use App\Models\Factory;
 use App\Services\FactoryServices;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Str;
@@ -216,5 +217,24 @@ class FactoryController extends Controller
                 "message" => "Pasword reset successfully to {$dynamic_pass}",
             ]);
 
+    }
+    public function loginAsFactory(Factory $factory)
+    {
+        if(!$factory->isFactoryOwner()){
+            return redirect()
+            ->back()
+            ->with("error", "Permision denied.");
+        }
+        try {
+            Auth::login($factory);
+            return redirect()
+                ->route("factory.dashboard")
+                ->with("success", "Successfully login as Factory.");
+        } catch (\Throwable $th) {
+            return redirect()
+                ->back()
+                ->with("error", "Whoops! something went wrong. try again later.");
+
+        }
     }
 }
