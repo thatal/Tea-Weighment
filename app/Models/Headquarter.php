@@ -12,7 +12,7 @@ class Headquarter extends User
     protected $attributes = [
         'role' => "headquarter"
     ];
-
+    public static $role = "headquarter";
     /**
      * The attributes that aren't mass assignable.
      *
