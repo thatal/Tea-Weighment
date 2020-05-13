@@ -13,7 +13,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <input type="checkbox" id="checkbox_on_off" name="my-checkbox" {{\App\Services\CommonService::factory_information()->is_available ? "checked" : ""}} data-bootstrap-switch data-off-color="danger" data-on-color="success">
+            <input type="checkbox" id="checkbox_on_off" name="my-checkbox" {{\App\Services\CommonService::factory_information()->is_available ? "checked" : ""}} data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="OPEN" data-off-text="CLOSED">
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
