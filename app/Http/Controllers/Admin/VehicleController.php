@@ -39,7 +39,7 @@ class VehicleController extends Controller
             ->back()
             ->with("error", "Whoops something went wrong try again later.");
         }
-        return redirect()->back()->with("success", "Successfully added.");
+        return redirect()->route("admin.vehicle.index")->with("success", "Successfully added.");
 
     }
     public function destroy(Vehicle $vehicle)
