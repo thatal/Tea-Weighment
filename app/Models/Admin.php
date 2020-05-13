@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Admin extends User
 {
-    protected $table = "users";
     public static $role = "admin";
     protected $attributes = [
         'role' => "admin"
@@ -28,7 +27,7 @@ class Admin extends User
     {
         self::boot();
         static::addGlobalScope('role', function (Builder $builder) {
-            $builder->where('role', '=', "admin");
+            $builder->where('role', '=', self::$role);
         });
     }
 }

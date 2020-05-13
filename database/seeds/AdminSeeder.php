@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Admin;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -13,23 +12,26 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        DB::beginTransaction();
         try {
             DB::listen(function ($query) {
                 \Log::error($query);
             });
-            Admin::truncate();
-            $user = Admin::create([
+            Admin::where("role", Admin::$role);
+            $admin_user = [
                 "name"     => "Administrator",
                 "username" => 'admin',
                 "email"    => "admin@admin.com",
                 "password" => "admin123@tea",
-            ]);
+            ];
+            $user = Admin::create($admin_user);
             \Log::error($user);
 
         } catch (\Throwable $th) {
+            DB::rollback();
             \Log::error($th);
         }
+        DB::commit();
 
     }
 }
