@@ -16,6 +16,7 @@ class CreateFactoryInformationTable extends Migration
         Schema::create('factory_information', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
+            $table->bigInteger('headquarter_id');
             $table->string('mobile', 20)->nullable();
             $table->string('location', 255)->nullable();
             $table->tinyInteger('is_available')->defatul(true);
