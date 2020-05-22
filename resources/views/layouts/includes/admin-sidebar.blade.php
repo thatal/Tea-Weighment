@@ -16,7 +16,7 @@
             <a href="{{route("admin.vehicle.index")}}" class="nav-link {{ (request()->is('admin/vehicle*')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tractor"></i>
                 <p>
-                    Vehicles
+                    Vehicle Types
                 </p>
             </a>
         </li>
