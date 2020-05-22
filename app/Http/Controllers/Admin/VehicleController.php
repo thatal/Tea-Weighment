@@ -21,9 +21,9 @@ class VehicleController extends Controller
     }
     public function store(Request $request)
     {
-        $rules = Vehicle::rules();
-        $validator = Validator::make($request->all(), $rules);
-        if($validator->fails()){
+        $rules     = Vehicle::rules();
+        $validator = Validator::make($request->all(), $rules, Vehicle::rulesMessages());
+        if ($validator->fails()) {
             $request->session()->flash('error', "error");
             return redirect()
                 ->back()
@@ -36,8 +36,8 @@ class VehicleController extends Controller
             Vehicle::create($data);
         } catch (\Throwable $th) {
             return redirect()
-            ->back()
-            ->with("error", "Whoops something went wrong try again later.");
+                ->back()
+                ->with("error", "Whoops something went wrong try again later.");
         }
         return redirect()->route("admin.vehicle.index")->with("success", "Successfully added.");
 
@@ -62,9 +62,9 @@ class VehicleController extends Controller
     }
     public function update(Vehicle $vehicle, Request $request)
     {
-        $rules = Vehicle::rules();
-        $validator = Validator::make($request->all(), $rules);
-        if($validator->fails()){
+        $rules     = Vehicle::rules();
+        $validator = Validator::make($request->all(), $rules, Vehicle::rulesMessages());
+        if ($validator->fails()) {
             $request->session()->flash('error', "error");
             return redirect()
                 ->back()
@@ -74,8 +74,8 @@ class VehicleController extends Controller
         }
         try {
             $vehicle->update([
-                "name"  => $request->name,
-                "weight"    => $request->weight
+                "name"   => $request->name,
+                "weight" => $request->weight,
             ]);
         } catch (\Throwable $th) {
             \Log::error($th);

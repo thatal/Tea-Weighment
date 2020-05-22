@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title')
-Admin Vehicles
+Admin Vehicle Types
 @endsection
 @section('p_title')
-Vehicles
+Vehicle Types
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -11,7 +11,7 @@ Vehicles
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Vehicles list</h3>
+                <h3 class="card-title">Vehicles Type list</h3>
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm">
@@ -28,7 +28,7 @@ Vehicles
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Weight</th>
+                            <th>Weight(Kg)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

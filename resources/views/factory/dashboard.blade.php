@@ -37,5 +37,56 @@ Dashboard
         <!-- /.col -->
     </div>
     <!-- /.row -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Today's pending offers</h3>
+
+            <div class="card-tools">
+                {{-- <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vendor</th>
+                        <th>Qty</th>
+                        <th>Offer Price</th>
+                        <th>Exp. Fine leaf count</th>
+                        <th>Exp. Moisture</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($daily_collections as $key => $offer)
+                        <tr>
+                            <td>{{(($daily_collections->currentPage() - 1 ) * $daily_collections->perPage() ) + 1 + $key}}</td>
+                            <td>{{$offer->vendor->name}}</td>
+                            <td>{{$offer->leaf_quantity}}</td>
+                            <td>{{$offer->offer_price}}</td>
+                            <td>{{$offer->expected_fine_leaf_count}}</td>
+                            <td>{{$offer->expected_moisture_expected}}</td>
+                            <td>Action</td>
+                        </tr>
+
+                    @empty
+                        <tr>
+                            <td class="text-danger text-center" colspan="7">No records found.</td>
+                        </tr>
+                    @endforelse
+
+                </tbody>
+            </table>
+            {!!$daily_collections->links()!!}
+        </div>
+    </div>
 </div>
 @endsection

@@ -25,8 +25,15 @@ class Vehicle extends Model
     public static function rules()
     {
         return [
-            "name"  => "required|max:100",
-            "weight"    => "required|numeric|min:0"
+            "name"   => "required|max:100",
+            "weight" => "required|numeric|min:0",
+        ];
+    }
+    public static function rulesMessages()
+    {
+        return [
+            "name.required" => "Vehicle Type is required.",
+            "name.max"      => "Vehicle Type max 100 character allowed.",
         ];
     }
 }

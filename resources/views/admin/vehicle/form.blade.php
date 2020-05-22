@@ -2,7 +2,7 @@
 <li class="text-danger">{{ $error }}</li>
 @endforeach
 <div class="form-group">
-    {!! Form::label("name", "Name", ["class" => "label-control"]) !!}
+    {!! Form::label("name", "Vehicle Type", ["class" => "label-control"]) !!}
     {!! Form::text("name", null, ["class" => "form-control input-sm", "required" => true, "max" => "100", "placeholder"
     => "Vehicle Name"]) !!}
     @error('name')
@@ -12,7 +12,7 @@
     @enderror
 </div>
 <div class="form-group">
-    {!! Form::label("weight", "Weight", ["class" => "label-control"]) !!}
+    {!! Form::label("weight", "Weight (kg)", ["class" => "label-control"]) !!}
     {!! Form::number("weight", null, ["class" => "form-control input-sm ", "required" => true, "maxlength" => "20",
     "placeholder" => "Vehicle Weight", "step" => "0.100"]) !!}
     @error('weight')
