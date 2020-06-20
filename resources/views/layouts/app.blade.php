@@ -24,7 +24,7 @@
     @yield("js")
 </head>
 
-<body class="hold-transition sidebar-mini accent-success">
+<body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
         @include('layouts.includes.navbar')

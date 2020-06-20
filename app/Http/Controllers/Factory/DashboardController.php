@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Factory;
 
+use App\Exceptions\PermissionDenied;
 use App\Http\Controllers\Controller;
+use App\Models\VendorOffer;
 use App\Services\CommonService;
-use Illuminate\Http\Request;
+use App\Services\VendorOfferService;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return view("factory.dashboard");
+        $daily_collections = VendorOfferService::todayReports(4);
+        return view("factory.dashboard", compact("daily_collections"));
     }
-        public function switchAvailable(){
+    public function switchAvailable(){
         try {
             $status = true;
             $factory_information = CommonService::factory_information();
@@ -33,6 +36,25 @@ class DashboardController extends Controller
             "status"    => $status,
             "message"    => $message
         ]);
+    }
+
+    public function confirmOrder(VendorOffer $vendorOffer)
+    {
+        try {
+            VendorOfferService::confirmOffer($vendorOffer);
+            return redirect()
+                ->back()
+                ->with("success", "Offer Accepted successfully.");
+        } catch(PermissionDenied $e){
+            return redirect()
+                ->back()
+                ->with("error", $e->getMessage());
+
+        }catch (\Throwable $th) {
+            return redirect()
+                ->back()
+                ->with("error", "Whoops! something went wrong. Try again later");
+        }
     }
 
 }

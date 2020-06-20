@@ -12,6 +12,10 @@ class CommonService
     {
         return (auth()->check() && auth()->user()->role === "headquarter");
     }
+    public static function isFactory()
+    {
+        return (auth()->check() && auth()->user()->role === "factory");
+    }
 
     public static function factory_information(){
         return FactoryInformation::where("user_id", auth()->id())->first();

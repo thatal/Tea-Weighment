@@ -39,7 +39,7 @@ Dashboard
     <!-- /.row -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Today's pending offers</h3>
+            <h3 class="card-title">Today's pending offers. <small>{{$daily_collections->total()}} records found.</small></h3>
 
             <div class="card-tools">
                 {{-- <div class="input-group input-group-sm" style="width: 150px;">
@@ -62,6 +62,7 @@ Dashboard
                         <th>Offer Price</th>
                         <th>Exp. Fine leaf count</th>
                         <th>Exp. Moisture</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -73,8 +74,13 @@ Dashboard
                             <td>{{$offer->leaf_quantity}}</td>
                             <td>{{$offer->offer_price}}</td>
                             <td>{{$offer->expected_fine_leaf_count}}</td>
-                            <td>{{$offer->expected_moisture_expected}}</td>
-                            <td>Action</td>
+                            <td>{{$offer->expected_moisture}}</td>
+                            <td>{{$offer->status}}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                    <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                                </button>
+                            </td>
                         </tr>
 
                     @empty
@@ -85,8 +91,8 @@ Dashboard
 
                 </tbody>
             </table>
-            {!!$daily_collections->links()!!}
         </div>
+        {!!$daily_collections->links()!!}
     </div>
 </div>
 @endsection
