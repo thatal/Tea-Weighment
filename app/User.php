@@ -46,6 +46,10 @@ class User extends Authenticatable
     {
         return strtolower($this->role) == "factory";
     }
+    public function isVendor()
+    {
+        return strtolower($this->role) == "vendor";
+    }
     public function isAdmin()
     {
         return strtolower($this->role) == "admin";
