@@ -9,13 +9,17 @@ class CommonService
 {
 
 
-    public static function isHeadQuarter()
+    public static function isHeadQuarter($guard = "web")
     {
-        return (auth()->check() && auth()->user()->role === "headquarter");
+        return (auth($guard)->check() && auth($guard)->user()->role === "headquarter");
     }
-    public static function isFactory()
+    public static function isFactory($guard = "web")
     {
-        return (auth()->check() && auth()->user()->role === "factory");
+        return (auth($guard)->check() && auth($guard)->user()->role === "factory");
+    }
+    public static function isVendor($guard = "web")
+    {
+        return (auth($guard)->check() && auth($guard)->user()->role === "vendor");
     }
 
     public static function factory_information(){

@@ -15,7 +15,25 @@ use Illuminate\Http\Request;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::group(['prefix' => 'vendor'], function () {
+    Route::post('login', [
+        "uses"  => "Mobile\Vendor\AuthController@login"
+    ]);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::get('available-factory-fetch', [
+            "uses"  => "Mobile\Vendor\DashboardController@factoryFetch"
+        ]);
+        Route::get('vendors-offer-today', [
+            "uses"  => "Mobile\Vendor\DashboardController@fetchVendorTodayOffers"
+        ]);
+        Route::get('vendors-offer-all', [
+            "uses"  => "Mobile\Vendor\DashboardController@fetchVendorOffers"
+        ]);
+        Route::post('offer-create', [
+            "uses"  => "Mobile\Vendor\DashboardController@offerCreate"
+        ]);
+    });
+});
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

@@ -13,6 +13,16 @@ class Factory extends User
     protected $attributes = [
         'role' => "factory"
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token', "created_at", "deleted_at", "updated_at", "email_verified_at",
+    ];
+
     public static $role = "factory";
     /**
      * The attributes that aren't mass assignable.
@@ -63,5 +73,18 @@ class Factory extends User
         return $this->whereHas("factory_information", function($query){
             return $query->where("headquarter_id", auth()->id());
         })->exists();
+    }
+
+    /**
+     * Scope a query to only include pending
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->whereHas('factory_information', function($query){
+            return $query->where("is_available", 1);
+        });
     }
 }
