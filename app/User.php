@@ -42,4 +42,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Address::class, "user_id", "id");
     }
+    public function isFactory()
+    {
+        return strtolower($this->role) == "factory";
+    }
+    public function isAdmin()
+    {
+        return strtolower($this->role) == "admin";
+    }
+    public function isHeadquarter()
+    {
+        return strtolower($this->role) == "headquarter";
+    }
 }

@@ -53,4 +53,10 @@ Route::group(['prefix' => 'admin', "as" => "admin.", "namespace" => "Admin", "mi
             "uses"    => "HeadQuarterController@passwordReset"
         ]);
     });
+    Route::group(['prefix' => 'reports'], function () {
+        Route::get('/vendor-offers', [
+            "uses" => "ReportsController@vendorReports",
+            "as"    => "reports.vendor-offer.index"
+        ]);
+    });
 });

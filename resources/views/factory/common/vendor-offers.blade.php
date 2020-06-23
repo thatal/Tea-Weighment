@@ -24,14 +24,16 @@
             <td>{{$offer->expected_moisture}}</td>
             <td>{{$offer->status}}</td>
             <td>
-                @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
-                <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
-                    <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
-                </button>
-                @else
-                <button class="btn btn-danger btn-sm" disabled>
-                    Accept Offer
-                </button>
+                @if(auth()->user()->isFactory())
+                    @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
+                    <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                        <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                    </button>
+                    @else
+                    <button class="btn btn-danger btn-sm" disabled>
+                        Accept Offer
+                    </button>
+                    @endif
                 @endif
             </td>
         </tr>

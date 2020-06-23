@@ -18,7 +18,7 @@ Vendor Offers
                 <div class="card-body">
                     {!! Form::open(["method" => "GET"]) !!}
                     {{-- <div class="container"> --}}
-                        @include("factory.common.filter")
+                    @include("factory.common.filter")
                     {{-- </div> --}}
                     {!! Form::close() !!}
                 </div>
@@ -32,8 +32,10 @@ Vendor Offers
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
-                            <a href="{{route("factory.offer.index", array_merge(request()->all(), ["export" => "excel"]))}}" target="_blank">
-                            <button class="btn btn-primary btn-sm"><i class="fas fa-file-excel"></i> Export to Excel</button>
+                            <a href="{{route("factory.offer.index", array_merge(request()->all(), ["export" => "excel"]))}}"
+                                target="_blank">
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-file-excel"></i> Export to
+                                    Excel</button>
                             </a>
                         </div>
                     </div>
