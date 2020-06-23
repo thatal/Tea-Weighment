@@ -7,6 +7,7 @@ use App\Models\Factory;
 use App\Models\VendorOffer;
 use App\Services\VendorOfferService;
 use Illuminate\Http\Request;
+use Log;
 use Validator;
 
 class DashboardController extends Controller
@@ -35,7 +36,7 @@ class DashboardController extends Controller
         }
         try {
             $offer_data = [
-                "vendor_id"                => auth("api")->id(),
+                "vendor_id"                => auth("sanctum")->id(),
                 "factory_id"               => request("factory_id"),
                 "offer_price"              => request("offer_price"),
                 "expected_fine_leaf_count" => request("expected_fine_leaf_count"),
@@ -44,6 +45,7 @@ class DashboardController extends Controller
             ];
             VendorOffer::create($offer_data);
         } catch (\Throwable $th) {
+            Log::error($th);
             return response()
                 ->json([
                     "data"    => [],
