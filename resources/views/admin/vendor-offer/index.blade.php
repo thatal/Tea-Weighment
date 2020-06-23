@@ -32,7 +32,7 @@ Vendor Offers
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
-                            <a href="{{route("factory.offer.index", array_merge(request()->all(), ["export" => "excel"]))}}"
+                            <a href="{{route("admin.reports.vendor-offer.index", array_merge(request()->all(), ["export" => "excel"]))}}"
                                 target="_blank">
                                 <button class="btn btn-primary btn-sm"><i class="fas fa-file-excel"></i> Export to
                                     Excel</button>

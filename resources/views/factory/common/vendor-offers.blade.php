@@ -4,6 +4,7 @@
             <th>#</th>
             <th>Date</th>
             <th>Vendor</th>
+            <th>Confirmation</th>
             <th>Qty</th>
             <th>Offer Price</th>
             <th>Exp. Fine leaf count</th>
@@ -18,6 +19,7 @@
             <td>{{(($vendor_offers->currentPage() - 1 ) * $vendor_offers->perPage() ) + 1 + $key}}</td>
             <td>{{$offer->created_at->format("Y-m-d")}}</td>
             <td>{{$offer->vendor->name}}</td>
+            <td>{{$offer->confirmation_code ?? "N/A"}}</td>
             <td>{{$offer->leaf_quantity}}</td>
             <td>{{$offer->offer_price}}</td>
             <td>{{$offer->expected_fine_leaf_count}}</td>

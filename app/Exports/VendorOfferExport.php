@@ -44,6 +44,7 @@ ShouldAutoSize
     {
         return [
             "Date",
+            "confirmation Code",
             "Vendor",
             "Qty",
             "Offer Price",
@@ -56,6 +57,7 @@ ShouldAutoSize
     {
         return [
             $vendor_offer->created_at->format("Y-m-d"),
+            $vendor_offer->confirmation_code ?? "N/A",
             $vendor_offer->vendor->name,
             $vendor_offer->leaf_quantity,
             $vendor_offer->offer_price,
