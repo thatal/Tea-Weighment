@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VendorOffer extends Model
 {
     use SoftDeletes;
-    public static $pending_status= "pending";
+    public static $pending_status = "pending";
+    public static $confirm_status = "confirmed";
+    public static $status         = [
+        "pending"   => "pending",
+        "confirmed" => "confirmed",
+    ];
     /**
      * The attributes that aren't mass assignable.
      *
@@ -41,6 +46,16 @@ class VendorOffer extends Model
     public function scopePending($query)
     {
         return $query->where('status', self::$pending_status);
+    }
+    /**
+     * Scope a query to only include pending
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeConfirmed($query)
+    {
+        return $query->where('status', self::$confirm_status);
     }
 
     /**

@@ -42,55 +42,16 @@ Dashboard
             <h3 class="card-title">Today's pending offers. <small>{{$daily_collections->total()}} records found.</small></h3>
 
             <div class="card-tools">
-                {{-- <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
-                </div> --}}
+                <div class="input-group input-group-sm">
+                    <a href="{{route("factory.offer.index")}}" >
+                        <button class="btn btn-primary btn-sm"> View All</button>
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0" style="height: 300px;">
-            <table class="table table-head-fixed text-nowrap">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Vendor</th>
-                        <th>Qty</th>
-                        <th>Offer Price</th>
-                        <th>Exp. Fine leaf count</th>
-                        <th>Exp. Moisture</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($daily_collections as $key => $offer)
-                        <tr>
-                            <td>{{(($daily_collections->currentPage() - 1 ) * $daily_collections->perPage() ) + 1 + $key}}</td>
-                            <td>{{$offer->vendor->name}}</td>
-                            <td>{{$offer->leaf_quantity}}</td>
-                            <td>{{$offer->offer_price}}</td>
-                            <td>{{$offer->expected_fine_leaf_count}}</td>
-                            <td>{{$offer->expected_moisture}}</td>
-                            <td>{{$offer->status}}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
-                                    <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
-                                </button>
-                            </td>
-                        </tr>
-
-                    @empty
-                        <tr>
-                            <td class="text-danger text-center" colspan="7">No records found.</td>
-                        </tr>
-                    @endforelse
-
-                </tbody>
-            </table>
+            @include("factory.common.vendor-offers", ["vendor_offers" => $daily_collections])
         </div>
         {!!$daily_collections->links()!!}
     </div>

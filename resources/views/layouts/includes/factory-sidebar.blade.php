@@ -11,6 +11,12 @@
                     Dashboard
                 </p>
             </a>
+            <a href="{{route("factory.offer.index")}}" class="nav-link {{ (request()->is('factory/reports/vendor-offers')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                    Vendor Offer
+                </p>
+            </a>
         </li>
     </ul>
 </nav>
