@@ -73,6 +73,11 @@ class VendorOfferService
             "status"            => VendorOffer::$confirm_status,
         ]);
     }
+    public static function fetchVendorOfferByConfirmationCode(String $confirmation_code , String $guard)
+    {
+        return VendorOffer::latest()->where("confirmation_code", $confirmation_code)->first();
+
+    }
     public static function mainFilter(Builder $builder)
     {
         $builder->when(request("offer_status"), function ($query) {

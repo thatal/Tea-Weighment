@@ -10,10 +10,13 @@ class VendorOffer extends Model
     use SoftDeletes;
     public static $pending_status = "pending";
     public static $confirm_status = "confirmed";
+    public static $first_wieght_status = "first_wieght_done";
+    public static $second_wieght_status = "second_wieght_done";
     public static $status         = [
         "pending"   => "pending",
         "confirmed" => "confirmed",
     ];
+    protected $appends = ['first_weight_image_url', 'second_weight_image_url'];
     /**
      * The attributes that aren't mass assignable.
      *
@@ -67,5 +70,13 @@ class VendorOffer extends Model
     public function scopeLatest($query)
     {
         return $query->orderBy("id", "DESC");
+    }
+    public function getFirstWeightImageUrlAttribute()
+    {
+        return asset("storage/".$this->first_weight_image);
+    }
+    public function getSecondWeightImageUrlAttribute()
+    {
+        return asset("storage/".$this->second_weight_image);
     }
 }

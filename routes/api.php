@@ -37,6 +37,19 @@ Route::group(['prefix' => 'vendor'], function () {
         ]);
     });
 });
+Route::group(['prefix' => 'factory'], function () {
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('offer-fetch', [
+            "uses"  => "Mobile\Factory\OfferController@confirmationFetch"
+        ]);
+        Route::post('offer-first-weight', [
+            "uses"  => "Mobile\Factory\OfferController@firstWeightDataSave"
+        ]);
+        Route::post('offer-second-weight', [
+            "uses"  => "Mobile\Factory\OfferController@secondWeightDataSave"
+        ]);
+    });
+});
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

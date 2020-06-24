@@ -60,6 +60,7 @@ class Vendor extends User
         return [
             "username" => "required",
             "password" => "required",
+            "role"     => "required|in:vendor,factory"
         ];
     }
 }

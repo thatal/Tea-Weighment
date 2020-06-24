@@ -4,10 +4,14 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
+use Laravel\Sanctum\HasApiTokens;
 
 class Factory extends User
 {
+    use SoftDeletes, HasApiTokens;
+
     protected $table = "users";
 
     protected $attributes = [
