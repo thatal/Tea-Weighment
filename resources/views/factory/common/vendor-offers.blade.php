@@ -18,7 +18,7 @@
         <tr>
             <td>{{(($vendor_offers->currentPage() - 1 ) * $vendor_offers->perPage() ) + 1 + $key}}</td>
             <td>{{$offer->created_at->format("Y-m-d")}}</td>
-            <td>{{$offer->vendor->name}}</td>
+            <td>{{$offer->vendor->name ?? "NA"}}</td>
             <td>{{$offer->confirmation_code ?? "N/A"}}</td>
             <td>{{$offer->leaf_quantity}}</td>
             <td>{{$offer->offer_price}}</td>
