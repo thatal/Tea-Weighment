@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mobile\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Factory;
+use App\Models\Vehicle;
 use App\Models\VendorOffer;
 use App\Services\VendorOfferService;
 use Illuminate\Http\Request;
@@ -20,6 +21,15 @@ class DashboardController extends Controller
             "data"    => $factories,
             "status"  => true,
             "message" => $factories->count() . " records found.",
+        ]);
+    }
+    public function vehicleFetch()
+    {
+        $vehicles = Vehicle::select(["id", "name", "weight"])->get();
+        return response()->json([
+            "data"    => $vehicles,
+            "status"  => true,
+            "message" => $vehicles->count() . " records found.",
         ]);
     }
 

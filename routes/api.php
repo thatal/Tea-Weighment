@@ -19,9 +19,12 @@ Route::group(['prefix' => 'vendor'], function () {
     Route::post('login', [
         "uses"  => "Mobile\Vendor\AuthController@login"
     ]);
-    Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['middleware' => [/* 'auth:sanctum' */]], function () {
         Route::get('available-factory-fetch', [
             "uses"  => "Mobile\Vendor\DashboardController@factoryFetch"
+        ]);
+        Route::get('available-vehicle-type-fetch', [
+            "uses"  => "Mobile\Vendor\DashboardController@vehicleFetch"
         ]);
         Route::get('vendors-offer-today', [
             "uses"  => "Mobile\Vendor\DashboardController@fetchVendorTodayOffers"
