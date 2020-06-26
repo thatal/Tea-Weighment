@@ -29,7 +29,7 @@ class VendorOffer extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', "deleted_at", "updated_at"];
+    protected $hidden = ["deleted_at", "updated_at"];
 
     public function vendor()
     {
