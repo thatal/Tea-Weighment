@@ -16,7 +16,7 @@ class VendorOfferService
     public static function all($paginate = 100, $guard = "web")
     {
         $vendor_offers = VendorOffer::query();
-        $vendor_offers->when(CommonService::isFactory(), function($query) use ($guard){
+        $vendor_offers->when(CommonService::isFactory(), function ($query) use ($guard) {
             return $query->where("factory_id", auth($guard)->user()->id);
         });
         $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
@@ -24,23 +24,89 @@ class VendorOfferService
         });
 
         $vendor_offers = self::mainFilter($vendor_offers);
-        $vendor_offers->with(["vendor", "factory", "vehicle" => function($select){
-            return $select->select(["name","id"]);
+        $vendor_offers->with(["vendor", "factory", "vehicle" => function ($select) {
+            return $select->select(["name", "id"]);
         }])
             ->latest();
-        if(request("export") === "excel"){
+        if (request("export") === "excel") {
             return Excel::download(new VendorOfferExport($vendor_offers->get()), "vendor_offer_.xlsx");
         }
         return $vendor_offers
             ->paginate($paginate);
     }
+    public static function summaryReport($guard = "web")
+    {
+        $month = date("m");
+        if (request("month")) {
+            $month = request("month");
+        }
+        $vendor_offers = VendorOffer::query();
+        $vendor_offers->when(CommonService::isFactory(), function ($query) use ($guard) {
+            return $query->where("factory_id", auth($guard)->user()->id);
+        });
+        $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
+            return $query->where("vendor_id", auth($guard)->user()->id);
+        });
+        $vendor_offers->whereMonth("created_at", $month);
+        $vendor_offers->where("status", "second_wieght_done");
+        // $vendor_offers = self::mainFilter($vendor_offers);
+        $vendor_offers->with(["vendor", "factory"])
+            ->selectRaw('vendor_id, factory_id,
+            net_weight as sum_weight,
+            confirmation_code,
+            vehicle_number,
+            first_weight as gross,
+            second_weight as tare,
+            deduction,
+            confirmed_fine_leaf_count as fine_leaf,
+            confirmed_price as rate,
+            total_amount as amount,
+            date(created_at) as date');
+        if (request("export") === "excel") {
+            // return Excel::download(new VendorOfferExport($vendor_offers->get()), "vendor_offer_.xlsx");
+        }
+
+        $vendor_offers = $vendor_offers->get()->makeHidden(["first_weight_image_url", "second_weight_image_url"]);
+        $grouped       = $vendor_offers->groupBy("vendor_id");
+        // dd($grouped);
+        $grouped_data = [];
+        $grouped->map(function ($item) use (&$grouped_data) {
+            $grouped_data["records"][] = [
+                "data"                 => $item->except(["vendor"]),
+                "vendor"               => $item->first()->vendor,
+                "sub_total_amount"     => $item->sum("amount"),
+                "sub_total_gross"      => $item->sum("gross"),
+                "sub_total_tare"       => $item->sum("tare"),
+                "sub_total_deduction"  => $item->sum("deduction"),
+                "sub_total_net_weight" => $item->sum("sum_weight"),
+                "sub_total_rate"       => $item->avg("rate"),
+                "sub_total_fine_leaf"  => $item->avg("fine_leaf"),
+
+            ];
+        });
+        unset($grouped);
+        unset($vendor_offers);
+        $grouped_data = collect($grouped_data)->map(function($row){
+            return collect($row);
+        });
+        // dd($grouped_data);
+        $grouped_data["grand_total_amount"]     = $grouped_data["records"]->sum("sub_total_amount");
+        $grouped_data["grand_total_gross"]      = $grouped_data["records"]->sum("sub_total_gross");
+        $grouped_data["grand_total_tare"]       = $grouped_data["records"]->sum("sub_total_tare");
+        $grouped_data["grand_total_deduction"]  = $grouped_data["records"]->sum("sub_total_deduction");
+        $grouped_data["grand_total_net_weight"] = $grouped_data["records"]->sum("sub_total_net_weight");
+        $grouped_data["grand_total_rate"]       = $grouped_data["records"]->avg("sub_total_rate");
+        $grouped_data["grand_total_fine_leaf"]  = $grouped_data["records"]->avg("sub_total_fine_leaf");
+        return $grouped_data;
+
+    }
     public static function todayReports($paginate = 10, $guard = "web")
     {
         $vendor_offers = VendorOffer::query();
-        $vendor_offers->when(CommonService::isFactory($guard), function($query) use ($guard){
+        $vendor_offers->when(CommonService::isFactory($guard), function ($query) use ($guard) {
             return $query->where("factory_id", auth($guard)->user()->id);
         });
-        $vendor_offers->when(CommonService::isVendor($guard), function($query) use ($guard){
+        $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
         return $vendor_offers->whereDate("created_at", today()->format("Y-m-d"))
@@ -58,7 +124,7 @@ class VendorOfferService
                 throw new PermissionDenied(self::$permision_denied_mesage, 401);
             }
 
-        }elseif (CommonService::isHeadQuarter()) {
+        } elseif (CommonService::isHeadQuarter()) {
             $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id)
                 ->where("user_id", $vendorOffer->factory_id)
                 ->exist();
@@ -69,11 +135,14 @@ class VendorOfferService
         }
         $confirmation_no = date("Y") . (10000 + $vendorOffer->id);
         return $vendorOffer->update([
-            "confirmed_at"      => now()->format("Y-m-d H:i:s"),
-            "confirmed_by_id"   => auth($guard)->id(),
-            "confirmed_by_type" => get_class(auth($guard)->user()),
-            "confirmation_code" => $confirmation_no,
-            "status"            => VendorOffer::$confirm_status,
+            "confirmed_at"              => now()->format("Y-m-d H:i:s"),
+            "confirmed_price"           => $vendorOffer->offer_price,
+            "confirmed_fine_leaf_count" => $vendorOffer->expected_fine_leaf_count,
+            "confirmed_moisture"        => $vendorOffer->expected_moisture,
+            "confirmed_by_id"           => auth($guard)->id(),
+            "confirmed_by_type"         => get_class(auth($guard)->user()),
+            "confirmation_code"         => $confirmation_no,
+            "status"                    => VendorOffer::$confirm_status,
         ]);
     }
     public static function cancelOffer(VendorOffer $vendorOffer, $guard = "web")
@@ -87,7 +156,7 @@ class VendorOfferService
             }
             $status = VendorOffer::$cancelled_status_factory;
 
-        }elseif (CommonService::isHeadQuarter()) {
+        } elseif (CommonService::isHeadQuarter()) {
             $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id)
                 ->where("user_id", $vendorOffer->factory_id)
                 ->exist();
@@ -106,7 +175,7 @@ class VendorOfferService
             "status"            => $status,
         ]);
     }
-    public static function fetchVendorOfferByConfirmationCode(String $confirmation_code , String $guard)
+    public static function fetchVendorOfferByConfirmationCode(String $confirmation_code, String $guard)
     {
         return VendorOffer::latest()->where("confirmation_code", $confirmation_code)->first();
 

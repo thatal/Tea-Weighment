@@ -29,5 +29,9 @@ Route::group([
             "uses" => 'FactoryController@vendorOffers',
             "as"   => "offer.index"
         ]);
+        Route::get("summary-report", [
+            "uses" => 'FactoryController@summaryReport',
+            "as"   => "offer.summary-report"
+        ]);
     });
 });

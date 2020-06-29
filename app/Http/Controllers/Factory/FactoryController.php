@@ -17,4 +17,12 @@ class FactoryController extends Controller
         // dd($vendor_offers);
         return view("factory.reports.vendor-offers", compact("vendor_offers"));
     }
+
+    public function summaryReport()
+    {
+        $summary_reports = VendorOfferService::summaryReport();
+        // return $summary_reports;
+        return view("factory.reports.summary-vendor-offers", compact("summary_reports"));
+
+    }
 }
