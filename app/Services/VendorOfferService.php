@@ -90,13 +90,13 @@ class VendorOfferService
             return collect($row);
         });
         // dd($grouped_data);
-        $grouped_data["grand_total_amount"]     = $grouped_data["records"]->sum("sub_total_amount");
-        $grouped_data["grand_total_gross"]      = $grouped_data["records"]->sum("sub_total_gross");
-        $grouped_data["grand_total_tare"]       = $grouped_data["records"]->sum("sub_total_tare");
-        $grouped_data["grand_total_deduction"]  = $grouped_data["records"]->sum("sub_total_deduction");
-        $grouped_data["grand_total_net_weight"] = $grouped_data["records"]->sum("sub_total_net_weight");
-        $grouped_data["grand_total_rate"]       = $grouped_data["records"]->avg("sub_total_rate");
-        $grouped_data["grand_total_fine_leaf"]  = $grouped_data["records"]->avg("sub_total_fine_leaf");
+        $grouped_data["grand_total_amount"]     = $grouped_data["records"]->sum("sub_total_amount") ?? 0;
+        $grouped_data["grand_total_gross"]      = $grouped_data["records"]->sum("sub_total_gross") ?? 0;
+        $grouped_data["grand_total_tare"]       = $grouped_data["records"]->sum("sub_total_tare") ?? 0;
+        $grouped_data["grand_total_deduction"]  = $grouped_data["records"]->sum("sub_total_deduction") ?? 0;
+        $grouped_data["grand_total_net_weight"] = $grouped_data["records"]->sum("sub_total_net_weight") ?? 0;
+        $grouped_data["grand_total_rate"]       = $grouped_data["records"]->avg("sub_total_rate") ?? 0;
+        $grouped_data["grand_total_fine_leaf"]  = $grouped_data["records"]->avg("sub_total_fine_leaf") ?? 0;
         return $grouped_data;
 
     }
