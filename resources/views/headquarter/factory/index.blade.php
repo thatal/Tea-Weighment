@@ -44,7 +44,7 @@ Factories
                                 <td>{{$factory->name}}</td>
                                 <td>{{$factory->factory_information->mobile}}</td>
                                 <td>{{$factory->email}}</td>
-                            <td><span class="badge badge-{{$factory->factory_information->is_available ? "success" : "danger"}}">{{$factory->factory_information->is_available ? "Available" : "No Available"}}</span></td>
+                            <td><span class="badge badge-{{$factory->factory_information->is_available ? "success" : "danger"}}">{{$factory->factory_information->is_available ? "Available" : "Not Available"}}</span></td>
                                 <td>
                                     <a href="{{route("headquarter.factory.destroy", $factory)}}"
                                         onClick="return confirm('Are you sure ?')">
