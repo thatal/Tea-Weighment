@@ -15,7 +15,7 @@ Dashboard
 
                 <div class="info-box-content">
                     <span class="info-box-text">Factories</span>
-                    <span class="info-box-number">410</span>
+                    <span class="info-box-number">{{\App\Models\Factory::count()}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -28,7 +28,7 @@ Dashboard
 
                 <div class="info-box-content">
                     <span class="info-box-text">Vendors</span>
-                    <span class="info-box-number">13,648</span>
+                    <span class="info-box-number">{{\App\Models\Vendor::count()}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
