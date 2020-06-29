@@ -24,7 +24,9 @@ class VendorOfferService
         });
 
         $vendor_offers = self::mainFilter($vendor_offers);
-        $vendor_offers->with(["vendor", "factory"])
+        $vendor_offers->with(["vendor", "factory", "vehicle" => function($select){
+            return $select->select(["name","id"]);
+        }])
             ->latest();
         if(request("export") === "excel"){
             return Excel::download(new VendorOfferExport($vendor_offers->get()), "vendor_offer_.xlsx");
@@ -69,8 +71,39 @@ class VendorOfferService
         return $vendorOffer->update([
             "confirmed_at"      => now()->format("Y-m-d H:i:s"),
             "confirmed_by_id"   => auth($guard)->id(),
+            "confirmed_by_type" => get_class(auth($guard)->user()),
             "confirmation_code" => $confirmation_no,
             "status"            => VendorOffer::$confirm_status,
+        ]);
+    }
+    public static function cancelOffer(VendorOffer $vendorOffer, $guard = "web")
+    {
+        $status = VendorOffer::$cancelled_status_vendor;
+        if (CommonService::isFactory()) {
+            if (auth($guard)->user()->id !== $vendorOffer->factory_id) {
+                Log::alert('Permission denied confirm order factory');
+
+                throw new PermissionDenied(self::$permision_denied_mesage, 401);
+            }
+            $status = VendorOffer::$cancelled_status_factory;
+
+        }elseif (CommonService::isHeadQuarter()) {
+            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id)
+                ->where("user_id", $vendorOffer->factory_id)
+                ->exist();
+            if (!$vendor_belongs_to_factory) {
+                Log::alert('Permission denied confirm order headquarter');
+                throw new PermissionDenied(self::$permision_denied_mesage, 401);
+            }
+            $status = VendorOffer::$cancelled_status_factory;
+        }
+        $confirmation_no = "NA";
+        return $vendorOffer->update([
+            "cancelled_at"      => now()->format("Y-m-d H:i:s"),
+            "cancelled_by_id"   => auth($guard)->id(),
+            "cancelled_by_type" => get_class(auth($guard)->user()),
+            "confirmation_code" => $confirmation_no,
+            "status"            => $status,
         ]);
     }
     public static function fetchVendorOfferByConfirmationCode(String $confirmation_code , String $guard)

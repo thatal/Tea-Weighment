@@ -63,4 +63,5 @@ class Vendor extends User
             "role"     => "required|in:vendor,factory"
         ];
     }
+
 }

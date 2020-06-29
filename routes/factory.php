@@ -20,6 +20,10 @@ Route::group([
         "uses" => 'DashboardController@confirmOrder',
         "as"   => "offer.accept"
     ]);
+    Route::get("offer-cancel/{vendorOffer}", [
+        "uses" => 'DashboardController@cancelOffer',
+        "as"   => "offer.cancel"
+    ]);
     Route::group(['prefix' => 'reports'], function () {
         Route::get("vendor-offers", [
             "uses" => 'FactoryController@vendorOffers',

@@ -10,6 +10,8 @@ class VendorOffer extends Model
     use SoftDeletes;
     public static $pending_status = "pending";
     public static $confirm_status = "confirmed";
+    public static $cancelled_status_vendor = "cancelled_by_vendor";
+    public static $cancelled_status_factory = "cancelled_by_factory";
     public static $first_wieght_status = "first_wieght_done";
     public static $second_wieght_status = "second_wieght_done";
     public static $status         = [
@@ -39,6 +41,25 @@ class VendorOffer extends Model
     public function factory()
     {
         return $this->belongsTo(Factory::class, "factory_id", "id")->withTrashed();
+    }
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class,"vehicle_type_id", "id");
+    }
+     /**
+     * Get the owning confirmed_by model.
+     */
+    public function confirmed_by()
+    {
+        return $this->morphTo();
+    }
+     /**
+     * Get the owning confirmed_by model.
+     */
+    public function cancelled_by()
+    {
+        return $this->morphTo();
     }
     /**
      * Scope a query to only include pending

@@ -53,4 +53,5 @@ Vendor Offers
 
 @endsection
 @section("js")
+    @include('factory.common.js')
 @endsection
