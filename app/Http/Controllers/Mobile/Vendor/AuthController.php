@@ -28,7 +28,7 @@ class AuthController extends Controller
             if (!$factory || !Hash::check($request->password, $factory->password)) {
                 return response()
                     ->json([
-                        "data"    => [],
+                        // "data"    => [],
                         "message" => "Credentials does not matched.",
                         "status"  => false,
                     ]);
@@ -49,7 +49,7 @@ class AuthController extends Controller
         if (!$vendor || !Hash::check($request->password, $vendor->password)) {
             return response()
                 ->json([
-                    "data"    => [],
+                    // "data"    => [],
                     "message" => "Credentials does not matched.",
                     "status"  => false,
                 ]);
