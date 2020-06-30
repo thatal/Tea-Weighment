@@ -50,5 +50,25 @@ Dashboard
         <!-- /.col -->
     </div>
     <!-- /.row -->
+    <!-- /.row -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Today's offers. <small>{{$daily_collections->total()}} records found.</small>
+            </h3>
+
+            <div class="card-tools">
+                <div class="input-group input-group-sm">
+                    <a href="{{route("headquarter.offer.index")}}">
+                        <button class="btn btn-primary btn-sm"> View All</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 300px;">
+            @include("factory.common.vendor-offers", ["vendor_offers" => $daily_collections])
+        </div>
+        {!!$daily_collections->links()!!}
+    </div>
 </div>
 @endsection

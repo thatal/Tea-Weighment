@@ -111,7 +111,7 @@ class VendorOfferService
         });
         return $vendor_offers->whereDate("created_at", today()->format("Y-m-d"))
             ->with(["vendor", "factory"])
-            ->pending()
+            // ->pending()
             ->latest()
             ->paginate($paginate);
     }

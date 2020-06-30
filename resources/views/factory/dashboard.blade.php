@@ -28,7 +28,7 @@ Dashboard
 
                 <div class="info-box-content">
                     <span class="info-box-text">Today Collections</span>
-                    <span class="info-box-number">93,139</span>
+                    <span class="info-box-number">{{number_format(\App\Services\VendorOfferService::todaysCollection(), 2)}} KG</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -39,7 +39,7 @@ Dashboard
     <!-- /.row -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Today's pending offers. <small>{{$daily_collections->total()}} records found.</small></h3>
+            <h3 class="card-title">Today's offers. <small>{{$daily_collections->total()}} records found.</small></h3>
 
             <div class="card-tools">
                 <div class="input-group input-group-sm">

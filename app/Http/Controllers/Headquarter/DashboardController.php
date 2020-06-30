@@ -12,7 +12,9 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return view("headquarter.dashboard");
+        $daily_collections = VendorOfferService::todayReports(4);
+
+        return view("headquarter.dashboard", compact("daily_collections"));
     }
 
     public function confirmOrder(VendorOffer $vendorOffer)
