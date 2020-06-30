@@ -127,7 +127,7 @@ class VendorOfferService
         } elseif (CommonService::isHeadQuarter()) {
             $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
                 ->where("user_id", $vendorOffer->factory_id)
-                ->exist();
+                ->exists();
             if (!$vendor_belongs_to_factory) {
                 Log::alert('Permission denied confirm order headquarter');
                 throw new PermissionDenied(self::$permision_denied_mesage, 401);
@@ -159,7 +159,7 @@ class VendorOfferService
         } elseif (CommonService::isHeadQuarter()) {
             $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
                 ->where("user_id", $vendorOffer->factory_id)
-                ->exist();
+                ->exists();
             if (!$vendor_belongs_to_factory) {
                 Log::alert('Permission denied confirm order headquarter');
                 throw new PermissionDenied(self::$permision_denied_mesage, 401);
