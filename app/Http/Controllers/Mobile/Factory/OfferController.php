@@ -10,7 +10,28 @@ use Validator;
 
 class OfferController extends Controller
 {
-    private $guard = "sanctum";
+    private $guard    = "sanctum";
+    private $paginate = 100;
+    public function index()
+    {
+        try {
+            $all_offers = VendorOfferService::all($this->paginate, $this->guard);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                "message" => "Whoops! Something went wrong.",
+                "data"    => [],
+                "status"  => false,
+            ]);
+
+        }
+
+        return response()->json([
+            "message" => $all_offers->total() . " records found ",
+            "data"    => $all_offers,
+            "status"  => true,
+        ]);
+    }
     public function confirmationFetch()
     {
         $validator = Validator::make(request()->all(), $this->confirmationFetchRule());
@@ -91,7 +112,7 @@ class OfferController extends Controller
             $vendor_offer->vehicle_number     = request("vehicle_number");
             $vendor_offer->first_weight       = request("gross_weight");
             $vendor_offer->deduction          = request("deduction") ?? 0;
-            $vendor_offer->confirmed_moisture          = request("moisture") ?? 0;
+            $vendor_offer->confirmed_moisture = request("moisture") ?? 0;
             $vendor_offer->first_weight_image = $filename;
             // $vendor_offer->status = VendorOffer::$first_wieght_status;
             $vendor_offer->save();

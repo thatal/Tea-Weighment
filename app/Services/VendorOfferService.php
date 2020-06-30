@@ -16,7 +16,7 @@ class VendorOfferService
     public static function all($paginate = 100, $guard = "web")
     {
         $vendor_offers = VendorOffer::query();
-        $vendor_offers->when(CommonService::isFactory(), function ($query) use ($guard) {
+        $vendor_offers->when(CommonService::isFactory($guard), function ($query) use ($guard) {
             return $query->where("factory_id", auth($guard)->user()->id);
         });
         $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {

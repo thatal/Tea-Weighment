@@ -48,6 +48,9 @@ Route::group(['prefix' => 'factory'], function () {
         Route::post('offer-second-weight', [
             "uses"  => "Mobile\Factory\OfferController@secondWeightDataSave"
         ]);
+        Route::get('vendors-offer-all', [
+            "uses"  => "Mobile\Factory\OfferController@index"
+        ]);
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
