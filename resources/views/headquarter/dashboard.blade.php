@@ -40,8 +40,8 @@ Dashboard
                 <span class="info-box-icon bg-danger"><i class="far fa-chart-bar"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Today Collections</span>
-                    <span class="info-box-number">93,139</span>
+                    <span class="info-box-text">Today's Collections</span>
+                    <span class="info-box-number">{{number_format(\App\Services\VendorOfferService::todaysCollection(), 2)}} KG</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

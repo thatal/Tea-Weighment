@@ -11,13 +11,19 @@
                     Dashboard
                 </p>
             </a>
-            <a href="{{route("factory.offer.index")}}" class="nav-link {{ (request()->is('factory/reports/vendor-offers')) ? 'active' : '' }}">
+        </li>
+        <li class="nav-item">
+            <a href="{{route("factory.offer.index")}}"
+                class="nav-link {{ (request()->is('factory/reports/vendor-offers')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-chart-line"></i>
                 <p>
                     Vendor Offer
                 </p>
             </a>
-            <a href="{{route("factory.offer.summary-report")}}" class="nav-link {{ (request()->is('factory/reports/summary-report')) ? 'active' : '' }}">
+        </li>
+        <li class="nav-item">
+            <a href="{{route("factory.offer.summary-report")}}"
+                class="nav-link {{ (request()->is('factory/reports/summary-report')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-chart-line"></i>
                 <p>
                     Summary Report

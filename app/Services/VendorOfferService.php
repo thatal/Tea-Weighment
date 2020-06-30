@@ -203,4 +203,21 @@ class VendorOfferService
 
         return $builder;
     }
+
+    public static function todaysCollection($guard = "web")
+    {
+        $query = VendorOffer::whereDate("created_at", date("Y-m-d"));
+        $query->when(auth($guard)->user()->isHeadquarter(), function($query) use ($guard){
+            return $query->whereIn("factory_id", function($query) use ($guard){
+                return $query->select("factory_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
+            });
+        });
+        $query->when(auth($guard)->user()->isFactory(), function($query) use ($guard){
+            return $query->where("factory_id", auth($guard)->id());
+        });
+        $query->when(auth($guard)->user()->isVendor(), function($query) use ($guard){
+            return $query->where("vendor_id", auth($guard)->id());
+        });
+        return $query->sum("net_weight");
+    }
 }

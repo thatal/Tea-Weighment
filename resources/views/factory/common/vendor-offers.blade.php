@@ -4,6 +4,9 @@
             <th>#</th>
             <th>Date</th>
             <th>Vendor</th>
+            @if(auth()->user()->isHeadquarter())
+                <th>Factory</th>
+            @endif
             <th>Confirmation</th>
             <th>Qty</th>
             <th>Offer Price</th>
@@ -19,6 +22,9 @@
             <td>{{(($vendor_offers->currentPage() - 1 ) * $vendor_offers->perPage() ) + 1 + $key}}</td>
             <td>{{$offer->created_at->format("Y-m-d")}}</td>
             <td>{{$offer->vendor->name ?? "NA"}}</td>
+            @if(auth()->user()->isHeadquarter())
+                <td>{{$offer->factory->name ?? "NA"}}</td>
+            @endif
             <td>{{$offer->confirmation_code ?? "N/A"}}</td>
             <td>{{$offer->leaf_quantity}}</td>
             <td>{{$offer->offer_price}}</td>
@@ -26,7 +32,7 @@
             <td>{{$offer->expected_moisture}}</td>
             <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
             <td>
-                @if(auth()->user()->isFactory() || auth()->user()->isCompany())
+                @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
                     @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
                         <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
                             <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>

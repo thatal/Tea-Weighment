@@ -21,5 +21,23 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{route("headquarter.offer.index")}}"
+                class="nav-link {{ (request()->is('headquarter/reports/vendor-offers')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                    Vendor Offer
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route("headquarter.offer.summary-report")}}"
+                class="nav-link {{ (request()->is('headquarter/reports/summary-report')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                    Summary Report
+                </p>
+            </a>
+        </li>
     </ul>
 </nav>

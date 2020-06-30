@@ -21,4 +21,23 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "uses"    => "FactoryController@loginAsFactory"
         ]);
     });
+    Route::get("offer-accept/{vendorOffer}", [
+        "uses" => 'DashboardController@confirmOrder',
+        "as"   => "offer.accept",
+    ]);
+    Route::get("offer-cancel/{vendorOffer}", [
+        "uses" => 'DashboardController@cancelOffer',
+        "as"   => "offer.cancel",
+    ]);
+    Route::group(['prefix' => 'reports'], function () {
+        Route::get("vendor-offers", [
+            "uses" => 'HeadquarterController@vendorOffers',
+            "as"   => "offer.index",
+        ]);
+        Route::get("summary-report", [
+            "uses" => 'HeadquarterController@summaryReport',
+            "as"   => "offer.summary-report",
+        ]);
+    });
+
 });
