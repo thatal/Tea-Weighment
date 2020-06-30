@@ -72,3 +72,6 @@ Dashboard
     </div>
 </div>
 @endsection
+@section("js")
+    @include('factory.common.js')
+@endsection
