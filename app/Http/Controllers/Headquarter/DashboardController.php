@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\VendorOffer;
 use App\Services\VendorOfferService;
 use Illuminate\Http\Request;
+use Log;
 
 class DashboardController extends Controller
 {
@@ -25,11 +26,13 @@ class DashboardController extends Controller
                 ->back()
                 ->with("success", "Offer Accepted successfully.");
         } catch(PermissionDenied $e){
+            Log::error($e);
             return redirect()
                 ->back()
                 ->with("error", $e->getMessage());
 
         }catch (\Throwable $th) {
+            Log::error($th);
             return redirect()
                 ->back()
                 ->with("error", "Whoops! something went wrong. Try again later");
@@ -49,6 +52,7 @@ class DashboardController extends Controller
                 ->with("error", $e->getMessage());
 
         }catch (\Throwable $th) {
+            Log::error($th);
             return redirect()
                 ->back()
                 ->with("error", "Whoops! something went wrong. Try again later");

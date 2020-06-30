@@ -125,7 +125,7 @@ class VendorOfferService
             }
 
         } elseif (CommonService::isHeadQuarter()) {
-            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id)
+            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
                 ->where("user_id", $vendorOffer->factory_id)
                 ->exist();
             if (!$vendor_belongs_to_factory) {
@@ -157,7 +157,7 @@ class VendorOfferService
             $status = VendorOffer::$cancelled_status_factory;
 
         } elseif (CommonService::isHeadQuarter()) {
-            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id)
+            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
                 ->where("user_id", $vendorOffer->factory_id)
                 ->exist();
             if (!$vendor_belongs_to_factory) {
