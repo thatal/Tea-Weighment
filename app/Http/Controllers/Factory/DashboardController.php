@@ -22,9 +22,9 @@ class DashboardController extends Controller
             $factory_information->update([
                 "is_available"  => !$factory_information->is_available
             ]);
-            $message = "Vendor can't sent quotation.";
+            $message = "Vendor can't send quotation.";
             if($factory_information->is_available){
-                $message = "Vendor can now sent quotation.";
+                $message = "Vendor can now send quotation.";
             }
         } catch (\Throwable $th) {
             $message = "Whoops! something went wrong try again later.";

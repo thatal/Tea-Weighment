@@ -91,6 +91,7 @@ class OfferController extends Controller
             $vendor_offer->vehicle_number     = request("vehicle_number");
             $vendor_offer->first_weight       = request("gross_weight");
             $vendor_offer->deduction          = request("deduction") ?? 0;
+            $vendor_offer->confirmed_moisture          = request("moisture") ?? 0;
             $vendor_offer->first_weight_image = $filename;
             // $vendor_offer->status = VendorOffer::$first_wieght_status;
             $vendor_offer->save();
@@ -190,6 +191,7 @@ class OfferController extends Controller
             "gross_weight"       => "required|numeric|min:1",
             "gross_weight_image" => "required|image",
             "deduction"          => "numeric",
+            "moisture"           => "numeric|required",
         ];
     }
     private function secondWeightRule()
