@@ -3,7 +3,7 @@
         <tr>
             <th>#</th>
             <th>Date</th>
-            <th>Vendor</th>
+            <th>Supplier</th>
             @if(auth()->user()->isHeadquarter())
                 <th>Factory</th>
             @endif
