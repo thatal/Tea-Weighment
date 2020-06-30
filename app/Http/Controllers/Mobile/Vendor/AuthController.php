@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mobile\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\Factory;
 use App\Models\Vendor;
+use Hash;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -21,9 +22,20 @@ class AuthController extends Controller
                     "data"    => $validator->errors(),
                 ]);
         }
-        if($request->get("role") === "factory"){
-            $factory               = Factory::inRandomOrder()->first();
-            $token                  = $factory->createToken('token-name');
+
+        if ($request->get("role") === "factory") {
+            $factory = Factory::where('username', $request->username)->first();
+            if (!$factory || !Hash::check($request->password, $factory->password)) {
+                return response()
+                    ->json([
+                        "data"    => [],
+                        "message" => "Credentials does not matched.",
+                        "status"  => false,
+                    ]);
+
+            }
+
+            $token                 = $factory->createToken('auth-token');
             $factory->access_token = $token->plainTextToken;
             return response()
                 ->json([
@@ -33,8 +45,19 @@ class AuthController extends Controller
                 ]);
 
         }
-        $vendor               = Vendor::inRandomOrder()->first();
-        $token                = $vendor->createToken('token-name');
+        $vendor = Vendor::where('username', $request->username)->first();
+        if (!$vendor || !Hash::check($request->password, $vendor->password)) {
+            return response()
+                ->json([
+                    "data"    => [],
+                    "message" => "Credentials does not matched.",
+                    "status"  => false,
+                ]);
+
+        }
+
+        // $vendor               = Vendor::inRandomOrder()->first();
+        $token                = $vendor->createToken('auth-token');
         $vendor->access_token = $token->plainTextToken;
         return response()
             ->json([
