@@ -26,7 +26,7 @@
                 class="nav-link {{ (request()->is('headquarter/reports/vendor-offers')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-chart-line"></i>
                 <p>
-                    Vendor Offer
+                    Supplier Offer
                 </p>
             </a>
         </li>

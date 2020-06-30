@@ -9,7 +9,7 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Login to Headquarter Account</p>
+                <p class="login-box-msg">Login to Approver Account</p>
 
                 <form action="{{route("login")}}" method="post">
                     @csrf

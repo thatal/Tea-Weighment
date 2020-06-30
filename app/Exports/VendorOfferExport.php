@@ -45,7 +45,7 @@ ShouldAutoSize
         return [
             "Date",
             "confirmation Code",
-            "Vendor",
+            "Supplier",
             "Qty",
             "Offer Price",
             "Exp. Fine leaf count",

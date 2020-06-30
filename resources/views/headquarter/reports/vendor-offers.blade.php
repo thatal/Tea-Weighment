@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title')
-Vendor Offers
+Supplier Offers
 @endsection
 @section('p_title')
-Vendor Offers
+Supplier Offers
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -28,7 +28,7 @@ Vendor Offers
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Vendor Offers</h3>
+                    <h3 class="card-title">Supplier Offers</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">

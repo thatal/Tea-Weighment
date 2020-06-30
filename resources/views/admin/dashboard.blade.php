@@ -40,7 +40,7 @@
                     <span class="info-box-icon bg-warning"><i class="fas fa-tractor"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Vendors</span>
+                        <span class="info-box-text">Suppliers</span>
                         <span class="info-box-number">13,648</span>
                     </div>
                     <!-- /.info-box-content -->

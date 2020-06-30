@@ -8,7 +8,7 @@
                 +'<tr>'
                     +'<td>Factory: </td>'
                     +'<th>'+data.factory.name+'</th>'
-                    +'<td>Vendor: </td>'
+                    +'<td>Supplier: </td>'
                    +' <th>'+data.vendor.name+'</th>'
                     +'<td>Confirmation Code: </td>'
                     +'<th colspan="3">'+(data.confirmation_code ?? "N/A")+'</th>'
