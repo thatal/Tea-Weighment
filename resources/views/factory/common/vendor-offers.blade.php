@@ -34,18 +34,30 @@
             <td>
                 @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
                     @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
-                        <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
-                            <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
-                        </button>
+                        @if(auth()->user()->isHeadquarter())
+                            <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                            </button>
+                        @else
+                            <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                            </button>
+                        @endif
                     @else
                     {{-- <button class="btn btn-primary btn-sm" disabled>
                         Accept Offer
                     </button> --}}
                     @endif
                     @if (in_array($offer->status, ["pending", "confirmed"]))
-                        <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
-                            <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
-                        </button>
+                        @if(auth()->user()->isHeadquarter())
+                            <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                <a href="{{route("headquarter.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
+                            </button>
+                        @else
+                            <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
+                            </button>
+                        @endif
                     @endif
                 @endif
                 <button type="button" class="btn btn-success btn-sm" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
