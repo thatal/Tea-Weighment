@@ -191,7 +191,7 @@ class OfferController extends Controller
 
         }
         return response()->json([
-            "message" => "First weight data successfully saved.",
+            "message" => "Second weight data successfully saved.",
             "status"  => true,
             "data"    => $vendor_offer,
         ]);
