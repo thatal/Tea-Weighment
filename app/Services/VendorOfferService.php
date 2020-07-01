@@ -191,6 +191,9 @@ class VendorOfferService
                 return $query->where("status", request("offer_status"));
             }
         });
+        $builder->when(request("offer_status_not"), function ($query) {
+            return $query->where("status", "!=", request("offer_status_not"));
+        });
         $builder->when(request("date_from"), function ($query) {
             return $query->whereDate("created_at", ">=", request("date_from"));
         });
