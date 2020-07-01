@@ -114,7 +114,7 @@ class OfferController extends Controller
             $vendor_offer->deduction          = request("deduction") ?? 0;
             $vendor_offer->confirmed_moisture = request("moisture") ?? 0;
             $vendor_offer->first_weight_image = $filename;
-            // $vendor_offer->status = VendorOffer::$first_wieght_status;
+            $vendor_offer->status = VendorOffer::$first_wieght_status;
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);

@@ -14,7 +14,7 @@
                     +'<th colspan="3">'+(data.confirmation_code ?? "N/A")+'</th>'
                 +'</tr>'
                 +'<tr>'
-                    +'<td>Offer Quantity(LG): </td>'
+                    +'<td>Offer Quantity(KG): </td>'
                    +' <th>'+data.leaf_quantity.toFixed(2)+'</th>'
                    +' <td>Offer Price (Rs): </td>'
                    +' <th>'+data.offer_price+'</th>'
