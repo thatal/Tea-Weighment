@@ -48,7 +48,7 @@ class VendorOfferService
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
         // $vendor_offers->whereMonth("created_at", $month);
-        $vendor_offers->where("status", "second_wieght_done");
+        $vendor_offers->where("status", VendorOffer::$second_wieght_status);
         // $vendor_offers = self::mainFilter($vendor_offers);
         $vendor_offers->with(["vendor", "factory"])
             ->selectRaw('vendor_id, factory_id,
