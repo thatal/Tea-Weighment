@@ -68,11 +68,11 @@ class VendorOfferService
 
         $vendor_offers = $vendor_offers->get()->makeHidden(["first_weight_image_url", "second_weight_image_url"]);
         $grouped       = $vendor_offers->groupBy("vendor_id");
-        // dd($grouped);
         $grouped_data = [];
-        $grouped->map(function ($item) use (&$grouped_data) {
+        // dump($grouped);
+        $grouped->each(function ($item) use (&$grouped_data) {
             $grouped_data["records"][] = [
-                "data"                 => $item->except(["vendor"]),
+                "data"                 => $item,
                 "vendor"               => $item->first()->vendor,
                 "sub_total_amount"     => $item->sum("amount"),
                 "sub_total_gross"      => $item->sum("gross"),
@@ -97,6 +97,7 @@ class VendorOfferService
         $grouped_data["grand_total_net_weight"] = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_total_net_weight") : 0;
         $grouped_data["grand_total_rate"]       = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_rate") : 0;
         $grouped_data["grand_total_fine_leaf"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_fine_leaf") : 0;
+        // dd($grouped_data);
         return $grouped_data;
 
     }
