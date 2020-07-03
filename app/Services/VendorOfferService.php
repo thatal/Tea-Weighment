@@ -110,7 +110,7 @@ class VendorOfferService
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
         return $vendor_offers->whereDate("created_at", today()->format("Y-m-d"))
-            ->with(["vendor", "factory"])
+            ->with(["vendor", "factory", "vehicle"])
             // ->pending()
             ->latest()
             ->paginate($paginate);

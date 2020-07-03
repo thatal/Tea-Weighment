@@ -39,7 +39,7 @@
                    +' <td>Deduction (KG): </td>'
                    +' <th>'+data.deduction+'</th>'
                     +'<td>Tare (KG): </td>'
-                   +' <th>'+data.tare+'</th>'
+                   +' <th>'+data.second_weight+'</th>'
                    +' <td>Net Weight (KG): </td>'
                    +' <th>'+data.net_weight+'</th>'
                +' </tr>'

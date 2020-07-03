@@ -12,8 +12,8 @@ class VendorOffer extends Model
     public static $confirm_status = "confirmed";
     public static $cancelled_status_vendor = "cancelled_by_vendor";
     public static $cancelled_status_factory = "cancelled_by_factory";
-    public static $first_wieght_status = "first_wieght_done";
-    public static $second_wieght_status = "second_wieght_done";
+    public static $first_wieght_status = "received";
+    public static $second_wieght_status = "completed";
     public static $status         = [
         "pending"   => "pending",
         "confirmed" => "confirmed",
