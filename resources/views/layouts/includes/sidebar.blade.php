@@ -14,7 +14,7 @@
                 <img src="{{asset("images/man-dark-avatar.jpg")}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block text-center">{{auth()->user()->name}}<br />(<strong>{{ucwords(auth()->user()->role)}}</strong>)</a>
+                <a href="#" class="d-block text-center">{{auth()->user()->name}}<br />(<strong>{{ucwords(strtolower(auth()->user()->role) == "headquarter" ? "Approver" : auth()->user()->role)}}</strong>)</a>
             </div>
         </div>
         @if(auth()->user()->role === "admin")
