@@ -66,7 +66,7 @@ class DashboardController extends Controller
         return response()
             ->json([
                 "data"    => [],
-                "message" => "Successfully Sent",
+                "message" => "Offer Sent",
                 "status"  => true,
             ]);
     }
