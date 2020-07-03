@@ -29,7 +29,7 @@ class AuthController extends Controller
                 return response()
                     ->json([
                         // "data"    => [],
-                        "message" => "Credentials does not matched.",
+                        "message" => "Credentials do not match.",
                         "status"  => false,
                     ]);
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
             return response()
                 ->json([
                     // "data"    => [],
-                    "message" => "Credentials does not matched.",
+                    "message" => "Credentials do not match.",
                     "status"  => false,
                 ]);
 

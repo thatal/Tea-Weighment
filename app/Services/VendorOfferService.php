@@ -47,7 +47,7 @@ class VendorOfferService
         $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
-        $vendor_offers->whereMonth("created_at", $month);
+        // $vendor_offers->whereMonth("created_at", $month);
         $vendor_offers->where("status", "second_wieght_done");
         // $vendor_offers = self::mainFilter($vendor_offers);
         $vendor_offers->with(["vendor", "factory"])
