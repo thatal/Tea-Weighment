@@ -4,7 +4,8 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{url("/")}}">{{env("APP_NAME")}}</a>
+            {{env("APP_NAME")}}<br />
+            (Approver)
         </div>
         <!-- /.login-logo -->
         <div class="card">
