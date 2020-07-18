@@ -13,8 +13,9 @@ class CancelReasonString extends Migration
      */
     public function up()
     {
+        $this->dropNew();
         Schema::table('vendor_offers', function (Blueprint $table) {
-            $table->text('cancelled_reason')->nullable()->change();
+            $table->text('cancelled_reason')->nullable()->after("cancelled_at");
         });
     }
 
@@ -27,6 +28,17 @@ class CancelReasonString extends Migration
     {
         Schema::table('vendor_offers', function (Blueprint $table) {
             //
+        });
+    }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function dropNew()
+    {
+        Schema::table('vendor_offers', function (Blueprint $table) {
+            $table->dropColumn('cancelled_reason');
         });
     }
 }
