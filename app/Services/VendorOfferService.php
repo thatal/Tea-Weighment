@@ -221,7 +221,7 @@ class VendorOfferService
         $vendorOffer->update([
             "counter_offer_accepted_at" => now()->format("Y-m-d H:i:s"),
             "confirmed_price"           => $vendorOffer->counter_offer_price,
-            "acce"                      => $confirmation_no,
+            "confirmation_no"                      => $confirmation_no,
             "status"                    => $status,
         ]);
         $vendorOffer->refresh();
