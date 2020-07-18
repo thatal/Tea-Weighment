@@ -81,8 +81,9 @@ class DashboardController extends Controller
                 "status"  => true,
             ]);
     }
-    public function rejectOffer(VendorOffer $vendorOffer)
+    public function rejectOffer()
     {
+        $vendorOffer = VendorOffer::find(request("offer_id"));
         try {
             $vendorOffer = VendorOfferService::rejectBySupplierOffer($vendorOffer);
         } catch (\Throwable $th) {
@@ -102,8 +103,9 @@ class DashboardController extends Controller
             ]);
 
     }
-    public function acceptOffer(VendorOffer $vendorOffer)
+    public function acceptOffer()
     {
+        $vendorOffer = VendorOffer::find(request("offer_id"));
         try {
             $vendorOffer = VendorOfferService::acceptOffer($vendorOffer);
         } catch (\Throwable $th) {

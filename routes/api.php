@@ -35,10 +35,10 @@ Route::group(['prefix' => 'vendor'], function () {
         Route::post('offer-create', [
             "uses"  => "Mobile\Vendor\DashboardController@offerCreate"
         ]);
-        Route::post('offer-reject/{vendorOffer}', [
+        Route::post('offer-reject', [
             "uses"  => "Mobile\Vendor\DashboardController@rejectOffer"
         ]);
-        Route::post('offer-accept/{vendorOffer}', [
+        Route::post('offer-accept', [
             "uses"  => "Mobile\Vendor\DashboardController@acceptOffer"
         ]);
     });
