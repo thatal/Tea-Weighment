@@ -110,11 +110,11 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="offer_price">Offer Price</label>
+                        <label for="offer_price">Supplier Offer Price</label>
                         <input type="number" id="offer_price" readonly class="form-control" step="00.01" placeholder="0.00" required>
                     </div>
                     <div class="form-group">
-                        <label for="offer_price">Accept Price</label>
+                        <label for="offer_price">Counter Price</label>
                         <input type="number" id="counter_price" name="counter_price" class="form-control" step="00.01"
                             placeholder="0.00" required>
                     </div>
