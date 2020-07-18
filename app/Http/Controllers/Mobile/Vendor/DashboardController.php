@@ -81,6 +81,48 @@ class DashboardController extends Controller
                 "status"  => true,
             ]);
     }
+    public function rejectOffer(VendorOffer $vendorOffer)
+    {
+        try {
+            $vendorOffer = VendorOfferService::rejectBySupplierOffer($vendorOffer);
+        } catch (\Throwable $th) {
+            return response()
+                ->json([
+                    "message" => $th->getMessage(),
+                    "data"    => $vendorOffer,
+                    "status"  => false,
+                ]);
+
+        }
+        return response()
+            ->json([
+                "message" => "Offer rejected Successfully.",
+                "data"    => $vendorOffer,
+                "status"  => true,
+            ]);
+
+    }
+    public function acceptOffer(VendorOffer $vendorOffer)
+    {
+        try {
+            $vendorOffer = VendorOfferService::acceptOffer($vendorOffer);
+        } catch (\Throwable $th) {
+            return response()
+                ->json([
+                    "message" => $th->getMessage(),
+                    "data"    => $vendorOffer,
+                    "status"  => false,
+                ]);
+
+        }
+        return response()
+            ->json([
+                "message" => "Offer Accepted Successfully.",
+                "data"    => $vendorOffer,
+                "status"  => true,
+            ]);
+
+    }
     public function fetchVendorTodayOffers()
     {
         $offers = VendorOfferService::todayReports(100, $this->guard);

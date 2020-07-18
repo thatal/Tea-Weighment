@@ -29,6 +29,10 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
         "uses" => 'DashboardController@cancelOffer',
         "as"   => "offer.cancel",
     ]);
+    Route::post("counter-offer/{vendorOffer}", [
+        "uses" => 'DashboardController@counterOffer',
+        "as"   => "counter.offer",
+    ]);
     Route::group(['prefix' => 'reports'], function () {
         Route::get("vendor-offers", [
             "uses" => 'HeadquarterController@vendorOffers',

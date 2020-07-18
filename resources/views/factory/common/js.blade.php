@@ -59,4 +59,18 @@
         $modal.find(".table-responsive").html(table_html);
         $modal.modal();
     }
+    showAcceptModal = function(obj){
+        console.log(obj);
+    }
+    counterOffer = function(obj){
+        var data = $(obj).data();
+        console.log(data);
+        var $modal = $("#vendorOfferCounter");
+        $modal.find("form").prop({
+            "action": data.url
+        });
+        $modal.find("#offer_price").val(data.offer.offer_price);
+        $modal.find("#counter_price").val(data.offer.offer_price);
+        $modal.modal();
+    }
 </script>

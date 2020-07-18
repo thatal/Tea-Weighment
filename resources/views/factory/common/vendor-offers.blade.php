@@ -43,6 +43,11 @@
                                 <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
                             </button>
                         @endif
+                        <button class="btn btn-warning btn-sm"
+                            data-url="{{ route('headquarter.counter.offer', $offer) }}"
+                            data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
+                            Counter Offer
+                         </button>
                     @else
                     {{-- <button class="btn btn-primary btn-sm" disabled>
                         Accept Offer
@@ -89,4 +94,35 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="vendorOfferCounter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Counter Offer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="" onSubmit="return confirm('Are you sure ?');">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="offer_price">Offer Price</label>
+                        <input type="number" id="offer_price" readonly class="form-control" step="00.01" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offer_price">Accept Price</label>
+                        <input type="number" id="counter_price" name="counter_price" class="form-control" step="00.01"
+                            placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

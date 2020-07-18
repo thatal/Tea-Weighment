@@ -35,6 +35,12 @@ Route::group(['prefix' => 'vendor'], function () {
         Route::post('offer-create', [
             "uses"  => "Mobile\Vendor\DashboardController@offerCreate"
         ]);
+        Route::post('offer-reject/{vendorOffer}', [
+            "uses"  => "Mobile\Vendor\DashboardController@rejectOffer"
+        ]);
+        Route::post('offer-accept/{vendorOffer}', [
+            "uses"  => "Mobile\Vendor\DashboardController@acceptOffer"
+        ]);
     });
 });
 Route::group(['prefix' => 'factory'], function () {

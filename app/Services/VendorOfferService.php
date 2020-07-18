@@ -68,7 +68,7 @@ class VendorOfferService
 
         $vendor_offers = $vendor_offers->get()->makeHidden(["first_weight_image_url", "second_weight_image_url"]);
         $grouped       = $vendor_offers->groupBy("vendor_id");
-        $grouped_data = [];
+        $grouped_data  = [];
         // dump($grouped);
         $grouped->each(function ($item) use (&$grouped_data) {
             $grouped_data["records"][] = [
@@ -86,7 +86,7 @@ class VendorOfferService
         });
         unset($grouped);
         unset($vendor_offers);
-        $grouped_data = collect($grouped_data)->map(function($row){
+        $grouped_data = collect($grouped_data)->map(function ($row) {
             return collect($row);
         });
         // dd($grouped_data);
@@ -110,9 +110,15 @@ class VendorOfferService
         $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
+        $vendor_offers->when(auth($guard)->user()->isHeadquarter(), function ($query) use ($guard) {
+            return $query->whereIn("factory_id", function ($query) use ($guard) {
+                return $query->select("user_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
+            });
+        });
+
         return $vendor_offers->whereDate("created_at", today()->format("Y-m-d"))
             ->with(["vendor", "factory", "vehicle"])
-            // ->pending()
+        // ->pending()
             ->latest()
             ->paginate($paginate);
     }
@@ -146,6 +152,34 @@ class VendorOfferService
             "status"                    => VendorOffer::$confirm_status,
         ]);
     }
+    public static function counterOffer(VendorOffer $vendorOffer, $guard = "web")
+    {
+        $status = VendorOffer::$cancelled_status_vendor;
+        if (CommonService::isFactory()) {
+            if (auth($guard)->user()->id !== $vendorOffer->factory_id) {
+                Log::alert('Permission denied counter offer factory');
+
+                throw new PermissionDenied(self::$permision_denied_mesage, 401);
+            }
+
+        } elseif (CommonService::isHeadQuarter()) {
+            $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
+                ->where("user_id", $vendorOffer->factory_id)
+                ->exists();
+            if (!$vendor_belongs_to_factory) {
+                Log::alert('Permission denied counter offer headquarter');
+                throw new PermissionDenied("You dont have permission to counter offer.", 401);
+            }
+        }
+        $status = VendorOffer::$counter_offer;
+        return $vendorOffer->update([
+            "counter_offer_price"      => request("counter_price"),
+            "counter_offer_sent_at"    => now()->format("Y-m-d H:i:s"),
+            "counter_offer_sent_by_id" => auth($guard)->id(),
+            "counter_offer_sent_type"  => get_class(auth($guard)->user()),
+            "status"                   => $status,
+        ]);
+    }
     public static function cancelOffer(VendorOffer $vendorOffer, $guard = "web")
     {
         $status = VendorOffer::$cancelled_status_vendor;
@@ -175,6 +209,44 @@ class VendorOfferService
             "confirmation_code" => $confirmation_no,
             "status"            => $status,
         ]);
+    }
+    public static function acceptOffer(VendorOffer $vendorOffer, $guard = "web")
+    {
+        $status = VendorOffer::$confirm_status;
+
+        // if ($vendorOffer->status != VendorOffer::$counter_offer) {
+        //     throw new PermissionDenied("Offer accept option not available.", 401);
+        // }
+        $confirmation_no = date("Y") . (10000 + $vendorOffer->id);
+        $vendorOffer->update([
+            "counter_offer_accepted_at" => now()->format("Y-m-d H:i:s"),
+            "confirmation_code"         => $confirmation_no,
+            "status"                    => $status,
+        ]);
+        $vendorOffer->refresh();
+        return $vendorOffer;
+    }
+    public static function rejectBySupplierOffer(VendorOffer $vendorOffer, $guard = "web")
+    {
+        $status = VendorOffer::$rejected_by_supplier;
+        $status_only_for_reject = [
+            VendorOffer::$confirm_status,
+            VendorOffer::$counter_offer
+        ];
+        if(!in_array($vendorOffer->status, $status_only_for_reject)){
+            throw new PermissionDenied("Reject option not available for the offer.", 1);
+        }
+
+        $confirmation_no = "NA";
+        $vendorOffer->update([
+            "counter_offer_rejected_at" => now()->format("Y-m-d H:i:s"),
+            "confirmation_code"         => $confirmation_no,
+            "cancelled_reason"          => request("remark"),
+            "status"                    => $status,
+        ]);
+        $vendorOffer->refresh();
+        return $vendorOffer;
+
     }
     public static function fetchVendorOfferByConfirmationCode(String $confirmation_code, String $guard)
     {
@@ -211,15 +283,15 @@ class VendorOfferService
     public static function todaysCollection($guard = "web")
     {
         $query = VendorOffer::whereDate("created_at", date("Y-m-d"));
-        $query->when(auth($guard)->user()->isHeadquarter(), function($query) use ($guard){
-            return $query->whereIn("factory_id", function($query) use ($guard){
-                return $query->select("factory_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
+        $query->when(auth($guard)->user()->isHeadquarter(), function ($query) use ($guard) {
+            return $query->whereIn("factory_id", function ($query) use ($guard) {
+                return $query->select("user_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
             });
         });
-        $query->when(auth($guard)->user()->isFactory(), function($query) use ($guard){
+        $query->when(auth($guard)->user()->isFactory(), function ($query) use ($guard) {
             return $query->where("factory_id", auth($guard)->id());
         });
-        $query->when(auth($guard)->user()->isVendor(), function($query) use ($guard){
+        $query->when(auth($guard)->user()->isVendor(), function ($query) use ($guard) {
             return $query->where("vendor_id", auth($guard)->id());
         });
         return $query->sum("net_weight");
