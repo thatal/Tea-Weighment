@@ -7,7 +7,7 @@
             +'<tbody>'
                 +'<tr>'
                     +'<td>Factory: </td>'
-                    +'<th>'+data.factory.name+'</th>'
+                    +'<th>'+(data.factory !== null ? data.factory.name : "NA")+'</th>'
                     +'<td>Supplier: </td>'
                    +' <th>'+data.vendor.name+'</th>'
                     +'<td>Confirmation Code: </td>'

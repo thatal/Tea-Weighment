@@ -220,7 +220,8 @@ class VendorOfferService
         $confirmation_no = date("Y") . (10000 + $vendorOffer->id);
         $vendorOffer->update([
             "counter_offer_accepted_at" => now()->format("Y-m-d H:i:s"),
-            "confirmation_code"         => $confirmation_no,
+            "confirmed_price"           => $vendorOffer->counter_offer_price,
+            "acce"                      => $confirmation_no,
             "status"                    => $status,
         ]);
         $vendorOffer->refresh();
@@ -228,12 +229,12 @@ class VendorOfferService
     }
     public static function rejectBySupplierOffer(VendorOffer $vendorOffer, $guard = "web")
     {
-        $status = VendorOffer::$rejected_by_supplier;
+        $status                 = VendorOffer::$rejected_by_supplier;
         $status_only_for_reject = [
             VendorOffer::$confirm_status,
-            VendorOffer::$counter_offer
+            VendorOffer::$counter_offer,
         ];
-        if(!in_array($vendorOffer->status, $status_only_for_reject)){
+        if (!in_array($vendorOffer->status, $status_only_for_reject)) {
             throw new PermissionDenied("Reject option not available for the offer.", 1);
         }
 
