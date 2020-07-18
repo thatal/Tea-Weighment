@@ -5,12 +5,76 @@ namespace App\Http\Controllers\Mobile\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\Factory;
 use App\Models\Vendor;
+use DB;
 use Hash;
 use Illuminate\Http\Request;
+use Log;
 use Validator;
 
 class AuthController extends Controller
 {
+    public function register()
+    {
+        $validator = Validator::make(request()->all(), $this->registerRules());
+        if ($validator->fails()) {
+            return response()
+                ->json([
+                    "message" => "Please fix the issues.",
+                    "status"  => false,
+                    "data"    => $validator->errors(),
+                ]);
+        }
+        DB::beginTransaction();
+        try {
+            $vendor = Vendor::create([
+                "name"     => request("name"),
+                "username" => request("mobile"),
+                "email"    => request("email"),
+                "password" => bcrypt(request("password")),
+            ]);
+            $vendor_info = [
+                "mobile" => request("mobile"),
+            ];
+            $vendor_address = [
+                "address_1" => request("address_1"),
+                "address_2" => request("address_2"),
+                "pin"       => request("pin"),
+            ];
+            $vendor_bank = [
+                "bank_name"           => request("bank_name"),
+                "account_number"      => request("account_number"),
+                "account_holder_name" => request("account_holder_name"),
+                "ifsc_code"           => request("ifsc_code"),
+                "is_primary"          => 1,
+            ];
+            $vendor->address()->create($vendor_address);
+            $vendor->vendor_information()->create($vendor_info);
+            $vendor->bank_details()->create($vendor_bank);
+            $vendor->refresh();
+            $vendor->load(["address", "vendor_information", "bank_details"]);
+            $token                = $vendor->createToken('auth-token');
+            $vendor->access_token = $token->plainTextToken;
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            Log::error($th);
+            return response()
+                ->json([
+                    "message" => "Supplier registration failed.",
+                    "data"    => null,
+                    "status"  => false,
+                ]);
+
+        }
+        DB::commit();
+        return response()
+            ->json([
+                "message" => "Successfully registered.",
+                "data"    => $vendor,
+                "status"  => true,
+            ]);
+
+    }
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), Vendor::lognRules());
@@ -66,5 +130,25 @@ class AuthController extends Controller
                 "status"  => true,
             ]);
 
+    }
+
+    private function registerRules()
+    {
+        return [
+            // personal details
+            "name"                => "required|max:100",
+            "mobile"              => "required|digits:10|unique:users,username",
+            "email"               => "nullable|email|unique:users",
+            "password"            => "required|confirmed",
+            // address
+            "address_1"           => "required|max:255",
+            "address_2"           => "nullable|max:255",
+            "pin"                 => "required|digits:6",
+            // bank details
+            "bank_name"           => "required|max:255",
+            "account_number"      => "required|max:50",
+            "account_holder_name" => "required|max:100",
+            "ifsc_code"           => "required|max:100",
+        ];
     }
 }
