@@ -13,6 +13,15 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{route("headquarter.change-password")}}"
+                class="nav-link {{ (request()->is('headquarter/change-password*')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-lock"></i>
+                <p>
+                    Change Password
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{route("headquarter.factory.index")}}"
                 class="nav-link {{ (request()->is('headquarter/factory*')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-industry"></i>

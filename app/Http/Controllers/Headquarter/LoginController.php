@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Headquarter;
 
 use App\Http\Controllers\Controller;
+use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -37,7 +39,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('headquarter.guest')->except('logout');
+        $this->middleware('headquarter.guest')->except('logout', "changePassword", "changePasswordPost");
     }
     public function getForm()
     {
@@ -83,5 +85,46 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    public function changePassword()
+    {
+        return view("headquarter.change-password");
+    }
+    public function changePasswordPost()
+    {
+        $validator = Validator::make(request()->all(), $this->changePassRules());
+        if($validator->fails()){
+            return redirect()
+                ->back()
+                ->with("error", "Please fix the issues and try again later.")
+                ->withInput(request()->all())
+                ->withErrors($validator);
+        }
+        $headquarter = auth()->user();
+        if(Hash::check(request("password"), $headquarter->password)){
+            return redirect()
+                ->back()
+                ->with("error", "Current Password does not matched.");
+        }
+        try {
+            $headquarter->password = bcrypt(request("password"));
+            $headquarter->save();
+        } catch (\Throwable $th) {
+            return redirect()
+                ->back()
+                ->with("error", "Whoops! something went wrong try again later.");
+        }
+        return redirect()
+            ->back()
+            ->with("success", "Password Successfully changed.");
+    }
+
+    private function changePassRules()
+    {
+        return [
+            "current_password"  => "required",
+            "password"          => "required|confirmed"
+        ];
     }
 }

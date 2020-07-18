@@ -6,6 +6,14 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
         "as"    => "dashboard",
         "uses"  => "DashboardController@dashboard"
     ]);
+    Route::get("/change-password", [
+        "as"    => "change-password",
+        "uses"  => "LoginController@changePassword"
+    ]);
+    Route::post("/change-password", [
+        "as"    => "change-password.post",
+        "uses"  => "LoginController@changePasswordPost"
+    ]);
     Route::resource('factory', 'FactoryController')->except("destroy");
     Route::group(['prefix' => 'factory'], function () {
         Route::get("/destroy/{factory}", [
