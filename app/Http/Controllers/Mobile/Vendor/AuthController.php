@@ -132,6 +132,51 @@ class AuthController extends Controller
 
     }
 
+    public function changePassword()
+    {
+        $validator = Validator::make(request()->all(), $this->changePasswordRules());
+        if($validator->fails()){
+            return response()
+                ->json([
+                    "message"   => "Please fix the issue.",
+                    "data"      => $validator->errors(),
+                    "status"    => false
+                ]);
+        }
+        try {
+
+            $vendor_id = auth("sanctum")->id();
+            $vendor = Vendor::find($vendor_id);
+
+            if (!Hash::check(request("current_password"), $vendor->password)) {
+                return response()
+                    ->json([
+                        "message" => "Current password does not match.",
+                        "data"    => null,
+                        "status"  => false,
+                    ]);
+            }
+
+            $vendor->password = bcrypt(request("password"));
+            $vendor->save();
+
+        } catch (\Throwable $th) {
+            return response()
+                ->json([
+                    "message" => "Whoops! something went wrong.",
+                    // "data"      => $vendor,
+                    "status"  => false,
+                ]);
+
+        }
+
+        return response()
+            ->json([
+                "message"   => "Password Successfully changed.",
+                // "data"      => $vendor,
+                "status"    => true
+            ]);
+    }
     private function registerRules()
     {
         return [
@@ -149,6 +194,13 @@ class AuthController extends Controller
             "account_number"      => "required|max:50",
             "account_holder_name" => "required|max:100",
             "ifsc_code"           => "required|max:100",
+        ];
+    }
+
+    private function changePasswordRules(){
+        return [
+            "password"  => "required|confirmed",
+            "current_password"  => "required"
         ];
     }
 }

@@ -44,6 +44,9 @@ Route::group(['prefix' => 'vendor'], function () {
         Route::post('offer-accept', [
             "uses"  => "Mobile\Vendor\DashboardController@acceptOffer"
         ]);
+        Route::post('change-password', [
+            "uses"  => "Mobile\Vendor\AuthController@changePassword"
+        ]);
     });
 });
 Route::group(['prefix' => 'factory'], function () {
