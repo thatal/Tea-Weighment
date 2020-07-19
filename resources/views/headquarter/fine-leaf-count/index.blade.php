@@ -26,7 +26,7 @@ Fine Leaf Count Table
                     <div class="row">
                         <div class="col-md-6 pr-5 pl-5">
                             {!! Form::open(["route" =>"headquarter.fine-leaf.create"]) !!}
-                            @include("headquarter.factory.form")
+                            @include("headquarter.fine-leaf-count.form")
                             {!! Form::close() !!}
                         </div>
                         <div class="col-md-6">
