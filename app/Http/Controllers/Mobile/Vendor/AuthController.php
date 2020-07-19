@@ -98,7 +98,7 @@ class AuthController extends Controller
                     ]);
 
             }
-
+            $factory->load(["address", "factory_information"]);
             $token                 = $factory->createToken('auth-token');
             $factory->access_token = $token->plainTextToken;
             return response()
@@ -119,6 +119,7 @@ class AuthController extends Controller
                 ]);
 
         }
+        $vendor->load(["address", "vendor_information", "bank_details"]);
 
         // $vendor               = Vendor::inRandomOrder()->first();
         $token                = $vendor->createToken('auth-token');
