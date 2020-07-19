@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($records as $key => $record)
+        @forelse ($records as $key => $record)
             <tr>
                 <td>{{ $key +1 }}</td>
                 <td>{{ $record->fine_leaf_count_from }} - {{ $record->fine_leaf_count_to }}</td>
@@ -21,6 +21,10 @@
                     <button type="button" onClick="deleteRecord(this)" data-record='{!! json_encode($record) !!}' class="btn btn-sm btn-danger">Delete</button>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td class="text-danger text-center" colspan="5">No Records found.</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
