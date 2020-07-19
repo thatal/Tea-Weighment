@@ -11,6 +11,7 @@ class VendorOffer extends Model
     public static $pending_status = "pending";
     public static $confirm_status = "confirmed";
     public static $cancelled_status_vendor = "cancelled_by_vendor";
+    public static $cancelled_status_factory = "cancelled_by_factory";
     public static $rejected_by_supplier = "rejected_by_supplier";
     public static $counter_offer = "counter_offer_sent";
     public static $first_wieght_status = "received";

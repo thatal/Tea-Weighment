@@ -17,7 +17,8 @@
         "laravel/ui": "^1.2",
         "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1",
-        "renatomarinho/laravel-page-speed": "^1.18"
+        "renatomarinho/laravel-page-speed": "^1.18",
+        "owen-it/laravel-auditing": "^10.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
@@ -67,8 +68,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
+            "@php artisan ide-helper:generate"
         ]
     }
 }

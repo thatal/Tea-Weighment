@@ -29,6 +29,20 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "uses"    => "FactoryController@loginAsFactory"
         ]);
     });
+    Route::group(['prefix' => 'leaf-count'], function () {
+        Route::get('/', [
+            "uses"  => "FineLeafController@index",
+            "as"    => "fine-leaf.index"
+        ]);
+        Route::post('/create', [
+            "uses"  => "FineLeafController@store",
+            "as"    => "fine-leaf.create"
+        ]);
+        Route::get('/ajax-data', [
+            "uses"  => "FineLeafController@ajaxData",
+            "as"    => "fine-leaf.ajax-data"
+        ]);
+    });
     Route::get("offer-accept/{vendorOffer}", [
         "uses" => 'DashboardController@confirmOrder',
         "as"   => "offer.accept",
