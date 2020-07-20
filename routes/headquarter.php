@@ -42,6 +42,18 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "uses"  => "FineLeafController@ajaxData",
             "as"    => "fine-leaf.ajax-data"
         ]);
+        Route::get('/edit/{model}', [
+            "uses"  => "FineLeafController@edit",
+            "as"    => "fine-leaf.edit"
+        ]);
+        Route::post('/edit/{model}', [
+            "uses"  => "FineLeafController@update",
+            "as"    => "fine-leaf.update"
+        ]);
+        Route::get('/delete/{model}', [
+            "uses"  => "FineLeafController@destroy",
+            "as"    => "fine-leaf.destroy"
+        ]);
     });
     Route::get("offer-accept/{vendorOffer}", [
         "uses" => 'DashboardController@confirmOrder',

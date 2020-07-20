@@ -1,4 +1,4 @@
-<h3>{{$records->count()}} records found.</h3>
+<h3>{{ $records->count() }} records found.</h3>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -17,8 +17,12 @@
                 <td>{{ $record->price }}</td>
                 <td>{{ $record->date }}</td>
                 <td>
-                    <button type="button" onClick="editRecord(this)" data-record='{!! json_encode($record) !!}' class="btn btn-sm btn-primary">Edit</button>
-                    <button type="button" onClick="deleteRecord(this)" data-record='{!! json_encode($record) !!}' class="btn btn-sm btn-danger">Delete</button>
+                    <button type="button" onClick="editRecord(this)" data-record='{!! json_encode($record) !!}'
+                        data-url="{{ route('headquarter.fine-leaf.edit', $record) }}"
+                        class="btn btn-sm btn-primary">Edit</button>
+                    <button type="button" onClick="deleteRecord(this)"
+                        data-url="{{ route('headquarter.fine-leaf.destroy', $record) }}"
+                        data-record='{!! json_encode($record) !!}' class="btn btn-sm btn-danger">Delete</button>
                 </td>
             </tr>
         @empty

@@ -26,7 +26,7 @@ Fine Leaf Count Table
                     <div class="row">
                         <div class="col-md-6 pr-5 pl-5">
                             {!! Form::open(["route" =>"headquarter.fine-leaf.create"]) !!}
-                            @include("headquarter.fine-leaf-count.form")
+                            @include ("headquarter.fine-leaf-count.form")
                             {!! Form::close() !!}
                         </div>
                         <div class="col-md-6">
@@ -53,11 +53,7 @@ Fine Leaf Count Table
                 </button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                Loading...
             </div>
         </div>
     </div>
@@ -81,16 +77,38 @@ Fine Leaf Count Table
     }
     editRecord = function (obj) {
         var $this = $(obj);
+        var url = $this.data("url");
         console.log($this.data("record"))
         var $modal = $("#editModal");
+        $modal.find(".modal-body").html("Loading...");
         $modal.modal();
+        var xhr = $.get(url);
+        xhr.done(function (response) {
+            $modal.find(".modal-body").html(response);
+        });
+        xhr.fail(function () {
+            toastr["error"]("Whoops! something went wrong.")
+        });
     }
     deleteRecord = function (obj) {
         if (!confirm("Are you sure ?")) {
             return false;
         }
         var $this = $(obj);
-        console.log($this.data("record"))
+        var url = $this.data("url");
+        $.get(url)
+        .done(function(response){
+            toastr["success"]("Successfully Deleted.");
+        })
+        .fail(function(error){
+            console.log(error)
+            toastr["error"]("Deletion failed.")
+        })
+        .always(function(res){
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
+        });
     }
 
 </script>
