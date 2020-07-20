@@ -59,7 +59,7 @@ class VendorOfferService
             second_weight as tare,
             deduction,
             confirmed_fine_leaf_count as fine_leaf,
-            confirmed_price as rate,
+            final_rate as rate,
             total_amount as amount,
             date(created_at) as date');
         if (request("export") === "excel") {
