@@ -49,6 +49,7 @@ class VendorOfferService
         });
         // $vendor_offers->whereMonth("created_at", $month);
         $vendor_offers->where("status", VendorOffer::$second_wieght_status);
+        // $vendor_offers->whereNotNull("leaf_count_added_at");
         // $vendor_offers = self::mainFilter($vendor_offers);
         $vendor_offers->with(["vendor", "factory"])
             ->selectRaw('vendor_id, factory_id,
