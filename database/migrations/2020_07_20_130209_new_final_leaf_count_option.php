@@ -29,7 +29,7 @@ class NewFinalLeafCountOption extends Migration
     public function down()
     {
         Schema::table('vendor_offers', function (Blueprint $table) {
-            $table->dropColumn('daily_leaf_cound_id', "final_rate", "leaf_count_added_by_id", );
+            $table->dropColumn('daily_leaf_cound_id', "final_rate", "leaf_count_added_by_id", "leaf_count_added_at");
         });
 
     }
