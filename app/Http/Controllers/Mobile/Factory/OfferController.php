@@ -179,7 +179,7 @@ class OfferController extends Controller
             $vendor_offer->second_weight_image = $filename;
             $vendor_offer->status              = VendorOffer::$second_wieght_status;
             $vendor_offer->net_weight          = $vendor_offer->first_weight - request("second_weight");
-            $vendor_offer->total_amount        = $vendor_offer->net_weight * $vendor_offer->confirmed_price;
+            $vendor_offer->deduction           = ($vendor_offer->net_weight /100) * $vendor_offer->confirmed_moisture;
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);

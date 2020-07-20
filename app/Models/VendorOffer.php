@@ -20,6 +20,15 @@ class VendorOffer extends Model
         "pending"   => "pending",
         "confirmed" => "confirmed",
     ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'confirmed_moisture' => 'decimal:2',
+        'expected_moisture' => 'decimal:2',
+     ];
     protected $appends = ['first_weight_image_url', 'second_weight_image_url'];
     /**
      * The attributes that aren't mass assignable.

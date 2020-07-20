@@ -73,4 +73,17 @@
         $modal.find("#counter_price").val(data.offer.offer_price);
         $modal.modal();
     }
+    addLeafCountPc = function(obj){
+        var $this = $(obj);
+        console.log($this.data())
+
+        var url = $this.data("url");
+        var $modal = $("#vendorAddPrice");
+
+        $modal.find("form").prop({
+            "action" : url
+        });
+
+        $modal.modal();
+    }
 </script>

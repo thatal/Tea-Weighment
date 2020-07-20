@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-
 class DailyFineLeafCount extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable, SoftDeletes;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
     /**
      * The attributes that aren't mass assignable.
      *

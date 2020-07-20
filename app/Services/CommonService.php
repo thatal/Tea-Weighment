@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\DailyFineLeafCount;
 use App\Models\FactoryInformation;
 use App\Models\Vendor;
 
@@ -37,5 +38,22 @@ class CommonService
             return ["" => "All"] + $vendors->pluck("name", "id")->toArray();
         }
         return $vendors->get();
+    }
+    public static function getTodaysFineLeafPrice($today = false, $guard = "web"){
+        $query = DailyFineLeafCount::query();
+        $user =auth($guard)->user();
+        if($user->isHeadQuarter()){
+            $query->where("headquarter_id", $user->id);
+        }
+        if($user->isFactory()){
+            $query->whereIn("headquarter_id", function($query) use ($user){
+                $query->select("headquarter_id")->from("factory_information")->where("user_id", $user->id);
+            });
+        }
+        if($today){
+            $query->whereDate("date", today()->format("Y-m-d"));
+        }
+        $data = $query->get();
+        return $data;
     }
 }

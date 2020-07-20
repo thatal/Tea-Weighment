@@ -12,6 +12,7 @@
             <th>Offer Price</th>
             <th>Exp. Fine leaf count</th>
             <th>Exp. Moisture</th>
+            <th>Final Price Added</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -30,6 +31,13 @@
             <td>{{$offer->offer_price}}</td>
             <td>{{$offer->expected_fine_leaf_count}}</td>
             <td>{{$offer->expected_moisture}}</td>
+            <td>
+                @if ($offer->leaf_count_added_at)
+                    <span class="badge badge-success">Yes</span>
+                @else
+                    <span class="badge badge-danger">No</span>
+                @endif
+            </td>
             <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
             <td>
                 @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
@@ -52,6 +60,18 @@
                     {{-- <button class="btn btn-primary btn-sm" disabled>
                         Accept Offer
                     </button> --}}
+                    @endif
+                    @if ($offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
+                        <button
+                        type="button"
+                        data-offer='{!!json_encode($offer)!!}'
+                        @if(auth()->user()->isFactory())
+                            data-url=""
+                        @elseif(auth()->user()->isHeadQuarter())
+                            data-url='{{route("headquarter.fine-leaf.add-price", $offer)}}'
+                        @endif
+                        data-offer='{!!json_encode($offer)!!}'
+                        class="btn btn-warning btn-sm" onClick="addLeafCountPc(this)"> Add Leaf Count % (Price)</button>
                     @endif
                     @if (in_array($offer->status, ["pending", "confirmed"]))
                         @if(auth()->user()->isHeadquarter())
@@ -123,6 +143,65 @@
                     <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="vendorAddPrice" tabindex="-1" role="dialog" aria-labelledby="vendorAddPrice"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vendorAddPrice">Add Price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-5 pl-3 pr-3">
+                            {!! Form::open(["method" => "POST"]) !!}
+                                <div class="form-group">
+                                    {!! Form::label("confirm_leaf_count", "Leaf Count %", ["class" => "label-control"]) !!}
+                                    {!! Form::number("leaf_count", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "%"]) !!}
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::label("price", "Price", ["class" => "label-control"]) !!}
+                                    {!! Form::number("price", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "Price", "step" => "0.01"]) !!}
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::submit("Submit", ["class" => "btn btn-sm btn-primary"]) !!}
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
+                        <div class="col-sm-7">
+                            <h4>Today's Leaf Price.</h4>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fine Leaf Count % range</th>
+                                        <th>Price</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse (\App\Services\CommonService::getTodaysFineLeafPrice() as $index => $item)
+                                        <tr>
+                                            <td>{{$index + 1}}</td>
+                                            <td>
+                                                {{ $item->fine_leaf_count_from }} - {{ $item->fine_leaf_count_to}}
+                                            </td>
+                                            <td>{{$item->price}}</td>
+                                            <td>{{$item->date}}</td>
+                                        </tr>
+                                    @empty
+                                        <td class="text-danger text-center">No Records found.</td>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
         </div>
     </div>
 </div>

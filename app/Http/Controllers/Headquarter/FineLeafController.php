@@ -94,7 +94,7 @@ class FineLeafController extends Controller
     public function destroy(DailyFineLeafCount $model)
     {
 
-        if (!$this->permissionToEdit($model)) {
+        if (!$this->permissionToDelete($model)) {
             return redirect()
                 ->back()
                 ->with("error", "You don't have permission to edit the record.");
@@ -112,6 +112,7 @@ class FineLeafController extends Controller
             ->with("success", "Successfully Deleted.");
 
     }
+
     private function storeRules()
     {
         return [

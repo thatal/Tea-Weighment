@@ -55,6 +55,11 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "as"    => "fine-leaf.destroy"
         ]);
     });
+    Route::post('/add-final-price/{vendor_offer}', [
+        "uses" => "HeadquarterController@addPriceToVendorOffer",
+        "as"   => "fine-leaf.add-price",
+    ]);
+
     Route::get("offer-accept/{vendorOffer}", [
         "uses" => 'DashboardController@confirmOrder',
         "as"   => "offer.accept",
