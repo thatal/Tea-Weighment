@@ -45,7 +45,7 @@ class FactoryController extends Controller
         $rules     = Factory::rules();
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            dd($validator->errors());
+            // dd($validator->errors());
             return redirect()
                 ->back()
                 ->withErrors($validator)
@@ -68,7 +68,7 @@ class FactoryController extends Controller
             $factory->address()->create($address_data);
             $factory->factory_information()->create($factory_information);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             DB::rollback();
             return redirect()
                 ->back()
