@@ -114,7 +114,7 @@ class OfferController extends Controller
             $vendor_offer->deduction          = request("deduction") ?? 0;
             $vendor_offer->confirmed_moisture = request("moisture") ?? 0;
             $vendor_offer->first_weight_image = $filename;
-            $vendor_offer->status = VendorOffer::$first_wieght_status;
+            $vendor_offer->status             = VendorOffer::$first_wieght_status;
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);
@@ -174,12 +174,15 @@ class OfferController extends Controller
             $filename = $directory . $fname;
             $file->move(storage_path("app/public/" . $directory), $fname);
             // $full_url_filename =  url() . "/" . $filename;
+            $temp_net_weight                        = $vendor_offer->first_weight - request("second_weight");
+            $deduction                         = round(($temp_net_weight / 100) * $vendor_offer->confirmed_moisture, 2);
 
+            
             $vendor_offer->second_weight       = request("second_weight");
             $vendor_offer->second_weight_image = $filename;
             $vendor_offer->status              = VendorOffer::$second_wieght_status;
-            $vendor_offer->net_weight          = $vendor_offer->first_weight - request("second_weight");
-            $vendor_offer->deduction           = ($vendor_offer->net_weight /100) * $vendor_offer->confirmed_moisture;
+            $vendor_offer->net_weight          = round($temp_net_weight - $deduction, 2);
+            $vendor_offer->deduction           = $deduction;
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);
