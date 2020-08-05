@@ -16,7 +16,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Headquarters</span>
                         <span class="info-box-number">{{
-                            \App\Models\Headquarter::count();
+                            \App\Models\Headquarter::count()
                         }}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -31,7 +31,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Factories</span>
                         <span class="info-box-number">{{
-                            \App\Models\Factory::count();
+                            \App\Models\Factory::count()
                         }}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -46,7 +46,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Suppliers</span>
                         <span class="info-box-number">{{
-                            \App\Models\Vendor::count();
+                            \App\Models\Vendor::count()
                         }}</span>
                     </div>
                     <!-- /.info-box-content -->
