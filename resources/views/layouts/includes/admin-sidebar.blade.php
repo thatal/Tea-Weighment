@@ -28,7 +28,7 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item has-treeview {{request()->is("admin/reports/vendor-offers*") ? "menu-open" : ""}}">
+        {{-- <li class="nav-item has-treeview {{request()->is("admin/reports/vendor-offers*") ? "menu-open" : ""}}">
             <a href="#" class="nav-link {{request()->is("admin/reports/vendor-offers*") ? "active" : ""}}">
                 <i class="nav-icon fas fa-chart-bar"></i>
                 <p>
@@ -56,6 +56,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
     </ul>
 </nav>
