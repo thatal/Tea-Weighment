@@ -60,7 +60,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Today Collections</span>
-                        <span class="info-box-number">93,139</span>
+                        <span class="info-box-number">{{number_format(\App\Services\VendorOfferService::todaysCollection(), 2)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
