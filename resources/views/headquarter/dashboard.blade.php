@@ -16,7 +16,7 @@ Dashboard
                 <div class="info-box-content">
                     <span class="info-box-text">Factories</span>
                     <span class="info-box-number">{{
-                        \App\Models\Factory::->whereIn("factory_id", function ($query) use ($guard) {
+                        \App\Models\Factory::whereIn("factory_id", function ($query) use ($guard) {
                             return $query->select("user_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
                         })->count()
                     }}</span>
