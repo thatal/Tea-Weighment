@@ -16,7 +16,7 @@
             @php
             $vendor_array = \App\Services\CommonService::vendor_array($for_dropdown = true);
             @endphp
-            {!! Form::label("vendor", "Vendor", ["class" => "label-control"]) !!}
+            {!! Form::label("vendor", "Supplier", ["class" => "label-control"]) !!}
             {!! Form::select("vendor", $vendor_array, request("vendor"), ["class" => "form-control"]) !!}
         </div>
     </div>

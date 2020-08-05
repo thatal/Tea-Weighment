@@ -22,7 +22,11 @@ class VendorOfferService
         $vendor_offers->when(CommonService::isVendor($guard), function ($query) use ($guard) {
             return $query->where("vendor_id", auth($guard)->user()->id);
         });
-
+        $vendor_offers->when(auth($guard)->user()->isHeadquarter(), function ($query) use ($guard) {
+            return $query->whereIn("factory_id", function ($query) use ($guard) {
+                return $query->select("user_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
+            });
+        });
         $vendor_offers = self::mainFilter($vendor_offers);
         $vendor_offers->with(["vendor", "factory", "vehicle" => function ($select) {
             return $select->select(["name", "id"]);
