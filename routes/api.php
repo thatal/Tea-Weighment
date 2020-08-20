@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// url for vendor app
 Route::group(['prefix' => 'vendor'], function () {
     Route::post('login', [
         "uses"  => "Mobile\Vendor\AuthController@login"
@@ -25,6 +26,9 @@ Route::group(['prefix' => 'vendor'], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('available-factory-fetch', [
             "uses"  => "Mobile\Vendor\DashboardController@factoryFetch"
+        ]);
+        Route::get('daily-slab-fetch', [
+            "uses"  => "Mobile\Vendor\DashboardController@factorySlabFetch"
         ]);
         Route::get('available-vehicle-type-fetch', [
             "uses"  => "Mobile\Vendor\DashboardController@vehicleFetch"
@@ -49,6 +53,7 @@ Route::group(['prefix' => 'vendor'], function () {
         ]);
     });
 });
+// url for factory app
 Route::group(['prefix' => 'factory'], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('offer-fetch', [

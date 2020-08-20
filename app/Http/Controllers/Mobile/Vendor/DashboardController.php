@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mobile\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\DailyFineLeafCount;
 use App\Models\Factory;
 use App\Models\Vehicle;
 use App\Models\VendorOffer;
@@ -21,6 +22,26 @@ class DashboardController extends Controller
             "data"    => $factories,
             "status"  => true,
             "message" => $factories->count() . " records found.",
+        ]);
+    }
+    // slab is the fine leaf count rates
+    public function factorySlabFetch()
+    {
+        $validator = Validator::make(request()->all(),[
+            "factory_id"    => "required|exists:user,id"
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                "data"      => $validator->errors(),
+                "status"    => false,
+                "message"   => implode(",", $validator->errors()->all())
+            ]);
+        }
+        $slabs = DailyFineLeafCount::factotyWise()->get();
+        return response()->json([
+            "data"    => $slabs,
+            "status"  => true,
+            "message" => $slabs->count() . " records found.",
         ]);
     }
     public function vehicleFetch()
