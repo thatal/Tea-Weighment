@@ -37,7 +37,7 @@ class DashboardController extends Controller
                 "message"   => implode(",", $validator->errors()->all())
             ]);
         }
-        $slabs = DailyFineLeafCount::factotyWise()->get();
+        $slabs = DailyFineLeafCount::get();
         return response()->json([
             "data"    => $slabs,
             "status"  => true,
