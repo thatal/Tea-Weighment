@@ -28,7 +28,7 @@ class DashboardController extends Controller
     public function factorySlabFetch()
     {
         $validator = Validator::make(request()->all(),[
-            "factory_id"    => "required|exists:user,id"
+            "factory_id"    => "required|exists:users,id"
         ]);
         if($validator->fails()){
             return response()->json([
