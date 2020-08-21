@@ -41,7 +41,7 @@
             <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
             <td>
                 @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
-                    @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
+                    {{-- @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending") --}}
                         @if(auth()->user()->isHeadquarter())
                             <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
                                 <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
@@ -56,11 +56,11 @@
                             data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
                             Counter Offer
                          </button>
-                    @else
+                    {{-- @else --}}
                     {{-- <button class="btn btn-primary btn-sm" disabled>
                         Accept Offer
                     </button> --}}
-                    @endif
+                    {{-- @endif --}}
                     @if ($offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
                         <button
                         type="button"

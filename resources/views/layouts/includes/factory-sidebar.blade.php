@@ -13,6 +13,16 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route("factory.fine-leaf.index") }}"
+                class="nav-link
+                {{ (request()->is('factory/leaf-count*')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-percent"></i>
+                <p>
+                    Daily Fine Leaf Count
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{route("factory.offer.index")}}"
                 class="nav-link {{ (request()->is('factory/reports/vendor-offers')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-chart-line"></i>

@@ -81,6 +81,7 @@ class Kernel extends HttpKernel
         'headquarter' => \App\Http\Middleware\RedirectIfNotHeadquarter::class,
         'factory.guest' => \App\Http\Middleware\RedirectIfFactory::class,
         'factory' => \App\Http\Middleware\RedirectIfNotFactory::class,
+        'factory_slab' => \App\Http\Middleware\FineLeafMiddleware::class,
     ];
 
     /**
