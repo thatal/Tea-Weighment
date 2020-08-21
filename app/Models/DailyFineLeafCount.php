@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class DailyFineLeafCount extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that should be cast to native types.
@@ -54,8 +54,10 @@ class DailyFineLeafCount extends Model implements Auditable
      */
     public function scopeFactoryFilter($query)
     {
-        if(CommonService::isFactory()){
-            return $query->where('factory_id', auth()->id());
+        if(auth()->check()){
+            if(CommonService::isFactory()){
+                return $query->where('factory_id', auth()->id());
+            }
         }
         return $query;
     }

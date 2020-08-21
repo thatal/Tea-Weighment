@@ -24,12 +24,12 @@ Fine Leaf Count Table
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 pr-5 pl-5">
+                        <div class="col-md-5 pr-5 pl-5">
                             {!! Form::open(["route" =>"factory.fine-leaf.create"]) !!}
                             @include ("factory.fine-leaf-count.form")
                             {!! Form::close() !!}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <div id="load-data">
                                 <h3>Loading ...</h3>
                             </div>
@@ -98,16 +98,38 @@ Fine Leaf Count Table
         var url = $this.data("url");
         $.get(url)
         .done(function(response){
-            toastr["success"]("Successfully Deleted.");
-        })
-        .fail(function(error){
-            console.log(error)
-            toastr["error"]("Deletion failed.")
-        })
-        .always(function(res){
+            toastr["success"]("Successfully Deactivated.");
             setTimeout(function(){
                 location.reload();
             }, 1000);
+        })
+        .fail(function(error){
+            console.log(error)
+            toastr["error"]("Deactivation failed.")
+        })
+        .always(function(res){
+
+        });
+    }
+    activateRecord = function (obj) {
+        if (!confirm("Are you sure ?")) {
+            return false;
+        }
+        var $this = $(obj);
+        var url = $this.data("url");
+        $.get(url)
+        .done(function(response){
+            toastr["success"]("Successfully Activated.");
+            setTimeout(function(){
+                location.reload();
+            }, 1000);
+        })
+        .fail(function(error){
+            console.log(error)
+            toastr["error"]("Activation failed.")
+        })
+        .always(function(res){
+
         });
     }
 

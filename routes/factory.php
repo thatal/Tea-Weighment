@@ -53,6 +53,10 @@ Route::group([
             "uses"  => "FineLeafController@destroy",
             "as"    => "fine-leaf.destroy"
         ]);
+        Route::get('/activate/{model}', [
+            "uses"  => "FineLeafController@activate",
+            "as"    => "fine-leaf.activate"
+        ]);
     });
     Route::group(['prefix' => 'reports'], function () {
         Route::get("vendor-offers", [

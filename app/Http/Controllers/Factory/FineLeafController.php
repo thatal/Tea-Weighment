@@ -103,19 +103,60 @@ class FineLeafController extends Controller
         if (!$this->permissionToDelete($model)) {
             return redirect()
                 ->back()
-                ->with("error", "You don't have permission to edit the record.");
+                ->with("error", "You don't have permission to deactivate the record.");
         }
         try {
-            $model->delete();
+            $model->update([
+                "deleted_at"    => now()->format("Y-m-d H:i:")
+            ]);
         } catch (\Throwable $th) {
             Log::error($th);
+            return response()
+            ->json([
+                "message" => "failed"
+            ], 403);
             return redirect()
                 ->back()
                 ->with("error", "Whoops! Something went wrong. try again later.");
         }
+        return response()
+        ->json([
+            "message" => "Successfully Updated."
+        ]);
         return redirect()
             ->back()
-            ->with("success", "Successfully Deleted.");
+            ->with("success", "Successfully Deactivated.");
+
+    }
+    public function activate(DailyFineLeafCount $model)
+    {
+
+        if (!$this->permissionToDelete($model)) {
+            return redirect()
+                ->back()
+                ->with("error", "You don't have permission to activate the record.");
+        }
+        try {
+            $model->update([
+                "deleted_at"    => null
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()
+            ->json([
+                "message" => "failed"
+            ], 402);
+            return redirect()
+                ->back()
+                ->with("error", "Whoops! Something went wrong. try again later.");
+        }
+        return response()
+        ->json([
+            "message" => "Successfully Updated."
+        ]);
+        return redirect()
+            ->back()
+            ->with("success", "Successfully Activated.");
 
     }
 
