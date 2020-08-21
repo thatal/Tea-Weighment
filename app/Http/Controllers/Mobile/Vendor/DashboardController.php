@@ -66,11 +66,12 @@ class DashboardController extends Controller
                 ]);
         }
         try {
+            $daily_fine_leaf_count = DailyFineLeafCount::findOrFail(request("daily_leaf_count_id"));
             $offer_data = [
                 "vendor_id"                => auth("sanctum")->id(),
                 "factory_id"               => request("factory_id"),
-                "offer_price"              => request("offer_price"),
-                "expected_fine_leaf_count" => request("expected_fine_leaf_count"),
+                "offer_price"              => $daily_fine_leaf_count->price,
+                "expected_fine_leaf_count" => $daily_fine_leaf_count->fine_leaf_count_from."-".$daily_fine_leaf_count->fine_leaf_count_to." %",
                 "expected_moisture"        => request("expected_moisture"),
                 "leaf_quantity"            => request("leaf_quantity"),
             ];
@@ -161,10 +162,11 @@ class DashboardController extends Controller
     {
         return [
             "factory_id"               => "required|exists:users,id",
-            "offer_price"              => "required|numeric|min:1",
+            // "offer_price"              => "required|numeric|min:1",
             "expected_moisture"        => "required|numeric|min:0",
-            "expected_fine_leaf_count" => "required|numeric|min:1",
+            // "expected_fine_leaf_count" => "required|numeric|min:1",
             "leaf_quantity"            => "required|numeric|min:0",
+            "daily_leaf_count_id"      => "required|exists:daily_fine_leaf_counts,id"
         ];
     }
 
