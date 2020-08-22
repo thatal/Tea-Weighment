@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\VendorOffer;
 use App\Services\CommonService;
 use App\Services\VendorOfferService;
+use Validator;
 
 class DashboardController extends Controller
 {
@@ -76,4 +77,29 @@ class DashboardController extends Controller
         }
     }
 
+    public function incentiveVendorOffer(VendorOffer $offer)
+    {
+        if($offer->factory_id !== auth()->id()){
+            return redirect()
+                ->back()
+                ->with("error", "Access Denied.");
+        }
+        $validator = Validator::make(request()->all(), [
+            "incentive_per_kg"  => "required|numeric|min:0",
+        ]);
+        if($validator->fails()){
+            return response()
+                ->json([
+                    "error"   => implode(",", $validator->errors()->all()),
+                ], 422);
+        }
+        try {
+            $offer->incentive_per_kg    = request("incentive_per_kg");
+            $offer->incentive_total     = request("incentive_per_kg") * $offer->net_weight;
+            $offer->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+    }
 }
