@@ -62,7 +62,7 @@ class DashboardController extends Controller
                 ->json([
                     "data"    => $validator->errors(),
                     "status"  => false,
-                    "message" => "Validation error.",
+                    "message" =>  implode(",", $validator->errors()->all()),
                 ]);
         }
         try {
