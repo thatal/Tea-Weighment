@@ -73,7 +73,7 @@ class DashboardController extends Controller
                 "vendor_id"                => auth("sanctum")->id(),
                 "factory_id"               => request("factory_id"),
                 "offer_price"              => $daily_fine_leaf_count->price,
-                "expected_fine_leaf_count" => $daily_fine_leaf_count->fine_leaf_count_from."-".$daily_fine_leaf_count->fine_leaf_count_to." %",
+                "expected_fine_leaf_count" => $daily_fine_leaf_count->fine_leaf_count_from."-".$daily_fine_leaf_count->fine_leaf_count_to,
                 "expected_moisture"        => request("expected_moisture"),
                 "leaf_quantity"            => request("leaf_quantity"),
             ];
