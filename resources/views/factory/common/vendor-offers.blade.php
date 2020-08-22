@@ -41,7 +41,7 @@
             <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
             <td>
                 @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
-                    {{-- @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending") --}}
+                    @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
                         @if(auth()->user()->isHeadquarter())
                             <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
                                 <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
@@ -56,12 +56,12 @@
                             data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
                             Counter Offer
                          </button>
-                    {{-- @else --}}
+                    @else
                     {{-- <button class="btn btn-primary btn-sm" disabled>
                         Accept Offer
                     </button> --}}
-                    {{-- @endif --}}
-                    @if ($offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
+                    @endif
+                    @if (auth()->user()->isFactory() && $offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
                         <button
                         type="button"
                         data-offer='{!!json_encode($offer)!!}'
@@ -83,6 +83,9 @@
                                 <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
                             </button>
                         @endif
+                    @endif
+                    @if($offer->status === \App\Models\VendorOffer::$second_wieght_status)
+                        <button class="btn btn-warning btn-sm" type="button" data-url="{{route("factory.offer.incentive", $offer->id)}}" data-offer='{{$offer->toJson()}}' onClick="addIncentive(this)"> Incentive</button>
                     @endif
                 @endif
                 <button type="button" class="btn btn-success btn-sm" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
@@ -205,3 +208,36 @@
         </div>
     </div>
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="incentiveModal" tabindex="-1" role="dialog" aria-labelledby="incentiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="incentiveModalLabel">Incentive <strong id="confirmation_code"></strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {!! Form::open(["id" => "incentiveForm", "onSubmit" => "incentiveSubmit(this, event)"]) !!}
+        <div class="modal-body">
+            <div class="form-group">
+                {!! Form::label("Net Weight", "Net Weight (KG)", ["class" => "control-label"]) !!}
+                {!! Form::number("net_weight", null, ["id" => "net_weight", "class" => "form-control", "readonly" => true]) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label("incentive_per_kg", "Incentive Per KG (Rs)", ["class" => "control-label"]) !!}
+                {!! Form::number("incentive_per_kg", null, ["id" => "incentive_per_kg", "class" => "form-control", "required" => true]) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label("total_incentive", "Total Incentive", ["class" => "control-label"]) !!}
+                {!! Form::number("total_incentive", null, ["id" => "total_incentive", "class" => "form-control", "required" => true]) !!}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        {!! Form::close() !!}
+      </div>
+    </div>
+  </div>

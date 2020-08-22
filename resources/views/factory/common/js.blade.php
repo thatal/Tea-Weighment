@@ -44,14 +44,14 @@
                    +' <th>'+data.net_weight+'</th>'
                +' </tr>'
                +' <tr>'
+                   +' <td>Incentive per kg (Rs): </td>'
+                   +' <th>'+(data.incentive_per_kg == null ? 0.00 : data.incentive_per_kg)+'</th>'
+                   +' <td>Total Incentive</td>'
+                   +' <th>'+(data.incentive_total == null ? 0.00 : data.incentive_total)+'</th>'
                    +' <td>Total Amount (Rs): </td>'
-                    +'<th>'+data.total_amount+'</th>'
+                    +'<th>'+(data.total_amount + (data.incentive_total == null ? 0.00 : data.incentive_total))+'</th>'
                    +' <td>Status: </td>'
                    +' <th>'+data.status+'</th>'
-                   +' <td></td>'
-                   +' <th></th>'
-                   +' <td></td>'
-                   +' <th></th>'
                +' </tr>'
             +'</tbody>'
        +' </table>';
@@ -86,4 +86,58 @@
 
         $modal.modal();
     }
+    addIncentive = function(obj){
+        var $this = $(obj);
+        var $modal = $("#incentiveModal");
+        console.log($this.data())
+        $modal.find("form").attr("action", $this.data("url"));
+        $modal.find("#net_weight").val($this.data("offer").net_weight);
+        $modal.modal();
+    }
+    incentiveSubmit = function(obj, event){
+        event.preventDefault();
+        var $this = $(obj);
+        var incentive_kg = parseFloat($("#incentive_per_kg").val());
+        if( incentive_kg == 0 || isNaN(incentive_kg)){
+            toastr["error"]("incentive per kg field is required.");
+            return false;
+        }
+        $("body").css("cursor", "progress");
+        var formData = $this.serialize();
+        var url = $this.attr("action");
+        var xhr = $.post(url, formData);
+        $("#incentiveModal").find("button[type='submit']").prop("disabled", true);
+        xhr.done(function(resp){
+            // resp = JSON.parse(resp);
+            toastr["success"](resp.message);
+            $("#incentiveModal").modal("hide");
+        })
+        .fail(function(error){
+            // error = JSON.parse(error);
+            toastr["error"](JSON.parse(error.responseText).message);
+        })
+        .always(function(){
+            $("body").css("cursor", "default");
+            $("#incentiveModal").find("button[type='submit']").prop("disabled", false);
+        });
+    }
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        $("#incentive_per_kg").keyup(function(){
+            var value = parseFloat($(this).val());
+            if(isNaN(value)){
+                value = 0.00;
+            }
+            var net_weight = parseFloat($(this).parents("form").find("#net_weight").val());
+            if(isNaN(net_weight)){
+                net_weight = 0.00;
+            }
+            var total = net_weight * value;
+            $(this).parents("form").find("#total_incentive").val(total)
+        });
+    })
 </script>

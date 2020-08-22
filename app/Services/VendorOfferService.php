@@ -65,7 +65,8 @@ class VendorOfferService
             deduction,
             confirmed_fine_leaf_count as fine_leaf,
             final_rate as rate,
-            total_amount as amount,
+            (total_amount + incentive_total) as amount,
+            incentive_total,
             date(created_at) as date');
         if (request("export") === "excel") {
             // return Excel::download(new VendorOfferExport($vendor_offers->get()), "vendor_offer_.xlsx");
@@ -86,6 +87,7 @@ class VendorOfferService
                 "sub_total_net_weight" => $item->sum("sum_weight"),
                 "sub_total_rate"       => $item->avg("rate"),
                 "sub_total_fine_leaf"  => $item->avg("fine_leaf"),
+                "sub_incentive"        => $item->sum("incentive_total"),
 
             ];
         });
@@ -102,6 +104,7 @@ class VendorOfferService
         $grouped_data["grand_total_net_weight"] = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_total_net_weight") : 0;
         $grouped_data["grand_total_rate"]       = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_rate") : 0;
         $grouped_data["grand_total_fine_leaf"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_fine_leaf") : 0;
+        $grouped_data["grand_total_incentive"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_incentive") : 0;
         // dd($grouped_data);
         return $grouped_data;
 

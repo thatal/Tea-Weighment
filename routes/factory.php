@@ -28,6 +28,11 @@ Route::group([
         "as"   => "offer.cancel",
         "middleware"    => "factory_slab"
     ]);
+    Route::post("offer-incentive/{vendorOffer}", [
+        "uses" => 'DashboardController@incentiveVendorOffer',
+        "as"   => "offer.incentive",
+        "middleware"    => "factory_slab"
+    ]);
     Route::group(['prefix' => 'leaf-count'], function () {
         Route::get('/', [
             "uses"  => "FineLeafController@index",

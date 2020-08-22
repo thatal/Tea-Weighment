@@ -10,6 +10,7 @@
             <th>Net(Kg.)</th>
             <th>F.Leaf(%)</th>
             <th>Rate</th>
+            <th>Incentive</th>
             <th>Amount</th>
         </tr>
     </thead>
@@ -17,7 +18,7 @@
         @if(isset($summary_reports["records"]))
             @forelse($summary_reports["records"] as $key => $summary)
                 <tr>
-                    <th colspan="10">
+                    <th colspan="11">
                         {{$summary["vendor"]["name"] ?? "N/A"}}
                     </th>
                 </tr>
@@ -32,6 +33,7 @@
                         <td class="text-right">{{$row->sum_weight}}</td>
                         <td class="text-right">{{$row->fine_leaf}}</td>
                         <td class="text-right">{{$row->rate}}</td>
+                        <td class="text-right">{{$row->incentive_total ?? 0.00}}</td>
                         <td class="text-right">{{$row->amount}}</td>
                     </tr>
                 @endforeach
@@ -43,6 +45,7 @@
                     <td class="text-right">{{$summary["sub_total_net_weight"]}}</td>
                     <td class="text-right">{{$summary["sub_total_fine_leaf"]}}</td>
                     <td class="text-right">{{$summary["sub_total_rate"]}}</td>
+                    <td class="text-right">{{$summary["sub_incentive"]}}</td>
                     <td class="text-right">{{$summary["sub_total_amount"]}}</td>
                 </tr>
             @empty
@@ -58,11 +61,12 @@
             <td class="text-right">{{$summary_reports["grand_total_net_weight"]}}</td>
             <td class="text-right">{{$summary_reports["grand_total_fine_leaf"]}}</td>
             <td class="text-right">{{$summary_reports["grand_total_rate"]}}</td>
+            <td class="text-right">{{$summary_reports["grand_total_incentive"]}}</td>
             <td class="text-right">{{$summary_reports["grand_total_amount"]}}</td>
         </tr>
         @else
             <tr>
-                <td class="text-danger text-center" colspan="10">No records found for summary.</td>
+                <td class="text-danger text-center" colspan="11">No records found for summary.</td>
             </tr>
         @endif
     </tbody>

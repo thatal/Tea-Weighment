@@ -77,9 +77,13 @@ class DashboardController extends Controller
         }
     }
 
-    public function incentiveVendorOffer(VendorOffer $offer)
+    public function incentiveVendorOffer(VendorOffer $vendorOffer)
     {
-        if($offer->factory_id !== auth()->id()){
+        if($vendorOffer->factory_id !== auth()->id()){
+            return response()
+                ->json([
+                    "message"   => "Access denied.",
+                ], 401);
             return redirect()
                 ->back()
                 ->with("error", "Access Denied.");
@@ -90,16 +94,25 @@ class DashboardController extends Controller
         if($validator->fails()){
             return response()
                 ->json([
-                    "error"   => implode(",", $validator->errors()->all()),
+                    "message"   => implode(",", $validator->errors()->all()),
                 ], 422);
         }
         try {
-            $offer->incentive_per_kg    = request("incentive_per_kg");
-            $offer->incentive_total     = request("incentive_per_kg") * $offer->net_weight;
-            $offer->save();
+            $vendorOffer->incentive_per_kg    = request("incentive_per_kg");
+            $vendorOffer->incentive_total     = request("incentive_per_kg") * $vendorOffer->net_weight;
+            $vendorOffer->incentive_added_by_id     = auth()->id();
+            $vendorOffer->save();
         } catch (\Throwable $th) {
-            //throw $th;
+            \Log::error($th);
+            return response()
+                ->json([
+                    "message"   => "Whoops! Something went wrong. try again later.",
+                ], 422);
         }
+        return response()
+        ->json([
+            "message"   => "Successfully updated Incentive..",
+        ]);
 
     }
 }
