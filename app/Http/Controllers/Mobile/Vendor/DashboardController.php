@@ -58,6 +58,8 @@ class DashboardController extends Controller
     {
         $validator = Validator::make($request->all(), $this->offerCreateRule());
         if ($validator->fails()) {
+            Log::info(request()->all());
+            Log::error($validator->errors()->all());
             return response()
                 ->json([
                     "data"    => $validator->errors(),
