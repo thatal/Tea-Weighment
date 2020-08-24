@@ -86,3 +86,6 @@ Route::group(["prefix" => "admin"], function(){
         Route::resource('vehicle', 'Api\VehicleController');
     });
 });
+Route::get("app-version", function(){
+    return env("APP_VERSION");
+});
