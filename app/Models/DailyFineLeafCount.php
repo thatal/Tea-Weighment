@@ -43,6 +43,7 @@ class DailyFineLeafCount extends Model implements Auditable
      */
     public function scopeToday($query)
     {
+        return $query;
         return $query->whereDate('date', date("Y-m-d"));
     }
 

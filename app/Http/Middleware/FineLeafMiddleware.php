@@ -18,6 +18,7 @@ class FineLeafMiddleware
      */
     public function handle($request, Closure $next)
     {
+        return $next($request);
         // only check if user is factory
         if(CommonService::isFactory()){
             $todays_slab = DailyFineLeafCount::where("factory_id", auth()->id())
