@@ -87,5 +87,7 @@ Route::group(["prefix" => "admin"], function(){
     });
 });
 Route::get("app-version", function(){
-    return env("APP_VERSION");
+    return [
+        "version"   => env("APP_VERSION")
+    ];
 });
