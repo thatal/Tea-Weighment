@@ -50,7 +50,27 @@ class Vendor extends User
     {
         return $this->hasOne(VendorInformation::class, "vendor_id", "id");
     }
-
+    /**
+     * Scope a query to only include globalFilter
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGlobalFilter($query)
+    {
+        return $query->whereHas("vendor_information", function($query){
+            if(auth()->check()){
+                $user = auth()->user();
+                if($user->role === Headquarter::$role){
+                    $query->where("headquarter_id", auth()->id());
+                }elseif($user->role === Factory::$role){
+                    $factory = Factory::with("factory_information")->find($user->id);
+                    $query->where("headquarter_id",  $factory->factory_information->headquarter_id);
+                }
+            }
+            return $query;
+        });
+    }
     public function bank_details()
     {
         return $this->hasMany(VendorBankDetails::class, "vendor_id", "id");
