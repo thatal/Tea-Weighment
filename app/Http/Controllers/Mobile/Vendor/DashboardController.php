@@ -82,7 +82,7 @@ class DashboardController extends Controller
                 "factory_id"               => request("factory_id"),
                 "offer_price"              => request("offer_price"),
                 "expected_fine_leaf_count" => $daily_fine_leaf_count->fine_leaf_count_from."-".$daily_fine_leaf_count->fine_leaf_count_to,
-                "expected_moisture"        => request("expected_moisture"),
+                "expected_moisture"        => request("expected_moisture") ?? 0,
                 "leaf_quantity"            => request("leaf_quantity"),
             ];
             VendorOffer::create($offer_data);
