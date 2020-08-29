@@ -165,7 +165,7 @@ class DashboardController extends Controller
         return [
             "factory_id"               => "required|exists:users,id",
             "offer_price"              => "required|numeric|min:1",
-            "expected_moisture"        => "required|numeric|min:0",
+            "expected_moisture"        => "nullable|required|numeric|min:0",
             "expected_fine_leaf_count" => "exists:daily_fine_leaf_counts,id",
             "leaf_quantity"            => "required|numeric|min:0",
             // "daily_leaf_count_id"      => "required|exists:daily_fine_leaf_counts,id"

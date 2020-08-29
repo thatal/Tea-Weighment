@@ -177,8 +177,9 @@ class OfferController extends Controller
             $temp_net_weight                        = $vendor_offer->first_weight - request("second_weight");
             $deduction                         = round(($temp_net_weight / 100) * $vendor_offer->confirmed_moisture, 2);
 
-            
+
             $vendor_offer->second_weight       = request("second_weight");
+            $vendor_offer->confirmed_fine_leaf_count = request("fineLeafCount");
             $vendor_offer->second_weight_image = $filename;
             $vendor_offer->status              = VendorOffer::$second_wieght_status;
             $vendor_offer->net_weight          = round($temp_net_weight - $deduction, 2);
@@ -224,6 +225,7 @@ class OfferController extends Controller
             "confirmation_code"   => "required",
             "second_weight"       => "required|numeric|min:1",
             "second_weight_image" => "required|image",
+            "fineLeafCount"       => "required|numeric|min:1|max:100"
         ];
     }
 }
