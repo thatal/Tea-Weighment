@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Mobile\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Factory;
+use App\Models\Headquarter;
 use App\Models\Vendor;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Log;
 use Validator;
 
@@ -32,8 +34,10 @@ class AuthController extends Controller
                 "email"    => request("email"),
                 "password" => bcrypt(request("password")),
             ]);
+            $headquarter = Headquarter::where("username", request("companyCode"))->first();
             $vendor_info = [
                 "mobile" => request("mobile"),
+                "headquarter_id" => $headquarter->id,
             ];
             $vendor_address = [
                 "address_1" => request("address_1"),
@@ -190,6 +194,9 @@ class AuthController extends Controller
             "address_1"           => "required|max:255",
             "address_2"           => "nullable|max:255",
             "pin"                 => "required|digits:6",
+            "companyCode"         => "required|".Rule::exists("users", "username")->where(function($query){
+                return $query->where("role", Headquarter::$role);
+            }),
             // bank details
             "bank_name"           => "required|max:255",
             "account_number"      => "required|max:50",
