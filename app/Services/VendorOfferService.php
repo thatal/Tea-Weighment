@@ -152,8 +152,8 @@ class VendorOfferService
         return $vendorOffer->update([
             "confirmed_at"              => now()->format("Y-m-d H:i:s"),
             "confirmed_price"           => $vendorOffer->offer_price,
-            "confirmed_fine_leaf_count" => $vendorOffer->expected_fine_leaf_count,
-            "confirmed_moisture"        => $vendorOffer->expected_moisture,
+         /*    "confirmed_fine_leaf_count" => $vendorOffer->expected_fine_leaf_count,
+            "confirmed_moisture"        => $vendorOffer->expected_moisture, */
             "confirmed_by_id"           => auth($guard)->id(),
             "confirmed_by_type"         => get_class(auth($guard)->user()),
             "confirmation_code"         => $confirmation_no,
