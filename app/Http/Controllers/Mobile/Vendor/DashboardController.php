@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DailyFineLeafCount;
 use App\Models\Factory;
 use App\Models\Vehicle;
+use App\Models\Vendor;
 use App\Models\VendorOffer;
 use App\Services\VendorOfferService;
 use Illuminate\Http\Request;
@@ -17,7 +18,14 @@ class DashboardController extends Controller
     private $guard = "sanctum";
     public function factoryFetch()
     {
-        $factories = Factory::/* with(["factory_information"]) */select(["id", "name"])->available()->get();
+        $user_id = auth($this->guard)->id();
+        $vendor = Vendor::with("vendor_information")->findOrFail($user_id);
+        $factories = Factory::/* with(["factory_information"]) */select(["id", "name"])
+        ->whereHas("factory_information", function($query) use ($vendor){
+            return $query->where("headquarter_id", $vendor->vendor_information->headquarter_id);
+        })
+        ->available()
+        ->get();
         return response()->json([
             "data"    => $factories,
             "status"  => true,
@@ -165,7 +173,7 @@ class DashboardController extends Controller
         return [
             "factory_id"               => "required|exists:users,id",
             "offer_price"              => "required|numeric|min:1",
-            "expected_moisture"        => "nullable|required|numeric|min:0",
+            "expected_moisture"        => "nullable|numeric|min:0",
             "expected_fine_leaf_count" => "exists:daily_fine_leaf_counts,id",
             "leaf_quantity"            => "required|numeric|min:0",
             // "daily_leaf_count_id"      => "required|exists:daily_fine_leaf_counts,id"
