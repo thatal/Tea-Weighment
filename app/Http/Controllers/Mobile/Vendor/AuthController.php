@@ -21,9 +21,9 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()
                 ->json([
-                    "message" => implode(",", $validator->errors()->all()),
                     "status"  => false,
-                    "data"    => $validator->errors(),
+                    "data"    => $validator->errors()->all(),
+                    "message" => implode(",", $validator->errors()->all()),
                 ]);
         }
         DB::beginTransaction();
