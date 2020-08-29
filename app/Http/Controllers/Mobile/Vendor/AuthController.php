@@ -21,9 +21,9 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()
                 ->json([
-                    "message" => "Please fix the errors.",
+                    "message" => implode(",", $validator->errors()->all()),
                     "status"  => false,
-                    "data"    => $validator->errors(),
+                    // "data"    => $validator->errors(),
                 ]);
         }
         DB::beginTransaction();
@@ -65,7 +65,7 @@ class AuthController extends Controller
             return response()
                 ->json([
                     "message" => "Supplier registration failed.",
-                    "data"    => null,
+                    // "data"    => null,
                     "status"  => false,
                 ]);
 
