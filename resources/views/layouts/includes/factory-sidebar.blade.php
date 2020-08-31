@@ -23,6 +23,15 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{route("factory.vendor.index")}}"
+                class="nav-link {{ (request()->is('factory/vendor*')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-industry"></i>
+                <p>
+                    Suppliers
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{route("factory.offer.index")}}"
                 class="nav-link {{ (request()->is('factory/reports/vendor-offers')) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-chart-line"></i>

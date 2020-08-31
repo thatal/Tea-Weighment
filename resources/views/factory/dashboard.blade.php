@@ -15,7 +15,7 @@ Dashboard
 
                 <div class="info-box-content">
                     <span class="info-box-text">Suppliers</span>
-                    <span class="info-box-number">{{\App\Models\Vendor::globalFilter()->count()}}</span>
+                    <span class="info-box-number"><a href="{{route("factory.vendor.index")}}">{{\App\Models\Vendor::globalFilter()->count()}}</a></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

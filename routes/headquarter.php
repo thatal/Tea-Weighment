@@ -14,6 +14,12 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
         "as"    => "change-password.post",
         "uses"  => "LoginController@changePasswordPost"
     ]);
+    Route::group(['prefix' => 'vendor'], function () {
+        Route::get("/", [
+            "uses"  => "VendorController@index",
+            "as"  => "vendor.index",
+        ]);
+    });
     Route::resource('factory', 'FactoryController')->except("destroy");
     Route::group(['prefix' => 'factory'], function () {
         Route::get("/destroy/{factory}", [

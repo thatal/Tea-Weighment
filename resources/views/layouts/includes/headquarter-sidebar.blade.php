@@ -31,6 +31,15 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{route("headquarter.vendor.index")}}"
+                class="nav-link {{ (request()->is('headquarter/vendor*')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-industry"></i>
+                <p>
+                    Suppliers
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route("headquarter.fine-leaf.index") }}"
                 class="nav-link
                 {{ (request()->is('headquarter/leaf-count*')) ? 'active' : '' }}">

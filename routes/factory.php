@@ -33,6 +33,12 @@ Route::group([
         "as"   => "offer.incentive",
         "middleware"    => "factory_slab"
     ]);
+    Route::group(['prefix' => 'vendor'], function () {
+        Route::get("/", [
+            "uses"  => "VendorController@index",
+            "as"  => "vendor.index",
+        ]);
+    });
     Route::group(['prefix' => 'leaf-count'], function () {
         Route::get('/', [
             "uses"  => "FineLeafController@index",

@@ -18,11 +18,11 @@ Dashboard
                     @php
                         $guard = "web";
                     @endphp
-                    <span class="info-box-number">{{
+                    <span class="info-box-number"><a href="{{route("headquarter.factory.index")}}">{{
                         \App\Models\Factory::whereIn("id", function ($query) use ($guard) {
                             return $query->select("user_id")->from("factory_information")->where("headquarter_id", auth($guard)->id());
                         })->count()
-                    }}</span>
+                    }}</a></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -35,7 +35,7 @@ Dashboard
 
                 <div class="info-box-content">
                     <span class="info-box-text">Suppliers</span>
-                    <span class="info-box-number">{{\App\Models\Vendor::globalFilter()->count()}}</span>
+                    <span class="info-box-number"><a href="{{route("headquarter.vendor.index")}}">{{\App\Models\Vendor::globalFilter()->count()}}</a></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
