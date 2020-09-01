@@ -45,7 +45,7 @@ class DashboardController extends Controller
                 "message"   => implode(",", $validator->errors()->all())
             ]);
         }
-        $slabs = DailyFineLeafCount::today()->active()->get();
+        $slabs = DailyFineLeafCount::where("factory_id", request("factory_id"))->active()->get();
         return response()->json([
             "data"    => $slabs,
             "status"  => true,
