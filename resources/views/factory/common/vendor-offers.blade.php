@@ -18,81 +18,90 @@
         </tr>
     </thead>
     <tbody>
-        @forelse($vendor_offers as $key => $offer)
-        <tr>
-            <td>{{(($vendor_offers->currentPage() - 1 ) * $vendor_offers->perPage() ) + 1 + $key}}</td>
-            <td>{{$offer->created_at->format("Y-m-d")}}</td>
-            <td>{{$offer->vendor->name ?? "NA"}}</td>
-            @if(auth()->user()->isHeadquarter())
-                <td>{{$offer->factory->name ?? "NA"}}</td>
-            @endif
-            <td>{{$offer->confirmation_code ?? "N/A"}}</td>
-            <td>{{$offer->leaf_quantity}}</td>
-            <td>{{$offer->offer_price}}</td>
-            <td>{{$offer->expected_fine_leaf_count}}</td>
-            <td>{{$offer->expected_moisture}}</td>
-            <td>
-                @if ($offer->leaf_count_added_at)
-                    <span class="badge badge-success">Yes</span>
-                @else
-                    <span class="badge badge-danger">No</span>
-                @endif
-            </td>
-            <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
-            <td>
-                @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
-                    @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
-                        @if(auth()->user()->isHeadquarter())
-                            <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
-                                <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
-                            </button>
+        @php
+            $vendor_offers_grouped = $vendor_offers->groupBy(function($offer){
+                return $offer->created_at->format("Y-m-d");
+            });
+        @endphp
+        @forelse ($vendor_offers_grouped as $date => $vendor_offers_all)
+            <tr>
+                <td class="text-danger" colspan="7"><strong>{{$date}}</strong></td>
+            </tr>
+            @foreach($vendor_offers_all as $key => $offer)
+                <tr>
+                    <td>{{(($vendor_offers->currentPage() - 1 ) * $vendor_offers->perPage() ) + 1 + $key}}</td>
+                    <td>{{$offer->created_at->format("Y-m-d")}}</td>
+                    <td>{{$offer->vendor->name ?? "NA"}}</td>
+                    @if(auth()->user()->isHeadquarter())
+                        <td>{{$offer->factory->name ?? "NA"}}</td>
+                    @endif
+                    <td>{{$offer->confirmation_code ?? "N/A"}}</td>
+                    <td>{{$offer->leaf_quantity}}</td>
+                    <td>{{$offer->offer_price}}</td>
+                    <td>{{$offer->expected_fine_leaf_count}}</td>
+                    <td>{{$offer->expected_moisture}}</td>
+                    <td>
+                        @if ($offer->leaf_count_added_at)
+                            <span class="badge badge-success">Yes</span>
                         @else
-                            <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
-                                <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
-                            </button>
+                            <span class="badge badge-danger">No</span>
                         @endif
-                        <button class="btn btn-warning btn-sm"
-                            data-url="{{ route('headquarter.counter.offer', $offer) }}"
-                            data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
-                            Counter Offer
-                         </button>
-                    @else
-                    {{-- <button class="btn btn-primary btn-sm" disabled>
-                        Accept Offer
-                    </button> --}}
-                    @endif
-                    @if (auth()->user()->isFactory() && $offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
-                        <button
-                        type="button"
-                        data-offer='{!!json_encode($offer)!!}'
-                        @if(auth()->user()->isFactory())
-                            data-url=""
-                        @elseif(auth()->user()->isHeadQuarter())
-                            data-url='{{route("headquarter.fine-leaf.add-price", $offer)}}'
+                    </td>
+                    <td>{{ucwords(str_replace("_", " ",$offer->status))}}</td>
+                    <td>
+                        @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
+                            @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
+                                @if(auth()->user()->isHeadquarter())
+                                    <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                        <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                                    </button>
+                                @else
+                                    <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                        <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
+                                    </button>
+                                @endif
+                                <button class="btn btn-warning btn-sm"
+                                    data-url="{{ route('headquarter.counter.offer', $offer) }}"
+                                    data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
+                                    Counter Offer
+                                </button>
+                            @else
+                            {{-- <button class="btn btn-primary btn-sm" disabled>
+                                Accept Offer
+                            </button> --}}
+                            @endif
+                            @if (auth()->user()->isFactory() && $offer->status == \App\Models\VendorOffer::$second_wieght_status && !$offer->leaf_count_added_at )
+                                <button
+                                type="button"
+                                data-offer='{!!json_encode($offer)!!}'
+                                @if(auth()->user()->isFactory())
+                                    data-url=""
+                                @elseif(auth()->user()->isHeadQuarter())
+                                    data-url='{{route("headquarter.fine-leaf.add-price", $offer)}}'
+                                @endif
+                                data-offer='{!!json_encode($offer)!!}'
+                                class="btn btn-warning btn-sm" onClick="addLeafCountPc(this)"> Add Leaf Count % (Price)</button>
+                            @endif
+                            @if (in_array($offer->status, ["pending", "confirmed"]))
+                                @if(auth()->user()->isHeadquarter())
+                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                        <a href="{{route("headquarter.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
+                                    </button>
+                                @else
+                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                        <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
+                                    </button>
+                                @endif
+                            @endif
+                            @if($offer->status === \App\Models\VendorOffer::$second_wieght_status)
+                                <button class="btn btn-warning btn-sm" type="button" data-url="{{route("factory.offer.incentive", $offer->id)}}" data-offer='{{$offer->toJson()}}' onClick="addIncentive(this)"> Incentive</button>
+                            @endif
                         @endif
-                        data-offer='{!!json_encode($offer)!!}'
-                        class="btn btn-warning btn-sm" onClick="addLeafCountPc(this)"> Add Leaf Count % (Price)</button>
-                    @endif
-                    @if (in_array($offer->status, ["pending", "confirmed"]))
-                        @if(auth()->user()->isHeadquarter())
-                            <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
-                                <a href="{{route("headquarter.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
-                            </button>
-                        @else
-                            <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
-                                <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
-                            </button>
-                        @endif
-                    @endif
-                    @if($offer->status === \App\Models\VendorOffer::$second_wieght_status)
-                        <button class="btn btn-warning btn-sm" type="button" data-url="{{route("factory.offer.incentive", $offer->id)}}" data-offer='{{$offer->toJson()}}' onClick="addIncentive(this)"> Incentive</button>
-                    @endif
-                @endif
-                <button type="button" class="btn btn-success btn-sm" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
-                        class="far fa-eye"></i> View</button>
-            </td>
-        </tr>
-
+                        <button type="button" class="btn btn-success btn-sm" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
+                                class="far fa-eye"></i> View</button>
+                    </td>
+                </tr>
+            @endforeach
         @empty
         <tr>
             <td class="text-danger text-center" colspan="7">No records found.</td>
