@@ -39,7 +39,7 @@ Supplier Offers
                     </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0" style="height: 60vh;">
+                <div class="card-body table-responsive p-0">
                     @include("factory.common.vendor-offers", ["vendor_offers" => $vendor_offers])
                     {!!$vendor_offers->appends(request("all"))->links()!!}
                 </div>

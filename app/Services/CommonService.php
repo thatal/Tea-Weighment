@@ -29,11 +29,12 @@ class CommonService
 
     public static function vendor_array($for_select = false){
         $vendors = Vendor::query();
-        $vendors->when(self::isFactory(), function($query){
+       /*  $vendors->when(self::isFactory(), function($query){
             return $query->whereIn("id", function($query){
                 return $query->select("vendor_id")->from("vendor_offers")->where("factory_id", auth()->id());
             });
-        });
+        }); */
+        $vendors->globalFilter();
         if($for_select){
             return ["" => "All"] + $vendors->pluck("name", "id")->toArray();
         }

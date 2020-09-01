@@ -122,6 +122,9 @@
         });
     }
     $(document).ready(function(){
+        $(document).ready(function(){
+            $("body").addClass("sidebar-collapse");
+        })
         $.ajaxSetup({
             headers: {
                 'Accept': 'application/json'
