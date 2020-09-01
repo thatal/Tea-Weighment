@@ -52,21 +52,21 @@
                         @if(auth()->user()->isFactory() || auth()->user()->isHeadquarter())
                             @if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending")
                                 @if(auth()->user()->isHeadquarter())
-                                    <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                    <button class="btn btn-primary btn-xs" onClick="return confirm('Are you sure ?')">
                                         <a href="{{route("headquarter.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
                                     </button>
                                 @else
-                                    <button class="btn btn-primary btn-sm" onClick="return confirm('Are you sure ?')">
+                                    <button class="btn btn-primary btn-xs" onClick="return confirm('Are you sure ?')">
                                         <a href="{{route("factory.offer.accept", $offer->id)}}" style="color:white;">Accept Offer</a>
                                     </button>
                                 @endif
-                                <button class="btn btn-warning btn-sm"
+                                <button class="btn btn-warning btn-xs"
                                     data-url="{{ route('headquarter.counter.offer', $offer) }}"
                                     data-offer="{{ json_encode($offer) }}" onClick="counterOffer(this)">
                                     Counter Offer
                                 </button>
                             @else
-                            {{-- <button class="btn btn-primary btn-sm" disabled>
+                            {{-- <button class="btn btn-primary btn-xs" disabled>
                                 Accept Offer
                             </button> --}}
                             @endif
@@ -80,24 +80,24 @@
                                     data-url='{{route("headquarter.fine-leaf.add-price", $offer)}}'
                                 @endif
                                 data-offer='{!!json_encode($offer)!!}'
-                                class="btn btn-warning btn-sm" onClick="addLeafCountPc(this)"> Add Leaf Count % (Price)</button>
+                                class="btn btn-warning btn-xs" onClick="addLeafCountPc(this)"> Add Leaf Count % (Price)</button>
                             @endif
                             @if (in_array($offer->status, ["pending", "confirmed"]))
                                 @if(auth()->user()->isHeadquarter())
-                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                    <button class="btn btn-danger btn-xs" onClick="return confirm('Are you sure ?')">
                                         <a href="{{route("headquarter.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
                                     </button>
                                 @else
-                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Are you sure ?')">
+                                    <button class="btn btn-danger btn-xs" onClick="return confirm('Are you sure ?')">
                                         <a href="{{route("factory.offer.cancel", $offer->id)}}" style="color:white;">Cancel Offer</a>
                                     </button>
                                 @endif
                             @endif
                             @if($offer->status === \App\Models\VendorOffer::$second_wieght_status)
-                                <button class="btn btn-warning btn-sm" type="button" data-url="{{route("factory.offer.incentive", $offer->id)}}" data-offer='{{$offer->toJson()}}' onClick="addIncentive(this)"> Incentive</button>
+                                <button class="btn btn-warning btn-xs" type="button" data-url="{{route("factory.offer.incentive", $offer->id)}}" data-offer='{{$offer->toJson()}}' onClick="addIncentive(this)"> Incentive</button>
                             @endif
                         @endif
-                        <button type="button" class="btn btn-success btn-sm" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
+                        <button type="button" class="btn btn-success btn-xs" onclick="showDetails(this)" data-offer="{{json_encode($offer)}}"><i
                                 class="far fa-eye"></i> View</button>
                     </td>
                 </tr>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <div class="modal-footer text-right">
-                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-xs btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -181,7 +181,7 @@
                                     {!! Form::number("price", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "Price", "step" => "0.01"]) !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::submit("Submit", ["class" => "btn btn-sm btn-primary"]) !!}
+                                    {!! Form::submit("Submit", ["class" => "btn btn-xs btn-primary"]) !!}
                                 </div>
                             {!! Form::close() !!}
                         </div>
