@@ -10,8 +10,8 @@
             <th>Confirmation</th>
             <th>Qty</th>
             <th>Offer Price</th>
-            <th>Exp. Fine leaf count</th>
-            <th>Exp. Moisture</th>
+            {{-- <th>Exp. Fine leaf count</th> --}}
+            {{-- <th>Exp. Moisture</th> --}}
             <th>Final Price Added</th>
             <th>Status</th>
             <th>Action</th>
@@ -38,8 +38,8 @@
                     <td>{{$offer->confirmation_code ?? "N/A"}}</td>
                     <td>{{$offer->leaf_quantity}}</td>
                     <td>{{$offer->offer_price}}</td>
-                    <td>{{$offer->expected_fine_leaf_count}}</td>
-                    <td>{{$offer->expected_moisture}}</td>
+                    {{-- <td>{{$offer->expected_fine_leaf_count}}</td> --}}
+                    {{-- <td>{{$offer->expected_moisture}}</td> --}}
                     <td>
                         @if ($offer->leaf_count_added_at)
                             <span class="badge badge-success">Yes</span>
