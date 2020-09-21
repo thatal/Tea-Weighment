@@ -69,6 +69,10 @@ Route::group([
             "as"    => "fine-leaf.activate"
         ]);
     });
+    Route::post('/add-final-price/{vendor_offer}', [
+        "uses" => "FactoryController@addPriceToVendorOffer",
+        "as"   => "fine-leaf.add-price",
+    ]);
     Route::group(['prefix' => 'reports'], function () {
         Route::get("vendor-offers", [
             "uses" => 'FactoryController@vendorOffers',

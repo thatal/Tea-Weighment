@@ -75,7 +75,7 @@
                                 type="button"
                                 data-offer='{!!json_encode($offer)!!}'
                                 @if(auth()->user()->isFactory())
-                                    data-url=""
+                                    data-url="{{route("factory.fine-leaf.add-price", $offer)}}"
                                 @elseif(auth()->user()->isHeadQuarter())
                                     data-url='{{route("headquarter.fine-leaf.add-price", $offer)}}'
                                 @endif
@@ -174,11 +174,11 @@
                             {!! Form::open(["method" => "POST"]) !!}
                                 <div class="form-group">
                                     {!! Form::label("confirm_leaf_count", "Leaf Count %", ["class" => "label-control"]) !!}
-                                    {!! Form::number("leaf_count", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "%"]) !!}
+                                    {!! Form::number("leaf_count", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "%", "id" => "leaf_pc_input"]) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label("price", "Price", ["class" => "label-control"]) !!}
-                                    {!! Form::number("price", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "Price", "step" => "0.01"]) !!}
+                                    {!! Form::number("price", null, ["min" => 1, "class" => "form-control input-sm", "required" =>  true, "placeholder" => "Price", "step" => "0.01", "id" => "leaf_price_input"]) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::submit("Submit", ["class" => "btn btn-xs btn-primary"]) !!}

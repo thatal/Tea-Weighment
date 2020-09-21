@@ -1,4 +1,6 @@
 <script>
+    slabs = {!!\App\Services\CommonService::getTodaysFineLeafPrice()->toJson()!!};
+    // slabs = {!!\App\Services\CommonService::getTodaysFineLeafPrice()->toJson()!!};
     showDetails = function(obj){
         var data = $(obj).data('offer');
         console.log(data);
@@ -141,6 +143,21 @@
             }
             var total = net_weight * value;
             $(this).parents("form").find("#total_incentive").val(total)
+        });
+        $("#leaf_pc_input").on("input", function(){
+            var price = 0.0;
+            var value = parseFloat($(this).val());
+            if(isNaN(value)){
+                value = 0.00;
+            }
+            $.each(slabs, function(index, obj){
+                if(value >= obj.fine_leaf_count_from  && value <= obj.fine_leaf_count_to){
+                    price = parseFloat(obj.price);
+                    $("#leaf_price_input").val(price);
+                    return;
+                }
+            });
+            $("#leaf_price_input").val(price);
         });
     })
 </script>
