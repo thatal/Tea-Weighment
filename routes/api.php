@@ -91,3 +91,13 @@ Route::get("app-version", function(){
         "version"   => env("APP_VERSION")
     ];
 });
+Route::group(['prefix' => 'approver'], function () {
+    Route::post('login', [
+        "uses"  => "Mobile\Vendor\AuthController@login"
+    ]);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::get('offer-fetch', [
+            "uses"  => "Mobile\Provider\OfferController@index"
+        ]);
+    });
+});

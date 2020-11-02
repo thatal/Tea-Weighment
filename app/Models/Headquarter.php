@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Sanctum\HasApiTokens;
 
 class Headquarter extends User
 {
+    use HasApiTokens;
+
     protected $table = "users";
 
     protected $attributes = [
@@ -53,5 +56,13 @@ class Headquarter extends User
     public function factories_info()
     {
         return $this->hasMany(FactoryInformation::class, "headquarter_id", "id");
+    }
+    public static function loginRules()
+    {
+        return [
+            "username" => "required",
+            "password" => "required",
+            "role"     => "required|in:approver"
+        ];
     }
 }

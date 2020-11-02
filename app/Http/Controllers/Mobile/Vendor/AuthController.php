@@ -113,6 +113,27 @@ class AuthController extends Controller
                 ]);
 
         }
+        if ($request->get("role") === "approver") {
+            $headquarter = Headquarter::where('username', $request->username)->first();
+            if (!$headquarter || !Hash::check($request->password, $headquarter->password)) {
+                return response()
+                    ->json([
+                        // "data"    => [],
+                        "message" => "Credentials do not match.",
+                        "status"  => false,
+                    ]);
+
+            }
+            $token                 = $headquarter->createToken('auth-token');
+            $headquarter->access_token = $token->plainTextToken;
+            return response()
+                ->json([
+                    "data"    => $headquarter,
+                    "message" => "Successfully logged in.",
+                    "status"  => true,
+                ]);
+
+        }
         $vendor = Vendor::where('username', $request->username)->first();
         if (!$vendor || !Hash::check($request->password, $vendor->password)) {
             return response()
