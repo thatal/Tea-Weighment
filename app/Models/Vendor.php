@@ -59,8 +59,8 @@ class Vendor extends User
     public function scopeGlobalFilter($query)
     {
         return $query->whereHas("vendor_information", function($query){
-            if(auth()->check()){
-                $user = auth()->user();
+            if(auth()->check() || auth("sanctum")->check()){
+                $user = auth()->user() ??  auth("sanctum")->user();
                 if($user->role === Headquarter::$role){
                     $query->where("headquarter_id", auth()->id());
                 }elseif($user->role === Factory::$role){

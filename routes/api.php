@@ -99,5 +99,8 @@ Route::group(['prefix' => 'approver'], function () {
         Route::get('offer-fetch', [
             "uses"  => "Mobile\Provider\OfferController@index"
         ]);
+        Route::get('importants-data', [
+            "uses"  => "Mobile\Provider\ProviderDashController@importantApiData"
+        ]);
     });
 });

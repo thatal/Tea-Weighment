@@ -20,6 +20,14 @@ class VendorOffer extends Model
         "pending"   => "pending",
         "confirmed" => "confirmed",
     ];
+    public static $statuses = [
+        "pending" => "pending",
+        "confirmed" => "confirmed",
+        "cancelled_by_vendor" => "cancelled_by_vendor",
+        "cancelled_by_factory" => "cancelled_by_factory",
+        "counter_offer_sent" => "counter_offer_sent",
+        "received" => "completed",
+    ];
     /**
      * The attributes that should be cast to native types.
      *
