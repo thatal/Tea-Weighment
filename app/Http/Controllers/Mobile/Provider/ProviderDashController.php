@@ -20,14 +20,13 @@ class ProviderDashController extends Controller
         })
         ->available()
         ->get();
-        \DB::listen(function($query){
-            \Log::info($query->sql);
-            \Log::info($query->bindings);
-        });
-        $suppliers = app(SupplierService::class)->getAllSuppllierUsingFilter();
-        $offer_status = collect(VendorOffer::$statuses)->map(function($item){
-            return ucwords(str_replace("_", " ", $item));
-        })->toArray();;
+        $suppliers = app(SupplierService::class)->getAllSuppllierUsingFilter(["id", "name"]);
+        $offer_status = collect(VendorOffer::$statuses)->transform(function($item, $index){
+            return [
+                "id"    => $index,
+                "name"  =>  ucwords(str_replace("_", " ", $item)),
+            ];
+        })->values();;
         return response()
             ->json([
                 "status"       => true,
