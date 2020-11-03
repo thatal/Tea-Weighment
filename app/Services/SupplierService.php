@@ -5,9 +5,9 @@ use App\Models\Vendor;
 
 class SupplierService
 {
-    public function getAllSuppllierUsingFilter(array $with = [])
+    public function getAllSuppllierUsingFilter(array $with = [], $select = [])
     {
         // vendor supplier same
-        return Vendor::globalFilter()->with($with)->get();
+        return Vendor::select($select ? $select : "*")->globalFilter()->with($with)->get();
     }
 }
