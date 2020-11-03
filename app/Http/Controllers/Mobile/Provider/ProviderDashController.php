@@ -20,7 +20,7 @@ class ProviderDashController extends Controller
         })
         ->available()
         ->get();
-        $suppliers = app(SupplierService::class)->getAllSuppllierUsingFilter(["id", "name"]);
+        $suppliers = app(SupplierService::class)->getAllSuppllierUsingFilter([], ["id", "name"]);
         $offer_status = collect(VendorOffer::$statuses)->transform(function($item, $index){
             return [
                 "id"    => $index,
