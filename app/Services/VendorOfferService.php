@@ -132,14 +132,14 @@ class VendorOfferService
     }
     public static function confirmOffer(VendorOffer $vendorOffer, $guard = "web")
     {
-        if (CommonService::isFactory()) {
+        if (CommonService::isFactory($guard)) {
             if (auth($guard)->user()->id !== $vendorOffer->factory_id) {
                 Log::alert('Permission denied confirm order factory');
 
                 throw new PermissionDenied(self::$permision_denied_mesage, 401);
             }
 
-        } elseif (CommonService::isHeadQuarter()) {
+        } elseif (CommonService::isHeadQuarter($guard)) {
             $vendor_belongs_to_factory = FactoryInformation::where("headquarter_id", auth($guard)->id())
                 ->where("user_id", $vendorOffer->factory_id)
                 ->exists();

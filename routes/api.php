@@ -102,5 +102,17 @@ Route::group(['prefix' => 'approver'], function () {
         Route::get('importants-data', [
             "uses"  => "Mobile\Provider\ProviderDashController@importantApiData"
         ]);
+        Route::post("offer-accept/{vendorOffer}", [
+            "uses" => 'Mobile\Provider\Offercontroller@confirmOrder',
+            "as"   => "offer.accept",
+        ]);
+        Route::post("offer-cancel/{vendorOffer}", [
+            "uses" => 'Mobile\Provider\Offercontroller@cancelOffer',
+            "as"   => "offer.cancel",
+        ]);
+        Route::post("counter-offer/{vendorOffer}", [
+            "uses" => 'Mobile\Provider\Offercontroller@counterOffer',
+            "as"   => "counter.offer",
+        ]);
     });
 });
