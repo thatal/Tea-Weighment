@@ -6,6 +6,7 @@ use App\Exceptions\PermissionDenied;
 use App\Http\Controllers\Controller;
 use App\Models\VendorOffer;
 use App\Services\VendorOfferService;
+use App\Supports\Colors;
 use Log;
 use Illuminate\Http\Request;
 use Validator;
@@ -122,19 +123,19 @@ class OfferController extends Controller
             $links[] = [
                 "link"  => route("api.approver.offer.accept", $offer),
                 "name"  => "Accept Offer",
-                "color" => "primary"
+                "color" => Colors::PRIMARY
             ];
             $links[] = [
                 "link"  => route("api.approver.offer.cancel", $offer),
                 "name"  => "Counter Offer",
-                "color" => "warning"
+                "color" => Colors::WARNING
             ];
         }
         if (in_array($offer->status, ["pending", "confirmed"])){
             $links[] = [
                 "link"  => route("api.approver.counter.offer", $offer),
                 "name"  => "Cancel Offer",
-                "color" => "danger"
+                "color" => Colors::DANGER
             ];
 
         }
