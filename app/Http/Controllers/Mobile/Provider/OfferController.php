@@ -15,11 +15,12 @@ class OfferController extends Controller
 {
     public function index()
     {
-        $vendor_offers = VendorOfferService::all(50, "sanctum");
-        return response()->json(array_merge([
+        $vendor_offers = VendorOfferService::all(10, "sanctum");
+        return response()->json([
             "message" => $vendor_offers->total() . " records found ",
             "status"  => true,
-        ],$vendor_offers->toArray()));
+            "data"    => $vendor_offers,
+        ]);
     }
 
     public function confirmOrder(VendorOffer $vendorOffer)
