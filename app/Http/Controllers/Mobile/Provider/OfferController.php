@@ -16,6 +16,10 @@ class OfferController extends Controller
     public function index()
     {
         $vendor_offers = VendorOfferService::all(10, "sanctum");
+        $vendor_offers->map(function($item, $key){
+            $item->links = $this->generateLinks($item);
+            return $item;
+        });
         return response()->json([
             "message" => $vendor_offers->total() . " records found ",
             "status"  => true,
@@ -109,7 +113,31 @@ class OfferController extends Controller
                 ->json([
                     "message" =>  "Whoops! something went wrong. Try again later.",
                     "status" => false,
-                ], Response::HTTP_CREATED);
+                ]);
         }
+    }
+    private function generateLinks(VendorOffer $offer){
+        $links = [];
+        if (today()->format("Y-m-d") == $offer->created_at->format("Y-m-d") && $offer->status == "pending"){
+            $links[] = [
+                "link"  => route("api.approver.offer.accept", $offer),
+                "name"  => "Accept Offer",
+                "color" => "primary"
+            ];
+            $links[] = [
+                "link"  => route("api.approver.offer.cancel", $offer),
+                "name"  => "Counter Offer",
+                "color" => "warning"
+            ];
+        }
+        if (in_array($offer->status, ["pending", "confirmed"])){
+            $links[] = [
+                "link"  => route("api.approver.counter.offer", $offer),
+                "name"  => "Cancel Offer",
+                "color" => "danger"
+            ];
+
+        }
+        return $links;
     }
 }

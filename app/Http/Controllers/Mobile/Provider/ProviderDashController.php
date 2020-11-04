@@ -14,6 +14,7 @@ class ProviderDashController extends Controller
         $factories    = [];
         $offer_status = [];
         $suppliers    = [];
+        $today_date   = date("Y-m-d");
         $factories =  Factory::select(["id", "name"])
         ->whereHas("factory_information", function($query){
             return $query->where("headquarter_id", auth("sanctum")->id());
@@ -33,6 +34,7 @@ class ProviderDashController extends Controller
                 "factories"    => $factories,
                 "suppliers"    => $suppliers,
                 "offer_status" => $offer_status,
+                "today_date"   => $today_date,
             ]);
     }
 }

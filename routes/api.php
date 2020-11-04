@@ -97,22 +97,23 @@ Route::group(['prefix' => 'approver'], function () {
     ]);
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('offer-fetch', [
-            "uses"  => "Mobile\Provider\OfferController@index"
+            "uses"  => "Mobile\Provider\OfferController@index",
+            "as"  => "api.approver.offer-fetch",
         ]);
         Route::get('importants-data', [
-            "uses"  => "Mobile\Provider\ProviderDashController@importantApiData"
+            "uses"  => "Mobile\Provider\ProviderDashController@importantApiData",
         ]);
         Route::post("offer-accept/{vendorOffer}", [
             "uses" => 'Mobile\Provider\Offercontroller@confirmOrder',
-            "as"   => "offer.accept",
+            "as"   => "api.approver.offer.accept",
         ]);
         Route::post("offer-cancel/{vendorOffer}", [
             "uses" => 'Mobile\Provider\Offercontroller@cancelOffer',
-            "as"   => "offer.cancel",
+            "as"   => "api.approver.offer.cancel",
         ]);
         Route::post("counter-offer/{vendorOffer}", [
             "uses" => 'Mobile\Provider\Offercontroller@counterOffer',
-            "as"   => "counter.offer",
+            "as"   => "api.approver.counter.offer",
         ]);
     });
 });
