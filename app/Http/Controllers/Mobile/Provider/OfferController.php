@@ -80,10 +80,11 @@ class OfferController extends Controller
                 ]);
         }
     }
-    public function counterOffer(Request $request, VendorOffer $vendorOffer)
+    public function counterOffer(Request $request)
     {
         $rules = [
-            "counter_price" => "required|min:1"
+            "counter_price" => "required|min:1",
+            "id"            => "required|exists:vendor_offers,id",
         ];
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
@@ -94,6 +95,7 @@ class OfferController extends Controller
                 ]);
         }
         try {
+            $vendorOffer = VendorOffer::find($request->id);
             VendorOfferService::counterOffer($vendorOffer, "sanctum");
             return response()
                 ->json([

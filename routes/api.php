@@ -111,7 +111,7 @@ Route::group(['prefix' => 'approver'], function () {
             "uses" => 'Mobile\Provider\OfferController@cancelOffer',
             "as"   => "api.approver.offer.cancel",
         ]);
-        Route::post("counter-offer/{vendorOffer}", [
+        Route::post("counter-offer", [
             "uses" => 'Mobile\Provider\OfferController@counterOffer',
             "as"   => "api.approver.counter.offer",
         ]);
