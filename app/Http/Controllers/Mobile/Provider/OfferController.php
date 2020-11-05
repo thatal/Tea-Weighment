@@ -82,7 +82,6 @@ class OfferController extends Controller
     }
     public function counterOffer(Request $request, VendorOffer $vendorOffer)
     {
-        return $vendorOffer;
         $rules = [
             "counter_price" => "required|min:1"
         ];
