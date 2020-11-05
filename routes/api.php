@@ -104,15 +104,15 @@ Route::group(['prefix' => 'approver'], function () {
             "uses"  => "Mobile\Provider\ProviderDashController@importantApiData",
         ]);
         Route::post("offer-accept/{vendorOffer}", [
-            "uses" => 'Mobile\Provider\Offercontroller@confirmOrder',
+            "uses" => 'Mobile\Provider\OfferController@confirmOrder',
             "as"   => "api.approver.offer.accept",
         ]);
         Route::post("offer-cancel/{vendorOffer}", [
-            "uses" => 'Mobile\Provider\Offercontroller@cancelOffer',
+            "uses" => 'Mobile\Provider\OfferController@cancelOffer',
             "as"   => "api.approver.offer.cancel",
         ]);
         Route::post("counter-offer/{vendorOffer}", [
-            "uses" => 'Mobile\Provider\Offercontroller@counterOffer',
+            "uses" => 'Mobile\Provider\OfferController@counterOffer',
             "as"   => "api.approver.counter.offer",
         ]);
     });
