@@ -197,7 +197,7 @@ class VendorOfferService
         }
         $status = VendorOffer::$pending_status;
         return $vendorOffer->update([
-            "counter_offer_price"      => request("counter_price"),
+            "offer_price"              => request("counter_price"),
             "status"                   => $status,
         ]);
     }

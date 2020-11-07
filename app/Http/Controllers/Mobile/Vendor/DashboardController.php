@@ -181,6 +181,18 @@ class DashboardController extends Controller
     }
     public function counterOffer()
     {
+        $rules = [
+            "counter_price" => "required|min:1",
+            "id"            => "required|exists:vendor_offers,id",
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if($validator->fails()){
+            return response()
+                ->json([
+                    "message" =>  "Please fix the error.",
+                    "status" => false,
+                ]);
+        }
         try {
             $vendorOffer = VendorOffer::findOrFail(request("id"));
             $vendorOffer = VendorOfferService::counterOfferVendor($vendorOffer, "sanctum");
