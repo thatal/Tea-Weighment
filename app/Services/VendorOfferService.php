@@ -188,6 +188,19 @@ class VendorOfferService
             "status"                   => $status,
         ]);
     }
+    public static function counterOfferVendor(VendorOffer $vendorOffer, $guard = "web")
+    {
+        if (auth($guard)->user()->id !== $vendorOffer->vendor_id) {
+            Log::alert('Permission denied counter offer factory');
+
+            throw new PermissionDenied(self::$permision_denied_mesage, 401);
+        }
+        $status = VendorOffer::$pending_status;
+        return $vendorOffer->update([
+            "counter_offer_price"      => request("counter_price"),
+            "status"                   => $status,
+        ]);
+    }
     public static function cancelOffer(VendorOffer $vendorOffer, $guard = "web")
     {
         $status = VendorOffer::$cancelled_status_vendor;

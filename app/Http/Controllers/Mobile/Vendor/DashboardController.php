@@ -179,5 +179,27 @@ class DashboardController extends Controller
             // "daily_leaf_count_id"      => "required|exists:daily_fine_leaf_counts,id"
         ];
     }
+    public function counterOffer()
+    {
+        try {
+            $vendorOffer = VendorOffer::find(request("offer_id"));
+            $vendorOffer = VendorOfferService::counterOfferVendor($vendorOffer);
+        } catch (\Throwable $th) {
+            return response()
+                ->json([
+                    "message" => $th->getMessage(),
+                    "data"    => $vendorOffer,
+                    "status"  => false,
+                ]);
+
+        }
+        return response()
+            ->json([
+                "message" => "Couner offer successfully sent.",
+                "data"    => $vendorOffer,
+                "status"  => true,
+            ]);
+
+    }
 
 }

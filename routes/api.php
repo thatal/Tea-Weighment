@@ -48,6 +48,9 @@ Route::group(['prefix' => 'vendor'], function () {
         Route::post('offer-accept', [
             "uses"  => "Mobile\Vendor\DashboardController@acceptOffer"
         ]);
+        Route::post('counter-offer', [
+            "uses"  => "Mobile\Vendor\DashboardController@counterOffer"
+        ]);
         Route::post('change-password', [
             "uses"  => "Mobile\Vendor\AuthController@changePassword"
         ]);
