@@ -182,8 +182,8 @@ class DashboardController extends Controller
     public function counterOffer()
     {
         try {
-            $vendorOffer = VendorOffer::find(request("offer_id"));
-            $vendorOffer = VendorOfferService::counterOfferVendor($vendorOffer);
+            $vendorOffer = VendorOffer::findOrFail(request("id"));
+            $vendorOffer = VendorOfferService::counterOfferVendor($vendorOffer, "sanctum");
         } catch (\Throwable $th) {
             return response()
                 ->json([
