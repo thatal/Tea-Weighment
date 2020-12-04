@@ -124,6 +124,7 @@ class AuthController extends Controller
                     ]);
 
             }
+            $headquarter->load(["address"]);
             $token                 = $headquarter->createToken('auth-token');
             $headquarter->access_token = $token->plainTextToken;
             return response()
