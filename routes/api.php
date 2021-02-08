@@ -120,3 +120,7 @@ Route::group(['prefix' => 'approver'], function () {
         ]);
     });
 });
+Route::post("/token-register", [
+    "uses" => "HomeController@tokenRegister",
+    "as" => "token-register"
+])->middleware("auth:sanctum");

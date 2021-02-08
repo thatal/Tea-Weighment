@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except("tokenRegister");
     }
 
     /**
@@ -25,6 +25,25 @@ class HomeController extends Controller
     {
         // controller.php
         return $this->redirectAsRole();
+    }
+    public function tokenRegister()
+    {
+        $this->validate(request(), [
+            "token" => "required"
+        ]);
+        try {
+            $user  = request()->user();
+            $user->fcm_token = request("token");
+            $user->save();
+        } catch (\Throwable $th) {
+            report($th);
+            return response()->json([
+                "message"   => "failed."
+            ],422);
+        }
+        return response()->json([
+            "message" => "token updated successfully."
+        ],200);
     }
 
 }
