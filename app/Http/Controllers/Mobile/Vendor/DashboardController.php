@@ -85,7 +85,9 @@ class DashboardController extends Controller
                 "expected_moisture"        => request("expected_moisture") ?? 0,
                 "leaf_quantity"            => request("leaf_quantity"),
             ];
-            VendorOffer::create($offer_data);
+            $offer = VendorOffer::create($offer_data);
+            // sending  mobile push notification to both supplier and factory
+            $offer->notifyCreatedNotification();
         } catch (\Throwable $th) {
             Log::error($th);
             return response()
@@ -118,6 +120,7 @@ class DashboardController extends Controller
         $vendorOffer = VendorOffer::find(request("offer_id"));
         try {
             $vendorOffer = VendorOfferService::rejectBySupplierOffer($vendorOffer);
+            $vendorOffer->notifyRejectedBySupplierNotification();
         } catch (\Throwable $th) {
             return response()
                 ->json([
@@ -140,6 +143,7 @@ class DashboardController extends Controller
         $vendorOffer = VendorOffer::find(request("offer_id"));
         try {
             $vendorOffer = VendorOfferService::acceptOffer($vendorOffer);
+            $vendorOffer->notifyAcceptedBySupplierNotification();
         } catch (\Throwable $th) {
             return response()
                 ->json([

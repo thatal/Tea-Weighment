@@ -14,7 +14,7 @@ class FcmTokenToUsertable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('fcm_token', 100)->nullable()->after("remember_token");
+            $table->string('fcm_token')->nullable()->after("remember_token");
         });
     }
 

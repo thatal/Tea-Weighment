@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\VendorOfferNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VendorOffer extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, VendorOfferNotification;
+
     public static $pending_status = "pending";
     public static $confirm_status = "confirmed";
     public static $cancelled_status_vendor = "cancelled_by_vendor";

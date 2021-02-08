@@ -80,7 +80,8 @@ class Vendor extends User
         return [
             "username" => "required",
             "password" => "required",
-            "role"     => "required|in:vendor,factory,approver"
+            "role"     => "required|in:vendor,factory,approver",
+            "token"    => "required|max:255",
         ];
     }
 

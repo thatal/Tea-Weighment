@@ -149,7 +149,7 @@ class VendorOfferService
             }
         }
         $confirmation_no = date("Y") . (10000 + $vendorOffer->id);
-        return $vendorOffer->update([
+        $vendorOffer->update([
             "confirmed_at"              => now()->format("Y-m-d H:i:s"),
             "confirmed_price"           => $vendorOffer->offer_price,
          /*    "confirmed_fine_leaf_count" => $vendorOffer->expected_fine_leaf_count,
@@ -159,6 +159,8 @@ class VendorOfferService
             "confirmation_code"         => $confirmation_no,
             "status"                    => VendorOffer::$confirm_status,
         ]);
+        $vendorOffer->refresh();
+        return $vendorOffer;
     }
     public static function counterOffer(VendorOffer $vendorOffer, $guard = "web")
     {
@@ -223,13 +225,15 @@ class VendorOfferService
             $status = VendorOffer::$cancelled_status_factory;
         }
         $confirmation_no = "NA";
-        return $vendorOffer->update([
+        $vendorOffer->update([
             "cancelled_at"      => now()->format("Y-m-d H:i:s"),
             "cancelled_by_id"   => auth($guard)->id(),
             "cancelled_by_type" => get_class(auth($guard)->user()),
             "confirmation_code" => $confirmation_no,
             "status"            => $status,
         ]);
+        $vendorOffer->refresh();
+        return $vendorOffer;
     }
     public static function acceptOffer(VendorOffer $vendorOffer, $guard = "web")
     {

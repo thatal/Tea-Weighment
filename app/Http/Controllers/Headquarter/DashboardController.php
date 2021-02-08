@@ -23,7 +23,8 @@ class DashboardController extends Controller
     public function confirmOrder(VendorOffer $vendorOffer)
     {
         try {
-            VendorOfferService::confirmOffer($vendorOffer);
+            $offer = VendorOfferService::confirmOffer($vendorOffer);
+            $offer->notifyRejectedByFactoryNotification();
             return redirect()
                 ->back()
                 ->with("success", "Offer Accepted successfully.");
@@ -44,7 +45,9 @@ class DashboardController extends Controller
     public function cancelOffer(VendorOffer $vendorOffer)
     {
         try {
-            VendorOfferService::cancelOffer($vendorOffer);
+            $offer = VendorOfferService::cancelOffer($vendorOffer);
+            $offer->notifyRejectedByFactoryNotification();
+
             return redirect()
                 ->back()
                 ->with("success", "Offer Cancelled successfully.");

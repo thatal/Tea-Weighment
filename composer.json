@@ -11,14 +11,15 @@
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
+        "laravel-notification-channels/fcm": "~2.0",
         "laravel/framework": "^6.2",
         "laravel/sanctum": "^2.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
         "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1",
-        "renatomarinho/laravel-page-speed": "^1.18",
-        "owen-it/laravel-auditing": "^10.0"
+        "owen-it/laravel-auditing": "^10.0",
+        "renatomarinho/laravel-page-speed": "^1.18"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",

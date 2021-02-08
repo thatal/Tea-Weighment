@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 6.18.25 on 2020-07-20 00:27:43.
+ * Generated for Laravel 6.18.25 on 2021-02-04 18:07:14.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -16081,6 +16081,871 @@ namespace Facade\Ignition\Facades {
  
 }
 
+namespace Kreait\Laravel\Firebase\Facades { 
+
+    /**
+     * 
+     *
+     * @method static \Kreait\Firebase\Auth auth()
+     * @method static \Kreait\Firebase\Database database()
+     * @method static \Kreait\Firebase\DynamicLinks dynamicLinks()
+     * @method static \Kreait\Firebase\Firestore firestore()
+     * @method static \Kreait\Firebase\Messaging messaging()
+     * @method static \Kreait\Firebase\RemoteConfig remoteConfig()
+     * @method static \Kreait\Firebase\Storage storage()
+     * @see \Kreait\Laravel\Firebase\FirebaseProjectManager
+     * @see \Kreait\Laravel\Firebase\FirebaseProject
+     */ 
+    class Firebase {
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function project($name = null)
+        {
+                        /** @var \Kreait\Laravel\Firebase\FirebaseProjectManager $instance */
+                        return $instance->project($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getDefaultProject()
+        {
+                        /** @var \Kreait\Laravel\Firebase\FirebaseProjectManager $instance */
+                        return $instance->getDefaultProject();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setDefaultProject($name)
+        {
+                        /** @var \Kreait\Laravel\Firebase\FirebaseProjectManager $instance */
+                        return $instance->setDefaultProject($name);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \Kreait\Firebase\Auth
+     * @deprecated 3.0 Use {@see \Kreait\Laravel\Firebase\Facades\Firebase::auth()} instead.
+     */ 
+    class FirebaseAuth {
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @throws UserNotFound
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function getUser($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getUser($uid);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\array<Uid|\Kreait\Firebase\string> $uids
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @return \Kreait\Firebase\array<string, UserRecord|null>
+         * @static 
+         */ 
+        public static function getUsers($uids)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getUsers($uids);
+        }
+        
+        /**
+         * 
+         *
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @return \Kreait\Firebase\Traversable<UserRecord>|\Kreait\Firebase\UserRecord[] 
+         * @static 
+         */ 
+        public static function listUsers($maxResults = 1000, $batchSize = 1000)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->listUsers($maxResults, $batchSize);
+        }
+        
+        /**
+         * Creates a new user with the provided properties.
+         *
+         * @param \Kreait\Firebase\array<string,  mixed>|Request\CreateUser $properties
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function createUser($properties)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->createUser($properties);
+        }
+        
+        /**
+         * Updates the given user with the given properties.
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\array<string,  mixed>|Request\UpdateUser $properties
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function updateUser($uid, $properties)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->updateUser($uid, $properties);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ClearTextPassword|string $password
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function createUserWithEmailAndPassword($email, $password)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->createUserWithEmailAndPassword($email, $password);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @throws UserNotFound
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function getUserByEmail($email)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getUserByEmail($email);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\PhoneNumber|string $phoneNumber
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function getUserByPhoneNumber($phoneNumber)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getUserByPhoneNumber($phoneNumber);
+        }
+        
+        /**
+         * 
+         *
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function createAnonymousUser()
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->createAnonymousUser();
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\ClearTextPassword|string $newPassword
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function changeUserPassword($uid, $newPassword)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->changeUserPassword($uid, $newPassword);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\Email|string $newEmail
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function changeUserEmail($uid, $newEmail)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->changeUserEmail($uid, $newEmail);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function enableUser($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->enableUser($uid);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function disableUser($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->disableUser($uid);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @throws UserNotFound
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function deleteUser($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->deleteUser($uid);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToCreateActionLink
+         * @static 
+         */ 
+        public static function getEmailActionLink($type, $email, $actionCodeSettings = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getEmailActionLink($type, $email, $actionCodeSettings);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws UserNotFound
+         * @throws FailedToSendActionLink
+         * @static 
+         */ 
+        public static function sendEmailActionLink($type, $email, $actionCodeSettings = null, $locale = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->sendEmailActionLink($type, $email, $actionCodeSettings, $locale);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToCreateActionLink
+         * @static 
+         */ 
+        public static function getEmailVerificationLink($email, $actionCodeSettings = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getEmailVerificationLink($email, $actionCodeSettings);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToSendActionLink
+         * @static 
+         */ 
+        public static function sendEmailVerificationLink($email, $actionCodeSettings = null, $locale = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->sendEmailVerificationLink($email, $actionCodeSettings, $locale);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToCreateActionLink
+         * @static 
+         */ 
+        public static function getPasswordResetLink($email, $actionCodeSettings = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getPasswordResetLink($email, $actionCodeSettings);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToSendActionLink
+         * @static 
+         */ 
+        public static function sendPasswordResetLink($email, $actionCodeSettings = null, $locale = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->sendPasswordResetLink($email, $actionCodeSettings, $locale);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToCreateActionLink
+         * @static 
+         */ 
+        public static function getSignInWithEmailLink($email, $actionCodeSettings = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->getSignInWithEmailLink($email, $actionCodeSettings);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Email|string $email
+         * @param \Kreait\Firebase\ActionCodeSettings|\Kreait\Firebase\array<string,  mixed>|null $actionCodeSettings
+         * @throws FailedToSendActionLink
+         * @static 
+         */ 
+        public static function sendSignInWithEmailLink($email, $actionCodeSettings = null, $locale = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->sendSignInWithEmailLink($email, $actionCodeSettings, $locale);
+        }
+        
+        /**
+         * 
+         *
+         * @deprecated 5.4.0 use {@see setCustomUserClaims}($id, array $claims) instead
+         * @see setCustomUserClaims
+         * @codeCoverageIgnore 
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\array<string,  mixed> $attributes
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function setCustomUserAttributes($uid, $attributes)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->setCustomUserAttributes($uid, $attributes);
+        }
+        
+        /**
+         * 
+         *
+         * @deprecated 5.4.0 use {@see setCustomUserClaims}($uid) instead
+         * @see removeCustomUserClaims
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function deleteCustomUserAttributes($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->deleteCustomUserAttributes($uid);
+        }
+        
+        /**
+         * Sets additional developer claims on an existing user identified by the provided UID.
+         *
+         * @see https://firebase.google.com/docs/auth/admin/custom-claims
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\array<string,  mixed>|null $claims
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function setCustomUserClaims($uid, $claims)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->setCustomUserClaims($uid, $claims);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\array<string,  mixed> $claims
+         * @static 
+         */ 
+        public static function createCustomToken($uid, $claims = [])
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->createCustomToken($uid, $claims);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function parseToken($tokenString)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->parseToken($tokenString);
+        }
+        
+        /**
+         * Verifies a JWT auth token. Returns a Promise with the tokens claims. Rejects the promise if the token
+         * could not be verified. If checkRevoked is set to true, verifies if the session corresponding to the
+         * ID token was revoked. If the corresponding user's session was invalidated, a RevokedToken
+         * exception is thrown. If not specified the check is not applied.
+         * 
+         * NOTE: Allowing time inconsistencies might impose a security risk. Do this only when you are not able
+         * to fix your environment's time to be consistent with Google's servers. This parameter is here
+         * for backwards compatibility reasons, and will be removed in the next major version. You
+         * shouldn't rely on it.
+         *
+         * @param \Kreait\Firebase\Token|string $idToken the JWT to verify
+         * @param bool $checkIfRevoked whether to check if the ID token is revoked
+         * @throws \InvalidArgumentException if the token could not be parsed
+         * @throws InvalidToken if the token could be parsed, but is invalid for any reason (invalid signature, expired, time errors)
+         * @throws InvalidSignature if the signature doesn't match
+         * @throws ExpiredToken if the token is expired
+         * @throws IssuedInTheFuture if the token is issued in the future
+         * @throws UnknownKey if the token's kid header doesnt' contain a known key
+         * @static 
+         */ 
+        public static function verifyIdToken($idToken, $checkIfRevoked = false)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->verifyIdToken($idToken, $checkIfRevoked);
+        }
+        
+        /**
+         * Verifies the given password reset code.
+         *
+         * @see https://firebase.google.com/docs/reference/rest/auth#section-verify-password-reset-code
+         * @throws ExpiredOobCode
+         * @throws InvalidOobCode
+         * @throws OperationNotAllowed
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function verifyPasswordResetCode($oobCode)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->verifyPasswordResetCode($oobCode);
+        }
+        
+        /**
+         * Verifies the given password reset code and returns the associated user's email address.
+         *
+         * @see https://firebase.google.com/docs/reference/rest/auth#section-verify-password-reset-code
+         * @throws ExpiredOobCode
+         * @throws InvalidOobCode
+         * @throws OperationNotAllowed
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function verifyPasswordResetCodeAndReturnEmail($oobCode)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->verifyPasswordResetCodeAndReturnEmail($oobCode);
+        }
+        
+        /**
+         * Applies the password reset requested via the given OOB code.
+         *
+         * @see https://firebase.google.com/docs/reference/rest/auth#section-confirm-reset-password
+         * @param string $oobCode the email action code sent to the user's email for resetting the password
+         * @param \Kreait\Firebase\ClearTextPassword|string $newPassword
+         * @param bool $invalidatePreviousSessions Invalidate sessions initialized with the previous credentials
+         * @throws ExpiredOobCode
+         * @throws InvalidOobCode
+         * @throws OperationNotAllowed
+         * @throws UserDisabled
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function confirmPasswordReset($oobCode, $newPassword, $invalidatePreviousSessions = true)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->confirmPasswordReset($oobCode, $newPassword, $invalidatePreviousSessions);
+        }
+        
+        /**
+         * Applies the password reset requested via the given OOB code and returns the associated user's email address.
+         *
+         * @see https://firebase.google.com/docs/reference/rest/auth#section-confirm-reset-password
+         * @param string $oobCode the email action code sent to the user's email for resetting the password
+         * @param \Kreait\Firebase\ClearTextPassword|string $newPassword
+         * @param bool $invalidatePreviousSessions Invalidate sessions initialized with the previous credentials
+         * @throws ExpiredOobCode
+         * @throws InvalidOobCode
+         * @throws OperationNotAllowed
+         * @throws UserDisabled
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function confirmPasswordResetAndReturnEmail($oobCode, $newPassword, $invalidatePreviousSessions = true)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->confirmPasswordResetAndReturnEmail($oobCode, $newPassword, $invalidatePreviousSessions);
+        }
+        
+        /**
+         * Revokes all refresh tokens for the specified user identified by the uid provided.
+         * 
+         * In addition to revoking all refresh tokens for a user, all ID tokens issued
+         * before revocation will also be revoked on the Auth backend. Any request with an
+         * ID token generated before revocation will be rejected with a token expired error.
+         *
+         * @param \Kreait\Firebase\Uid|string $uid the user whose tokens are to be revoked
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function revokeRefreshTokens($uid)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->revokeRefreshTokens($uid);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Uid|string $uid
+         * @param \Kreait\Firebase\Provider[]|string[]|string $provider
+         * @throws Exception\AuthException
+         * @throws Exception\FirebaseException
+         * @static 
+         */ 
+        public static function unlinkProvider($uid, $provider)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->unlinkProvider($uid, $provider);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\UserRecord|\Kreait\Firebase\Uid|string $user
+         * @param \Kreait\Firebase\array<string,  mixed>|null $claims
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInAsUser($user, $claims = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInAsUser($user, $claims);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Token|string $token
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithCustomToken($token)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithCustomToken($token);
+        }
+        
+        /**
+         * 
+         *
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithRefreshToken($refreshToken)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithRefreshToken($refreshToken);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Kreait\Firebase\Email $email
+         * @param string|\Kreait\Firebase\ClearTextPassword $clearTextPassword
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithEmailAndPassword($email, $clearTextPassword)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithEmailAndPassword($email, $clearTextPassword);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Kreait\Firebase\Email $email
+         * @param string $oobCode
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithEmailAndOobCode($email, $oobCode)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithEmailAndOobCode($email, $oobCode);
+        }
+        
+        /**
+         * 
+         *
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInAnonymously()
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInAnonymously();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function signInWithTwitterOauthCredential($accessToken, $oauthTokenSecret, $redirectUrl = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithTwitterOauthCredential($accessToken, $oauthTokenSecret, $redirectUrl);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function signInWithGoogleIdToken($idToken, $redirectUrl = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithGoogleIdToken($idToken, $redirectUrl);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function signInWithFacebookAccessToken($accessToken, $redirectUrl = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithFacebookAccessToken($accessToken, $redirectUrl);
+        }
+        
+        /**
+         * 
+         *
+         * @see https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/signInWithIdp
+         * @param \Kreait\Firebase\Provider|string $provider
+         * @param \Kreait\Firebase\UriInterface|string|null $redirectUrl
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithIdpAccessToken($provider, $accessToken, $redirectUrl = null, $oauthTokenSecret = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithIdpAccessToken($provider, $accessToken, $redirectUrl, $oauthTokenSecret);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Kreait\Firebase\Provider|string $provider
+         * @param \Kreait\Firebase\Token|string $idToken
+         * @param \Kreait\Firebase\UriInterface|string|null $redirectUrl
+         * @throws FailedToSignIn
+         * @static 
+         */ 
+        public static function signInWithIdpIdToken($provider, $idToken, $redirectUrl = null)
+        {
+                        /** @var \Kreait\Firebase\Auth $instance */
+                        return $instance->signInWithIdpIdToken($provider, $idToken, $redirectUrl);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \Kreait\Firebase\DynamicLinks
+     * @deprecated 3.0 Use {@see \Kreait\Laravel\Firebase\Facades\Firebase::dynamicLinks()} instead.
+     */ 
+    class FirebaseDynamicLinks {
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function withApiClient($apiClient)
+        {
+                        return \Kreait\Firebase\DynamicLinks::withApiClient($apiClient);
+        }
+        
+        /**
+         * 
+         *
+         * @param mixed $mixedLinksDomain
+         * @static 
+         */ 
+        public static function withApiClientAndDefaultDomain($apiClient, $dynamicLinksDomain)
+        {
+                        return \Kreait\Firebase\DynamicLinks::withApiClientAndDefaultDomain($apiClient, $dynamicLinksDomain);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Url|\Kreait\Firebase\UriInterface|\Kreait\Firebase\CreateDynamicLink|array|mixed $url
+         * @throws InvalidArgumentException
+         * @throws FailedToCreateDynamicLink
+         * @static 
+         */ 
+        public static function createUnguessableLink($url)
+        {
+                        /** @var \Kreait\Firebase\DynamicLinks $instance */
+                        return $instance->createUnguessableLink($url);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Url|\Kreait\Firebase\UriInterface|\Kreait\Firebase\CreateDynamicLink|array|mixed $url
+         * @throws InvalidArgumentException
+         * @throws FailedToCreateDynamicLink
+         * @static 
+         */ 
+        public static function createShortLink($url)
+        {
+                        /** @var \Kreait\Firebase\DynamicLinks $instance */
+                        return $instance->createShortLink($url);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Url|\Kreait\Firebase\UriInterface|\Kreait\Firebase\CreateDynamicLink|array|mixed $actionOrParametersOrUrl
+         * @throws InvalidArgumentException
+         * @throws FailedToCreateDynamicLink
+         * @static 
+         */ 
+        public static function createDynamicLink($actionOrParametersOrUrl, $suffixType = null)
+        {
+                        /** @var \Kreait\Firebase\DynamicLinks $instance */
+                        return $instance->createDynamicLink($actionOrParametersOrUrl, $suffixType);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Url|\Kreait\Firebase\UriInterface|\Kreait\Firebase\ShortenLongDynamicLink|array|mixed $longDynamicLinkOrAction
+         * @throws InvalidArgumentException
+         * @throws FailedToShortenLongDynamicLink
+         * @static 
+         */ 
+        public static function shortenLongDynamicLink($longDynamicLinkOrAction, $suffixType = null)
+        {
+                        /** @var \Kreait\Firebase\DynamicLinks $instance */
+                        return $instance->shortenLongDynamicLink($longDynamicLinkOrAction, $suffixType);
+        }
+        
+        /**
+         * 
+         *
+         * @param string|\Url|\Kreait\Firebase\UriInterface|\Kreait\Firebase\GetStatisticsForDynamicLink|mixed $mixedLinkOrAction
+         * @throws InvalidArgumentException
+         * @throws GetStatisticsForDynamicLink\FailedToGetStatisticsForDynamicLink
+         * @static 
+         */ 
+        public static function getStatistics($dynamicLinkOrAction, $durationInDays = null)
+        {
+                        /** @var \Kreait\Firebase\DynamicLinks $instance */
+                        return $instance->getStatistics($dynamicLinkOrAction, $durationInDays);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \Kreait\Firebase\Storage
+     * @deprecated 3.0 Use {@see \Kreait\Laravel\Firebase\Facades\Firebase::storage()} instead.
+     */ 
+    class FirebaseStorage {
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getStorageClient()
+        {
+                        /** @var \Kreait\Firebase\Storage $instance */
+                        return $instance->getStorageClient();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getBucket($name = null)
+        {
+                        /** @var \Kreait\Firebase\Storage $instance */
+                        return $instance->getBucket($name);
+        }
+         
+    }
+ 
+}
+
 namespace Collective\Html { 
 
     /**
@@ -20175,6 +21040,14 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
+
+    class Firebase extends \Kreait\Laravel\Firebase\Facades\Firebase {}
+
+    class FirebaseAuth extends \Kreait\Laravel\Firebase\Facades\FirebaseAuth {}
+
+    class FirebaseDynamicLinks extends \Kreait\Laravel\Firebase\Facades\FirebaseDynamicLinks {}
+
+    class FirebaseStorage extends \Kreait\Laravel\Firebase\Facades\FirebaseStorage {}
 
     class Form extends \Collective\Html\FormFacade {}
 

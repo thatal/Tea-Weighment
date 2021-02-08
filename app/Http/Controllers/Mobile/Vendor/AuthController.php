@@ -103,6 +103,9 @@ class AuthController extends Controller
 
             }
             $factory->load(["address", "factory_information"]);
+            $factory->update([
+                "fcm_token" => request("token")
+            ]);
             $token                 = $factory->createToken('auth-token');
             $factory->access_token = $token->plainTextToken;
             return response()
@@ -125,6 +128,9 @@ class AuthController extends Controller
 
             }
             $headquarter->load(["address"]);
+            $headquarter->update([
+                "fcm_token" => request("token")
+            ]);
             $token                 = $headquarter->createToken('auth-token');
             $headquarter->access_token = $token->plainTextToken;
             return response()
@@ -146,7 +152,9 @@ class AuthController extends Controller
 
         }
         $vendor->load(["address", "vendor_information", "bank_details"]);
-
+        $vendor->update([
+            "fcm_token" => request("token")
+        ]);
         // $vendor               = Vendor::inRandomOrder()->first();
         $token                = $vendor->createToken('auth-token');
         $vendor->access_token = $token->plainTextToken;
@@ -224,6 +232,7 @@ class AuthController extends Controller
             "account_number"      => "required|max:50",
             "account_holder_name" => "required|max:100",
             "ifsc_code"           => "required|max:100",
+            "token"               => "required|max:255",
         ];
     }
 
