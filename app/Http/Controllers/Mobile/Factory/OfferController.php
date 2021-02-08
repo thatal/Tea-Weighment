@@ -115,6 +115,8 @@ class OfferController extends Controller
             $vendor_offer->confirmed_moisture = request("moisture") ?? 0;
             $vendor_offer->first_weight_image = $filename;
             $vendor_offer->status             = VendorOffer::$first_wieght_status;
+            $vendor_offer->slip_number        = request("slip_number");
+            $vendor_offer->vehicle_in_time    = request("vehicle_in_time");
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);
@@ -184,6 +186,7 @@ class OfferController extends Controller
             $vendor_offer->status              = VendorOffer::$second_wieght_status;
             $vendor_offer->net_weight          = round($temp_net_weight - $deduction, 2);
             $vendor_offer->deduction           = $deduction;
+            $vendor_offer->vehicle_out_time    = request("vehicle_out_time");
             $vendor_offer->save();
         } catch (\Throwable $th) {
             Log::error($th);
@@ -217,6 +220,8 @@ class OfferController extends Controller
             "gross_weight_image" => "required|image",
             "deduction"          => "numeric",
             "moisture"           => "numeric|required",
+            "slip_number"        => "required|max:200",
+            "vehicle_in_time"    => "required|max:50|date_format:h:i A",
         ];
     }
     private function secondWeightRule()
@@ -225,7 +230,8 @@ class OfferController extends Controller
             "confirmation_code"   => "required",
             "second_weight"       => "required|numeric|min:1",
             "second_weight_image" => "required|image",
-            "fineLeafCount"       => "required|numeric|min:1|max:100"
+            "fineLeafCount"       => "required|numeric|min:1|max:100",
+            "vehicle_out_time"    => "required|max:50|date_format:h:i A",
         ];
     }
 }
