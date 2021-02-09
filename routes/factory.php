@@ -38,6 +38,10 @@ Route::group([
             "uses"  => "VendorController@index",
             "as"  => "vendor.index",
         ]);
+        Route::post("/change_status/{vendor}", [
+            "uses"  => "VendorController@changeStatus",
+            "as"  => "vendor.change-status",
+        ]);
     });
     Route::group(['prefix' => 'leaf-count'], function () {
         Route::get('/', [

@@ -88,5 +88,10 @@ Route::group(['prefix' => 'headquarter', "as" => "headquarter.", "namespace" => 
             "as"   => "offer.summary-report",
         ]);
     });
-
+    Route::group(['prefix' => 'vendor'], function () {
+        Route::post("/change_status/{vendor}", [
+            "uses"  => "VendorController@changeStatus",
+            "as"  => "vendor.change-status",
+        ]);
+    });
 });
