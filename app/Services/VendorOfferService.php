@@ -85,7 +85,7 @@ class VendorOfferService
                 "sub_total_tare"       => $item->sum("tare"),
                 "sub_total_deduction"  => $item->sum("deduction"),
                 "sub_total_net_weight" => $item->sum("sum_weight"),
-                "sub_total_rate"       => $item->avg("rate"),
+                "sub_total_rate"       => number_format($item->avg("rate"), 2, ".", ""),
                 "sub_total_fine_leaf"  => number_format($item->avg("fine_leaf"), 2, ".", ""),
                 "sub_incentive"        => $item->sum("incentive_total"),
 
@@ -102,8 +102,8 @@ class VendorOfferService
         $grouped_data["grand_total_tare"]       = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_total_tare") : 0;
         $grouped_data["grand_total_deduction"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_total_deduction") : 0;
         $grouped_data["grand_total_net_weight"] = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_total_net_weight") : 0;
-        $grouped_data["grand_total_rate"]       = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_rate") : 0;
-        $grouped_data["grand_total_fine_leaf"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->avg("sub_total_fine_leaf") : 0;
+        $grouped_data["grand_total_rate"]       = isset($grouped_data["records"]) ? number_format($grouped_data["records"]->avg("sub_total_rate"), 2, ".", "") : 0;
+        $grouped_data["grand_total_fine_leaf"]  = isset($grouped_data["records"]) ? number_format($grouped_data["records"]->avg("sub_total_fine_leaf"), 2, ".", "") : 0;
         $grouped_data["grand_total_incentive"]  = isset($grouped_data["records"]) ? $grouped_data["records"]->sum("sub_incentive") : 0;
         // dd($grouped_data);
         return $grouped_data;
