@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\CommonHelper;
 use App\Models\Address;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username', "fcm_token"
+        'name', 'email', 'password','username', "fcm_token", "show_slab"
     ];
 
     /**
@@ -57,5 +58,31 @@ class User extends Authenticatable
     public function isHeadquarter()
     {
         return strtolower($this->role) == "headquarter";
+    }
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string|array
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
+    }
+    public function newOfferCreatedForSupplier()
+    {
+
+        $notification_id = $this->fcm_token;
+        $title = "Greeting Notification";
+        $message = "Have good day!";
+        $id = $this->id;
+        $type = "basic";
+
+        $res = CommonHelper::send_notification_FCM($notification_id, $title, $message, $id,$type);
+
+        if($res == 1){
+            // success code
+        }else{
+            // fail code
+        }
     }
 }
