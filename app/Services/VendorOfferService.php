@@ -86,7 +86,7 @@ class VendorOfferService
                 "sub_total_deduction"  => $item->sum("deduction"),
                 "sub_total_net_weight" => $item->sum("sum_weight"),
                 "sub_total_rate"       => $item->avg("rate"),
-                "sub_total_fine_leaf"  => $item->avg("fine_leaf"),
+                "sub_total_fine_leaf"  => number_format($item->avg("fine_leaf"), 2, ".", ""),
                 "sub_incentive"        => $item->sum("incentive_total"),
 
             ];
