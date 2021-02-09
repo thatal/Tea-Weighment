@@ -49,6 +49,7 @@ class DashboardController extends Controller
         return response()->json([
             "data"    => $slabs,
             "status"  => true,
+            "show_slab" => auth()->user()->show_slab,
             "message" => $slabs->count() . " records found.",
         ]);
     }
