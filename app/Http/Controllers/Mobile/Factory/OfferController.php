@@ -221,7 +221,7 @@ class OfferController extends Controller
             "deduction"          => "numeric",
             "moisture"           => "numeric|required",
             "slip_number"        => "required|max:200",
-            "vehicle_in_time"    => "required|max:50|date_format:h:i A",
+            "vehicle_in_time"    => "required|max:50",
         ];
     }
     private function secondWeightRule()
@@ -231,7 +231,7 @@ class OfferController extends Controller
             "second_weight"       => "required|numeric|min:1",
             "second_weight_image" => "required|image",
             "fineLeafCount"       => "required|numeric|min:1|max:100",
-            "vehicle_out_time"    => "required|max:50|date_format:h:i A",
+            "vehicle_out_time"    => "required|max:50",
         ];
     }
 }

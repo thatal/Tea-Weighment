@@ -28,7 +28,8 @@ class VendorOffer extends Model
         "cancelled_by_vendor" => "cancelled_by_vendor",
         "cancelled_by_factory" => "cancelled_by_factory",
         "counter_offer_sent" => "counter_offer_sent",
-        "received" => "completed",
+        "completed" => "completed",
+        "received" => "received",
     ];
     /**
      * The attributes that should be cast to native types.

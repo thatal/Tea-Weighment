@@ -16,8 +16,13 @@ class ProviderDashController extends Controller
         $suppliers    = [];
         $today_date   = date("Y-m-d");
         $factories =  Factory::select(["id", "name"])
-        ->whereHas("factory_information", function($query){
-            return $query->where("headquarter_id", auth("sanctum")->id());
+        ->when(auth("sanctum")->user()->isHeadquarter(), function($query){
+            return $query->whereHas("factory_information", function($query){
+                return $query->where("headquarter_id", auth("sanctum")->id());
+            });
+        })
+        ->when(auth("sanctum")->user()->isVendor(), function($query){
+            return $query->whereHas("id", auth("sanctum")->user()->id());
         })
         ->available()
         ->get();
