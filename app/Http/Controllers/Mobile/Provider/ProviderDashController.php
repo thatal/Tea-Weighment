@@ -22,7 +22,7 @@ class ProviderDashController extends Controller
             });
         })
         ->when(auth("sanctum")->user()->isVendor(), function($query){
-            return $query->whereHas("id", auth("sanctum")->id());
+            return $query->where("id", auth("sanctum")->id());
         })
         ->available()
         ->get();
