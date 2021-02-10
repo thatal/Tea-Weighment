@@ -59,7 +59,7 @@
                    +' <td>Slip Number: </td>'
                    +' <th>'+(data.slip_number !== null ? data.slip_number : "NA")+'</th>'
                    +' <td>Vehicle In-time</td>'
-                   +' <th>'+(data.vehicle_in_time !== null ? data.vehicle_out_time : "NA")+'</th>'
+                   +' <th>'+(data.vehicle_in_time !== null ? data.vehicle_in_time : "NA")+'</th>'
                    +' <td>Vehicle Out-time: </td>'
                     +'<th>'+(data.vehicle_out_time !== null ? data.vehicle_out_time : "NA")+'</th>'
                    +' <td> </td>'
