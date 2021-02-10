@@ -302,6 +302,9 @@ class VendorOfferService
         $builder->when(request("vendor"), function ($query) {
             return $query->where("vendor_id", request("vendor"));
         });
+        $builder->when(request("factory"), function ($query) {
+            return $query->where("factory_id", request("factory"));
+        });
 
         return $builder;
     }

@@ -25,7 +25,7 @@ class VendorOffer extends Model
     public static $statuses = [
         "pending" => "pending",
         "confirmed" => "confirmed",
-        "cancelled_by_vendor" => "cancelled_by_vendor",
+        "cancelled_by_vendor" => "cancelled_by_supplier",
         "cancelled_by_factory" => "cancelled_by_factory",
         "counter_offer_sent" => "counter_offer_sent",
         "completed" => "completed",
